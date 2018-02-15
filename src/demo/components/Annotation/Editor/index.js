@@ -9,6 +9,10 @@ const Container = styled.div`
     0px 2px 2px 0px rgba(0, 0, 0, 0.14),
     0px 3px 1px -2px rgba(0, 0, 0, 0.12);
   margin-top: 16px;
+  transform-origin: top left;
+  transition:
+    opacity 0.21s ease-in-out,
+    transform 0.31s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
 `
 
@@ -18,6 +22,7 @@ const Editor = styled.div`
     border: 0;
     font-size: 14px;
     margin: 6px 0;
+    min-height: 60px;
     outline: 0;
   }
 `
@@ -31,6 +36,7 @@ const Button = styled.button`
   font-size: 13px;
   font-weight: 700;
   outline: 0;
+  margin: 0;
   padding: 8px 16px;
   text-shadow: 0 1px 0 rgba(0,0,0,0.1);
   text-transform: uppercase;
