@@ -1,8 +1,3 @@
-import Example from './components/Example'
-import SecondExample from './components/SecondExample'
+import Annotation from './components/Annotation'
 
-export default Example
-
-export {
-  SecondExample
-}
+export default Annotation
