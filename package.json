@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "standard": "./node_modules/.bin/standard --fix",
     "demo": "node scripts/demo.js",
     "test": "node scripts/test.js --env=jsdom"
   },
@@ -45,6 +46,7 @@
     "react": "^16.2.0",
     "react-dev-utils": "^4.2.1",
     "react-dom": "^16.2.0",
+    "standard": "^10.0.3",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
@@ -95,6 +97,17 @@
     "presets": [
       "react-app"
     ]
+  },
+  "standard": {
+    "env": [
+      "jest",
+      "jasmine"
+    ],
+    "globals": [
+      "fetch",
+      "URL"
+    ],
+    "parser": "babel-eslint"
   },
   "eslintConfig": {
     "extends": "react-app"
