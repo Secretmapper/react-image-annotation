@@ -4,11 +4,10 @@ const isMouseOverElement = ({ elem, e }) => {
   const { pageY, pageX } = e
   const { left, right, bottom, top } = elem.getBoundingClientRect()
 
-  console.log(pageY, top, bottom)
   return pageX > left && pageX < right && pageY > top && pageY < bottom
 }
 
-const isMouseHovering = DecoratedComponent => {
+const isMouseHovering = (key = 'isMouseHovering') => DecoratedComponent => {
   class IsMouseHovering extends Component {
     constructor() {
       super()
@@ -35,13 +34,17 @@ const isMouseHovering = DecoratedComponent => {
     }
 
     render() {
-      const { isHoveringOver } = this.state
+      const hocProps = {
+        [key]: {
+          innerRef: el => this.el = el,
+          isHoveringOver: this.state.isHoveringOver
+        }
+      }
 
       return (
         <DecoratedComponent
-          hoverRef={el => this.el = el}
           {...this.props}
-          isHoveringOver={isHoveringOver}
+          {...hocProps}
         />
       )
     }

@@ -1,7 +1,7 @@
 import React from 'react'
 import Annotation from '../lib'
 import Root from './components/Root'
-import { Container, Content, Point } from './components/Annotation'
+import { Container, Content, Rect, Point } from './components/Annotation'
 
 import img from './img.jpeg'
 
@@ -16,22 +16,20 @@ const App = () => (
       src={img}
       alt='Two pebbles anthropomorphized holding hands'
     >
-      {props => annotations.map(annotation => (
-        <Container
-          key={annotation.data.id}
+      {props => (
+        <Rect
           style={{
-            opacity: props.isHoveringOver ? 1 : 0,
             position: 'absolute',
-            left: `${annotation.pos.left}%`,
-            top: `${annotation.pos.top}%`
+            left: `${props.geometry.x}%`,
+            top: `${props.geometry.y}%`,
+            height: `${props.geometry.height}%`,
+            width: `${props.geometry.width}%`
           }}
-        >
-          <Point />
-          <Content>I'm Pebble 1</Content>
-        </Container>
-      ))}
+        />
+      )}
     </Annotation>
   </Root>
 )
 
 export default App
+// <Content>I'm Pebble 1</Content>

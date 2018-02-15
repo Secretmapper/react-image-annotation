@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
 import './Annotation.css'
+import compose from '../utils/compose'
 import isMouseHovering from '../utils/isMouseHovering'
+import drawingRectangle from '../hocs/DrawingRectangle'
 
-class Annotation extends Component {
+export default compose(
+  isMouseHovering(),
+  drawingRectangle(),
+)(class Annotation extends Component {
   render () {
     const { props } = this
     const {
       children, alt,
-      isHoveringOver, hoverRef,
+      isMouseHovering,
+      drawingRectangle,
+
       ...imgProps
     } = props
 
@@ -18,17 +25,27 @@ class Annotation extends Component {
     return (
       <div
         className='Annotation'
-        ref={hoverRef}
+        style={props.style}
+        ref={isMouseHovering.innerRef}
       >
         <img
           className={className}
           alt={alt}
+          draggable={false}
+          ref={drawingRectangle.innerRef}
           {...imgProps}
         />
-        {props.children({ isHoveringOver })}
+        {props.children({
+          isSelecting: drawingRectangle.isSelecting,
+          geometry: drawingRectangle.geometry,
+          isHoveringOver: isMouseHovering.isHoveringOver
+        })}
+        <div
+          onClick={drawingRectangle.onClick}
+          onMouseMove={drawingRectangle.onMouseMove}
+          className='Annotation__target'
+        />
       </div>
     )
   }
-}
-
-export default isMouseHovering(Annotation)
+})
