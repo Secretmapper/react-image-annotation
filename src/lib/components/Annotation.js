@@ -69,6 +69,7 @@ export default compose(
       isMouseHovering,
 
       Highlight,
+      Content,
       Selector,
       Editor
     } = props
@@ -109,6 +110,15 @@ export default compose(
               topAnnotationAtMouse === annotation
             }
           />
+        ))}
+        {props.annotations.map(annotation => (
+          topAnnotationAtMouse === annotation && (
+            <Content
+              key='content'
+              geometry={annotation.geometry}
+              annotation={annotation}
+            />
+          )
         ))}
         <div
           style={{

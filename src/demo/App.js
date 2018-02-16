@@ -64,6 +64,7 @@ export default compose (
           onEditorSubmit={this.onSubmit}
 
           Highlight={Rect}
+          Content={Content}
           Selector={Rect}
           Editor={Editor}
         />
