@@ -3,7 +3,7 @@ import Annotation, { compose, withAnnotationEditor } from '../lib'
 import { withRectangleSelector } from '../lib/selectors'
 
 import Root from './components/Root'
-import { Content, Editor, Rect, Point } from './components/Annotation'
+import { Content, Editor, FancyRect, Rect, Point } from './components/Annotation'
 
 import img from './img.jpeg'
 
@@ -65,7 +65,7 @@ export default compose (
 
           Highlight={Rect}
           Content={Content}
-          Selector={Rect}
+          Selector={FancyRect}
           Editor={Editor}
         />
       </Root>
