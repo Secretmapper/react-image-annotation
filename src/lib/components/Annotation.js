@@ -121,17 +121,12 @@ export default compose(
           )
         ))}
         <div
-          style={{
-            pointerEvents: props.disableSelect && 'none'
-          }}
           onClick={selectorHandlers.onClick}
           onMouseMove={this.onTargetMouseMove}
           className='Annotation__target'
         />
         {annotation.showEditor && (
           <Editor
-            isEditing
-            isSelecting
             isHoveringOver={isMouseHovering.isHoveringOver}
             data={annotation.data}
             geometry={annotation.geometry}
