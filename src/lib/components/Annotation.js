@@ -1,21 +1,30 @@
 import React, { Component } from 'react'
+import T from 'prop-types'
 import './Annotation.css'
 import compose from '../utils/compose'
 import isMouseHovering from '../utils/isMouseHovering'
-import annotationLogic from '../hocs/AnnotationLogic'
-import drawingRectangle from '../hocs/DrawingRectangle'
 
 export default compose(
-  annotationLogic(),
   isMouseHovering(),
-  drawingRectangle()
 )(class Annotation extends Component {
+  static propTypes = {
+    containerRef: T.func.isRequired,
+    annotation: T.shape({
+      selection: T.object,
+      geometry: T.object,
+    }).isRequired,
+    selectorHandlers: T.shape({
+      onClick: T.func,
+      onMouseMove: T.func
+    }).isRequired
+  }
+
   render () {
     const { props } = this
     const {
       annotation,
+      selectorHandlers,
       isMouseHovering,
-      drawingRectangle,
 
       Selector,
       Editor
@@ -37,26 +46,30 @@ export default compose(
           alt={props.alt}
           src={props.src}
           draggable={false}
-          ref={drawingRectangle.innerRef}
+          ref={props.containerRef}
         />
-        <Selector
-          geometry={drawingRectangle.geometry}
-        />
-        <Editor
-          isEditing={annotation.isEditing}
-          isSelecting={annotation.isSelecting}
-          isHoveringOver={isMouseHovering.isHoveringOver}
-          geometry={drawingRectangle.geometry}
-          onSubmit={() => {}}
-        />
+        {annotation.geometry && (
+          <Selector
+            geometry={annotation.geometry}
+          />
+        )}
         <div
           style={{
             pointerEvents: props.disableSelect && 'none'
           }}
-          onClick={drawingRectangle.onClick}
-          onMouseMove={drawingRectangle.onMouseMove}
+          onClick={selectorHandlers.onClick}
+          onMouseMove={selectorHandlers.onMouseMove}
           className='Annotation__target'
         />
+        {annotation.geometry && (
+          <Editor
+            isEditing
+            isSelecting
+            isHoveringOver={isMouseHovering.isHoveringOver}
+            geometry={annotation.geometry}
+            onSubmit={() => {}}
+          />
+        )}
       </div>
     )
   }
