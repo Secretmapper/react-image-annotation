@@ -10,23 +10,28 @@ const initialState = {
   geometry: {}
 }
 
+const actions = {
+  onClick: e => {
+    if (this.state.isSelecting) {
+      this.props.setSelectionGeometry(this.state.geometry)
+      this.setState(initialState)
+    } else {
+      this.setState({
+        isSelecting: true,
+        selection: {
+          anchorX: getPercentage(e.nativeEvent.offsetX, this.img.width),
+          anchorY: getPercentage(e.nativeEvent.offsetY, this.img.height)
+        }
+      })
+    }
+  }
+}
+
 const drawingRectangle = (key = 'drawingRectangle') => DecoratedComponent => {
   class DrawingRectangle extends Component {
     state = initialState
 
     onClick = e => {
-      if (this.state.isSelecting) {
-        this.props.setSelectionGeometry(this.state.geometry)
-        this.setState(initialState)
-      } else {
-        this.setState({
-          isSelecting: true,
-          selection: {
-            anchorX: getPercentage(e.nativeEvent.offsetX, this.img.width),
-            anchorY: getPercentage(e.nativeEvent.offsetY, this.img.height)
-          }
-        })
-      }
     }
 
     onMouseMove = e => {

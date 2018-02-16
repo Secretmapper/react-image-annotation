@@ -50,7 +50,14 @@ const Button = styled.button`
 `
 
 export default (props) => (
-  <Container style={props.style}>
+  <Container
+    style={{
+      transform: `scale(1)`,
+      position: 'absolute',
+      left: `${props.geometry.x}%`,
+      top: `${props.geometry.y + props.geometry.height}%`
+    }}
+  >
     <Editor>
       <textarea placeholder='Write comment'>
       </textarea>

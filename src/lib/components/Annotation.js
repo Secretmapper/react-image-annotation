@@ -13,8 +13,12 @@ export default compose(
   render () {
     const { props } = this
     const {
+      annotation,
       isMouseHovering,
-      drawingRectangle
+      drawingRectangle,
+
+      Selector,
+      Editor
     } = props
 
     const className = props.className
@@ -35,12 +39,16 @@ export default compose(
           draggable={false}
           ref={drawingRectangle.innerRef}
         />
-        {props.children({
-          isEditing: props.isEditing,
-          isSelecting: drawingRectangle.isSelecting,
-          geometry: drawingRectangle.geometry,
-          isHoveringOver: isMouseHovering.isHoveringOver
-        })}
+        <Selector
+          geometry={drawingRectangle.geometry}
+        />
+        <Editor
+          isEditing={annotation.isEditing}
+          isSelecting={annotation.isSelecting}
+          isHoveringOver={isMouseHovering.isHoveringOver}
+          geometry={drawingRectangle.geometry}
+          onSubmit={() => {}}
+        />
         <div
           style={{
             pointerEvents: props.disableSelect && 'none'
