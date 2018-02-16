@@ -1,5 +1,17 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const appear = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
 
 const Container = styled.div`
   background: white;
@@ -10,9 +22,8 @@ const Container = styled.div`
     0px 3px 1px -2px rgba(0, 0, 0, 0.12);
   margin-top: 16px;
   transform-origin: top left;
-  transition:
-    opacity 0.21s ease-in-out,
-    transform 0.31s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  animation: ${appear} 0.31s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
 `
 
@@ -52,14 +63,16 @@ const Button = styled.button`
 export default (props) => (
   <Container
     style={{
-      transform: `scale(1)`,
       position: 'absolute',
       left: `${props.geometry.x}%`,
       top: `${props.geometry.y + props.geometry.height}%`
     }}
   >
     <Editor>
-      <textarea placeholder='Write comment'>
+      <textarea
+        placeholder='Write comment'
+        value={props.data.text}
+      >
       </textarea>
     </Editor>
     <Button>
