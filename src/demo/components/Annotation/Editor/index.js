@@ -75,7 +75,7 @@ export default (props) => (
       >
       </textarea>
     </Editor>
-    <Button>
+    <Button onClick={props.onSubmit}>
       Comment
     </Button>
   </Container>

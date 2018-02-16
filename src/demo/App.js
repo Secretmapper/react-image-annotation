@@ -25,6 +25,8 @@ export default compose (
         src={img}
         alt='Two pebbles anthropomorphized holding hands'
 
+        onEditorSubmit={props.annotation.clearState}
+
         Selector={Rect}
         Editor={Editor}
       />

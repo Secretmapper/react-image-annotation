@@ -8,9 +8,11 @@ const withRectangleSelector = (key = 'selector', annotationKey = 'annotation') =
         getContainerHeightRatio: T.func.isRequired,
         getContainerWidthRatio: T.func.isRequired,
 
-        isSelecting: T.bool.isRequired,
         selection: T.object,
         setSelection: T.func.isRequired,
+
+        showEditor: T.bool.isRequired,
+        setShowEditor: T.func.isRequired,
 
         geometry: T.object,
         setGeometry: T.func.isRequired
@@ -34,6 +36,7 @@ const withRectangleSelector = (key = 'selector', annotationKey = 'annotation') =
               ...props.selection,
               mode: 'EDITING'
             })
+            annotation.setShowEditor(true)
             break
           case 'EDITING':
             break

@@ -1,12 +1,15 @@
 import React, { PureComponent as Component } from 'react'
 
+const initialState = () => ({
+  showEditor: false,
+  selection: null,
+  geometry: null,
+  data: {}
+})
+
 const withAnnotationEditor = () => DecoratedComponent => {
   class WithAnnotationEditor extends Component {
-    state = {
-      selection: null,
-      geometry: null,
-      data: null
-    }
+    state = initialState()
 
     setContainer = el => {
       this.container = el
@@ -28,6 +31,14 @@ const withAnnotationEditor = () => DecoratedComponent => {
       this.setState({ selection })
     }
 
+    setShowEditor = (showEditor) => {
+      this.setState({ showEditor })
+    }
+
+    clearState = () => {
+      this.setState(initialState())
+    }
+
     render () {
       const hocProps = {
         annotation: {
@@ -36,12 +47,17 @@ const withAnnotationEditor = () => DecoratedComponent => {
           getContainerHeightRatio: this.getContainerHeightRatio,
           getContainerWidthRatio: this.getContainerWidthRatio,
 
-          isSelecting: !!this.state.selection,
+          showEditor: this.state.showEditor,
+          setShowEditor: this.setShowEditor,
+
           selection: this.state.selection,
           setSelection: this.setSelection,
 
           geometry: this.state.geometry,
-          setGeometry: this.setGeometry
+          setGeometry: this.setGeometry,
+
+          data: this.state.data,
+          clearState: this.clearState
         }
       }
 

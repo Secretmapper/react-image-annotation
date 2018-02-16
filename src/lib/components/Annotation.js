@@ -9,9 +9,12 @@ export default compose(
 )(class Annotation extends Component {
   static propTypes = {
     containerRef: T.func.isRequired,
+    onEditorSubmit: T.func.isRequired,
     annotation: T.shape({
+      showEditor: T.bool,
       selection: T.object,
       geometry: T.object,
+      data: T.object
     }).isRequired,
     selectorHandlers: T.shape({
       onClick: T.func,
@@ -61,13 +64,14 @@ export default compose(
           onMouseMove={selectorHandlers.onMouseMove}
           className='Annotation__target'
         />
-        {annotation.geometry && (
+        {annotation.showEditor && (
           <Editor
             isEditing
             isSelecting
             isHoveringOver={isMouseHovering.isHoveringOver}
+            data={annotation.data}
             geometry={annotation.geometry}
-            onSubmit={() => {}}
+            onSubmit={props.onEditorSubmit}
           />
         )}
       </div>
