@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Annotation, { compose, withAnnotationEditor } from '../lib'
 import { withRectangleSelector } from '../lib/selectors'
 
@@ -7,29 +7,67 @@ import { Content, Editor, Rect, Point } from './components/Annotation'
 
 import img from './img.jpeg'
 
-const annotations = [
-  { pos: { type: 'point', left: 5, top: 50 }, data: { id: 0 } }
-]
-
 export default compose (
   withAnnotationEditor(),
   withRectangleSelector()
-)(function App (props) {
-  return (
-    <Root>
-      <h1>React Annotation</h1>
-      <Annotation
-        containerRef={props.annotation.containerRef}
-        annotation={props.annotation}
-        selectorHandlers={props.selector}
-        src={img}
-        alt='Two pebbles anthropomorphized holding hands'
+)(class App extends Component {
+  state = {
+    annotations: [
+      {
+        geometry:
+          {
+            x: 25,
+            y: 31,
+            width: 21,
+            height: 35
+          },
+          data: {
+            text: 'Red',
+            id: 1
+          }
+      }
+    ]
+  }
 
-        onEditorSubmit={props.annotation.clearState}
+  onSubmit = () => {
+    const { geometry, data } = this.props.annotation
 
-        Selector={Rect}
-        Editor={Editor}
-      />
-    </Root>
-  )
+    this.setState({
+      annotations: this.state.annotations.concat({
+        geometry,
+        data: {
+          ...data,
+          id: Math.random()
+        }
+      })
+    })
+
+    this.props.annotation.clearState()
+  }
+
+  render () {
+    const { props } = this
+
+    return (
+      <Root>
+        <h1>React Annotation</h1>
+        <Annotation
+          annotations={this.state.annotations}
+          src={img}
+          alt='Two pebbles anthropomorphized holding hands'
+
+          containerRef={props.annotation.containerRef}
+          annotation={props.annotation}
+          selectorHandlers={props.selector}
+
+          onEditorDataChange={props.annotation.setData}
+          onEditorSubmit={this.onSubmit}
+
+          Highlight={Rect}
+          Selector={Rect}
+          Editor={Editor}
+        />
+      </Root>
+    )
+  }
 })

@@ -3,9 +3,11 @@ import T from 'prop-types'
 import './Annotation.css'
 import compose from '../utils/compose'
 import isMouseHovering from '../utils/isMouseHovering'
+import withRelativeMousePos from '../utils/withRelativeMousePos'
 
 export default compose(
   isMouseHovering(),
+  withRelativeMousePos()
 )(class Annotation extends Component {
   static propTypes = {
     containerRef: T.func.isRequired,
@@ -23,6 +25,42 @@ export default compose(
     }).isRequired
   }
 
+  setContainerRef = (el) => {
+    this.container = el
+    this.props.relativeMousePos.containerRef(el)
+    this.props.containerRef(el)
+  }
+
+  getTopAnnotationAt = (x, y) => {
+    const { annotations } = this.props
+
+    const intersections = annotations
+      .map(annotation => {
+        const { geometry } = annotation
+
+        if (x < geometry.x) return false
+        if (y < geometry.y) return false
+        if (x > geometry.x + geometry.width)
+          return false
+        if (y > geometry.y + geometry.height)
+          return false
+
+        return annotation
+      })
+      .filter(a => !!a)
+      .sort((a, b) => (
+        (a.geometry.width * a.geometry.height)
+        - (b.geometry.width * b.geometry.height)
+      ))
+
+    return intersections[0]
+  }
+
+  onTargetMouseMove = (e) => {
+    this.props.selectorHandlers.onMouseMove(e)
+    this.props.relativeMousePos.onMouseMove(e)
+  }
+
   render () {
     const { props } = this
     const {
@@ -30,9 +68,15 @@ export default compose(
       selectorHandlers,
       isMouseHovering,
 
+      Highlight,
       Selector,
       Editor
     } = props
+
+    const topAnnotationAtMouse = this.getTopAnnotationAt(
+      this.props.relativeMousePos.x,
+      this.props.relativeMousePos.y
+    )
 
     const className = props.className
       ? `Annotation__img ${props.className}`
@@ -50,19 +94,28 @@ export default compose(
           alt={props.alt}
           src={props.src}
           draggable={false}
-          ref={props.containerRef}
+          ref={this.setContainerRef}
         />
         {annotation.geometry && (
           <Selector
             geometry={annotation.geometry}
           />
         )}
+        {props.annotations.map(annotation => (
+          <Highlight
+            key={annotation.data.id}
+            geometry={annotation.geometry}
+            active={
+              topAnnotationAtMouse === annotation
+            }
+          />
+        ))}
         <div
           style={{
             pointerEvents: props.disableSelect && 'none'
           }}
           onClick={selectorHandlers.onClick}
-          onMouseMove={selectorHandlers.onMouseMove}
+          onMouseMove={this.onTargetMouseMove}
           className='Annotation__target'
         />
         {annotation.showEditor && (
