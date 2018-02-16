@@ -9,6 +9,7 @@ export default compose(
 )(class Annotation extends Component {
   static propTypes = {
     containerRef: T.func.isRequired,
+    onEditorDataChange: T.func.isRequired,
     onEditorSubmit: T.func.isRequired,
     annotation: T.shape({
       showEditor: T.bool,
@@ -71,6 +72,8 @@ export default compose(
             isHoveringOver={isMouseHovering.isHoveringOver}
             data={annotation.data}
             geometry={annotation.geometry}
+
+            setData={props.onEditorDataChange}
             onSubmit={props.onEditorSubmit}
           />
         )}

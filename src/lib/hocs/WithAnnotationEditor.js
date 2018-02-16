@@ -31,6 +31,10 @@ const withAnnotationEditor = () => DecoratedComponent => {
       this.setState({ selection })
     }
 
+    setData = (data) => {
+      this.setState({ data })
+    }
+
     setShowEditor = (showEditor) => {
       this.setState({ showEditor })
     }
@@ -57,6 +61,8 @@ const withAnnotationEditor = () => DecoratedComponent => {
           setGeometry: this.setGeometry,
 
           data: this.state.data,
+          setData: this.setData,
+
           clearState: this.clearState
         }
       }
