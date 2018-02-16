@@ -12,38 +12,56 @@ const Container = styled.div`
 const Box = styled.div`
   background: rgba(0, 0, 0, 0.2);
   position: absolute;
+  transform-origin: top left;
+  height: 1%;
+  width: 1%;
 `
 
 const Top = Box.extend.attrs({
   style: ({ geometry }) => ({
-    height: `${geometry.y}%`,
-    width: '100%'
+    transform: `scaleX(100) scaleY(${geometry.y}) translate3d(0, 0, 0)`
   })
 })``
 
 const Left = Box.extend.attrs({
   style: ({ geometry }) => ({
-    top: `${geometry.y}%`,
-    height: `${geometry.height}%`,
-    width: `${geometry.x}%`
+    transform: `
+      scaleX(${geometry.x})
+      scaleY(${geometry.height})
+      translate3d(0, ${geometry.y / geometry.height * 100}%, 0)
+    `
   })
 })``
 
 const Right = Box.extend.attrs({
-  style: ({ geometry }) => ({
-    top: `${geometry.y}%`,
-    left: `${geometry.x + geometry.width}%`,
-    height: `${geometry.height}%`,
-    width: `${100 - (geometry.x + geometry.width)}%`
-  })
+  style: ({ geometry }) => {
+    const scaleX = 100 - geometry.width - geometry.x
+    // const translateX = 0
+    const translateX = (geometry.x + geometry.width) * 100 / scaleX
+
+    return {
+      transform: `
+        scaleX(${scaleX})
+        scaleY(${geometry.height})
+        translate3d(${translateX}%, ${geometry.y / geometry.height * 100}%, 0)
+      `
+    }
+  }
 })``
 
 const Bottom = Box.extend.attrs({
-  style: ({ geometry }) => ({
-    top: `${geometry.y + geometry.height}%`,
-    height: `${100 - (geometry.y + geometry.height)}%`,
-    width: '100%'
-  })
+  style: ({ geometry }) => {
+    const scaleY = 100 - geometry.height - geometry.y
+    const translateY = (geometry.y + geometry.height) * 100 / scaleY
+
+    return {
+      transform: `
+        scaleX(100)
+        scaleY(${scaleY})
+        translate3d(0, ${translateY}%, 0)
+      `
+    }
+  }
 })``
 
 export default (props) => (
