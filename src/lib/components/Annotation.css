@@ -1,14 +1,14 @@
-.Annotation {
+.container {
   position: relative;
   width: 100%;
 }
 
-.Annotation__img {
+.img {
   display: block;
   width: 100%;
 }
 
-.Annotation__items, .Annotation__target {
+.items, .target {
   position: absolute;
   top: 0;
   left: 0;

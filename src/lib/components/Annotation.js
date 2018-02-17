@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import T from 'prop-types'
-import './Annotation.css'
+import styles from './Annotation.css'
 import compose from '../utils/compose'
 import isMouseHovering from '../utils/isMouseHovering'
 import withRelativeMousePos from '../utils/withRelativeMousePos'
@@ -94,12 +94,12 @@ export default compose(
     )
 
     const className = props.className
-      ? `Annotation__img ${props.className}`
-      : `Annotation__img`
+      ? `${styles.img} ${props.className}`
+      : styles.img
 
     return (
       <div
-        className='Annotation'
+        className={styles.container}
         style={props.style}
         ref={isMouseHovering.innerRef}
       >
@@ -112,7 +112,7 @@ export default compose(
           ref={this.setInnerRef}
         />
         <div
-          className='Annotation__items'
+          className={styles.items}
         >
           {props.showSelector && renderSelector()}
           {props.annotations.map(annotation => (
@@ -136,7 +136,7 @@ export default compose(
           onMouseUp={props.onMouseUp}
           onMouseDown={props.onMouseDown}
           onMouseMove={this.onTargetMouseMove}
-          className='Annotation__target'
+          className={styles.target}
         />
         {props.showEditor && renderEditor()}
       </div>

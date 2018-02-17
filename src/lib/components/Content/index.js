@@ -1,5 +1,5 @@
 import React from 'react'
-import './index.css'
+import styles from './index.css'
 
 function Content (props) {
   return (
@@ -10,7 +10,7 @@ function Content (props) {
         top: `${props.geometry.y + props.geometry.height}%`,
         ...props.style
       }}
-      className={`Content ${props.className}`}
+      className={`Content ${styles.container}`}
       geometry={props.geometry}
     >
       {props.data.text}
