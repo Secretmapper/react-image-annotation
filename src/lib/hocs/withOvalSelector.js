@@ -22,7 +22,10 @@ export function intersects ({ x, y }, geometry) {
 }
 
 export function area (geometry) {
-  return Math.PI * geometry.width * geometry.height
+  const rx = geometry.width / 2
+  const ry = geometry.height / 2
+
+  return Math.PI * rx * ry
 }
 
 const withOvalSelector = (key = 'selector', annotationKey = 'annotation') => DecoratedComponent => {
