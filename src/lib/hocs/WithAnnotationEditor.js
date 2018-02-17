@@ -1,52 +1,29 @@
 import React, { PureComponent as Component } from 'react'
 
 const initialState = () => ({
-  showEditor: false,
   selection: null,
   geometry: null,
   data: {}
 })
 
-const withAnnotationEditor = () => DecoratedComponent => {
+const withAnnotationEditor = (key = 'annotation') => DecoratedComponent => {
   class WithAnnotationEditor extends Component {
     state = initialState()
 
-    setGeometry = (geometry) => {
-      this.setState({ geometry })
+    change = (annotation) => {
+      this.setState(annotation)
     }
 
-    setSelection = (selection) => {
-      this.setState({ selection })
-    }
-
-    setData = (data) => {
-      this.setState({ data })
-    }
-
-    setShowEditor = (showEditor) => {
-      this.setState({ showEditor })
-    }
-
-    clearState = () => {
+    clear = () => {
       this.setState(initialState())
     }
 
     render () {
       const hocProps = {
-        annotation: {
-          showEditor: this.state.showEditor,
-          setShowEditor: this.setShowEditor,
-
-          selection: this.state.selection,
-          setSelection: this.setSelection,
-
-          geometry: this.state.geometry,
-          setGeometry: this.setGeometry,
-
-          data: this.state.data,
-          setData: this.setData,
-
-          clearState: this.clearState
+        [key]: {
+          store: this.state,
+          change: this.change,
+          clear: this.clear
         }
       }
 

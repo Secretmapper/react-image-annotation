@@ -64,11 +64,11 @@ export default compose (
       })
     })
 
-    this.props.annotation.clearState()
+    this.props.annotation.clear()
   }
 
   onChangeType = (e) => {
-    this.props.annotation.clearState()
+    this.props.annotation.clear()
     this.setState({
       type: e.currentTarget.innerHTML
     })
@@ -76,6 +76,9 @@ export default compose (
 
   render () {
     const { props } = this
+
+    const annotation = props.annotation.store
+    const { selection } = annotation
 
     return (
       <Root>
@@ -107,16 +110,21 @@ export default compose (
 
           type={this.state.type}
           value={{
-            geometry: props.annotation.geometry,
-            data: props.annotation.data
+            geometry: annotation.geometry,
+            data: annotation.data
           }}
           onMouseMove={props[this.state.type].onMouseMove}
           onClick={props[this.state.type].onClick}
-          onChange={props.annotation.setData}
+          onChange={data => {
+            props.annotation.change({
+              ...annotation,
+              data
+            })
+          }}
           onSubmit={this.onSubmit}
 
-          showSelector={!!props.annotation.geometry}
-          showEditor={!!props.annotation.showEditor}
+          showSelector={!!annotation.geometry}
+          showEditor={selection && selection.mode === 'EDITING'}
         />
       </Root>
     )
