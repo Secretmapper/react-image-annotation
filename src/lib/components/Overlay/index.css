@@ -1,0 +1,12 @@
+.container {
+  background: rgba(0, 0, 0, .4);
+  border-radius: 5px;
+  bottom: 4px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 10px;
+  position: absolute;
+  right: 4px;
+  user-select: none;
+}

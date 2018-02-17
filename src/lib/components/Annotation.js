@@ -13,6 +13,7 @@ import Editor from './Editor'
 import FancyRectangle from './FancyRectangle'
 import Rectangle from './Rectangle'
 import Content from './Content'
+import Overlay from './Overlay'
 
 export default compose(
   isMouseHovering(),
@@ -60,7 +61,10 @@ export default compose(
     renderEditor: T.func,
 
     renderHighlight: T.func.isRequired,
-    renderContent: T.func.isRequired
+    renderContent: T.func.isRequired,
+
+    disableOverlay: T.bool,
+    renderOverlay: T.func.isRequired
   }
 
   static defaultProps = {
@@ -129,7 +133,25 @@ export default compose(
         geometry={annotation.geometry}
         data={annotation.data}
       />
-    )
+    ),
+    renderOverlay: ({ type, annotation }) => {
+      switch (type) {
+        case withRectangleSelector.TYPE:
+          return (
+            <Overlay className={styles.overlay}>
+              Click and Drag to Annotate
+            </Overlay>
+          )
+        case withPointSelector.TYPE:
+          return (
+            <Overlay className={styles.overlay}>
+              Click to Annotate
+            </Overlay>
+          )
+        default:
+          return null
+      }
+    }
   }
 
   setInnerRef = (el) => {
@@ -179,7 +201,8 @@ export default compose(
       renderHighlight,
       renderContent,
       renderSelector,
-      renderEditor
+      renderEditor,
+      renderOverlay
     } = props
 
     const topAnnotationAtMouse = this.getTopAnnotationAt(
@@ -229,6 +252,12 @@ export default compose(
             })
           )}
         </div>
+        {!props.disableOverlay && (
+          renderOverlay({
+            type: props.type,
+            annotation: props.value
+          })
+        )}
         <div
           onClick={props.onClick}
           onMouseUp={props.onMouseUp}

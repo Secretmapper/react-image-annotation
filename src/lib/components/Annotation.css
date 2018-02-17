@@ -3,6 +3,15 @@
   width: 100%;
 }
 
+.container .overlay {
+  transition: opacity 0.21s ease-in-out;
+  opacity: 0;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
 .img {
   display: block;
   width: 100%;
