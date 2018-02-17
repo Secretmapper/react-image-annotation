@@ -10,7 +10,7 @@ export default compose(
   withRelativeMousePos()
 )(class Annotation extends Component {
   static propTypes = {
-    containerRef: T.func.isRequired,
+    innerRef: T.func.isRequired,
     onMouseUp: T.func,
     onMouseDown: T.func,
     onMouseMove: T.func,
@@ -32,10 +32,10 @@ export default compose(
     onClick: () => {}
   }
 
-  setContainerRef = (el) => {
+  setInnerRef = (el) => {
     this.container = el
-    this.props.relativeMousePos.containerRef(el)
-    this.props.containerRef(el)
+    this.props.relativeMousePos.innerRef(el)
+    this.props.innerRef(el)
   }
 
   getTopAnnotationAt = (x, y) => {
@@ -100,7 +100,7 @@ export default compose(
           alt={props.alt}
           src={props.src}
           draggable={false}
-          ref={this.setContainerRef}
+          ref={this.setInnerRef}
         />
         {props.showSelector && <Selector />}
         {props.annotations.map(annotation => (

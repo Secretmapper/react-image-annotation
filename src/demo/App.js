@@ -54,7 +54,7 @@ export default compose (
         <Annotation
           src={img}
           alt='Two pebbles anthropomorphized holding hands'
-          containerRef={props.annotation.containerRef}
+          innerRef={props.annotation.innerRef}
 
           annotations={this.state.annotations}
 

@@ -46,7 +46,7 @@ const withAnnotationEditor = () => DecoratedComponent => {
     render () {
       const hocProps = {
         annotation: {
-          containerRef: this.setContainer,
+          innerRef: this.setContainer,
 
           getContainerHeightRatio: this.getContainerHeightRatio,
           getContainerWidthRatio: this.getContainerWidthRatio,
