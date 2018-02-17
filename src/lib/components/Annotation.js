@@ -140,13 +140,14 @@ export default compose(
 
   getTopAnnotationAt = (x, y) => {
     const { annotations, selectors } = this.props
+    const { container } = this
 
     const intersections = annotations
       .map(annotation => {
         const { geometry } = annotation
         const selector = selectors.find(s => s.TYPE === geometry.type)
 
-        return selector.intersects({ x, y }, geometry)
+        return selector.intersects({ x, y }, geometry, container)
           ? annotation
           : false
       })
@@ -155,7 +156,7 @@ export default compose(
         const aSelector = selectors.find(s => s.TYPE === a.geometry.type)
         const bSelector = selectors.find(s => s.TYPE === b.geometry.type)
 
-        return aSelector.area(a.geometry) - bSelector.area(b.geometry)
+        return aSelector.area(a.geometry, container) - bSelector.area(b.geometry, container)
       })
 
     return intersections[0]
