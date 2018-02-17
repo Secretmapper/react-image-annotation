@@ -207,11 +207,6 @@ export default compose(
         <div
           className={styles.items}
         >
-          {props.showSelector && (
-            renderSelector({
-              annotation: props.value
-            })
-          )}
           {props.annotations.map(annotation => (
             renderHighlight({
               key: annotation.data.id,
@@ -227,6 +222,11 @@ export default compose(
               })
             )
           ))}
+          {props.showSelector && (
+            renderSelector({
+              annotation: props.value
+            })
+          )}
         </div>
         <div
           onClick={props.onClick}
