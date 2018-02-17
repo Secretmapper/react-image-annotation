@@ -4,6 +4,7 @@ import './Annotation.css'
 import compose from '../utils/compose'
 import isMouseHovering from '../utils/isMouseHovering'
 import withRelativeMousePos from '../utils/withRelativeMousePos'
+import Content from './Content'
 
 export default compose(
   isMouseHovering(),
@@ -30,7 +31,14 @@ export default compose(
     onMouseUp: () => {},
     onMouseDown: () => {},
     onMouseMove: () => {},
-    onClick: () => {}
+    onClick: () => {},
+    renderContent: ({ key, annotation }) => (
+      <Content
+        key={key}
+        geometry={annotation.geometry}
+        data={annotation.data}
+      />
+    )
   }
 
   setInnerRef = (el) => {

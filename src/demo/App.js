@@ -3,7 +3,7 @@ import Annotation, { compose, withAnnotationEditor } from '../lib'
 import { withRectangleSelector } from '../lib/selectors'
 
 import Root from './components/Root'
-import { Content, Editor, FancyRect, Rect, Point } from './components/Annotation'
+import { Editor, FancyRect, Rect, Point } from './components/Annotation'
 
 import img from './img.jpeg'
 
@@ -83,14 +83,6 @@ export default compose (
               key={key}
               geometry={annotation.geometry}
               active={active}
-            />
-          )}
-
-          renderContent={({ key, annotation }) => (
-            <Content
-              key={key}
-              geometry={annotation.geometry}
-              data={annotation.data}
             />
           )}
         />
