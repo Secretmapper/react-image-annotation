@@ -1,0 +1,15 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.box {
+  background: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  transform-origin: top left;
+  height: 1%;
+  width: 1%;
+}
