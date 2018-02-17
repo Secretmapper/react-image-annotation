@@ -32,35 +32,44 @@ export function area (geometry, container) {
   return marginX * marginY
 }
 
-const withPointSelector = (key = 'selector') => DecoratedComponent => {
-  class WithPointSelector extends Component {
-    static propTypes = {
-      annotation: T.shape({
-        selection: T.object,
-        setSelection: T.func.isRequired,
-
-        showEditor: T.bool.isRequired,
-        setShowEditor: T.func.isRequired,
-
-        geometry: T.object,
-        setGeometry: T.func.isRequired
-      }).isRequired
-    }
-
-    onClick = e => {
-      const { props } = this
-      const { annotation } = props
-
-      if (!annotation.geometry) {
-        annotation.setGeometry({
+export const methods = {
+  onClick (annotation, e) {
+    if (!annotation.geometry) {
+      return {
+        ...annotation,
+        selection: {
+          ...annotation.selection,
+          showEditor: true,
+          mode: 'EDITING'
+        },
+        geometry: {
           ...annotation.geometry,
           ...getCoordPercentage(e),
           width: 0,
           height: 0,
-          type: TYPE
-        })
-        annotation.setShowEditor(true)
+          type: TYPE,
+        }
       }
+    }
+  }
+}
+
+const withPointSelector = (key = 'selector', annotationKey = 'annotation') => DecoratedComponent => {
+  class WithPointSelector extends Component {
+    static propTypes = {
+      [annotationKey]: T.shape({
+        store: T.object.isRequired,
+        change: T.func.isRequired,
+        clear: T.func.isRequired
+      }).isRequired
+    }
+
+    onClick = (e) => {
+      const annotation = this.props[annotationKey]
+
+      annotation.change(
+        methods.onClick(annotation.store, e)
+      )
     }
 
     render () {

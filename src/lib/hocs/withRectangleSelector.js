@@ -44,6 +44,7 @@ export const methods = {
             ...annotation,
             selection: {
               ...annotation.selection,
+              showEditor: true,
               mode: 'EDITING'
             }
           }

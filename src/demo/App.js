@@ -124,7 +124,7 @@ export default compose (
           onSubmit={this.onSubmit}
 
           showSelector={!!annotation.geometry}
-          showEditor={selection && selection.mode === 'EDITING'}
+          showEditor={selection && selection.showEditor}
         />
       </Root>
     )
