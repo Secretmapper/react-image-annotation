@@ -87,12 +87,7 @@ export default compose (
           }}
           onMouseMove={props[this.state.type].onMouseMove}
           onClick={props[this.state.type].onClick}
-          onChange={data => {
-            props.annotation.change({
-              ...annotation,
-              data
-            })
-          }}
+          onChange={props.annotation.changeData}
           onSubmit={this.onSubmit}
 
           showSelector={!!annotation.geometry}

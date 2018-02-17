@@ -14,6 +14,12 @@ const withAnnotationEditor = (key = 'annotation') => DecoratedComponent => {
       this.setState(annotation)
     }
 
+    changeData = (data) => {
+      this.setState({
+        data
+      })
+    }
+
     clear = () => {
       this.setState(initialState())
     }
@@ -23,6 +29,7 @@ const withAnnotationEditor = (key = 'annotation') => DecoratedComponent => {
         [key]: {
           store: this.state,
           change: this.change,
+          changeData: this.changeData,
           clear: this.clear
         }
       }
