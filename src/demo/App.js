@@ -15,6 +15,7 @@ export default compose (
       {
         geometry:
           {
+            type: withRectangleSelector.TYPE,
             x: 25,
             y: 31,
             width: 21,

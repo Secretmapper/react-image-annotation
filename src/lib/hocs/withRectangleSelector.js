@@ -6,6 +6,8 @@ const getCoordPercentage = (e) => ({
   y: e.nativeEvent.offsetY / e.currentTarget.offsetHeight * 100
 })
 
+export const TYPE = 'RECTANGLE'
+
 export function intersects ({ x, y }, geometry) {
   if (x < geometry.x) return false
   if (y < geometry.y) return false
@@ -77,6 +79,7 @@ const withRectangleSelector = (key = 'selector', annotationKey = 'annotation') =
 
         annotation.setGeometry({
           ...annotation.geometry,
+          type: TYPE,
           x: width > 0 ? anchorX : newX,
           y: height > 0 ? anchorY : newY,
           width: Math.abs(width),
@@ -106,5 +109,9 @@ const withRectangleSelector = (key = 'selector', annotationKey = 'annotation') =
 
   return WithRectangleSelector
 }
+
+withRectangleSelector.TYPE = TYPE
+withRectangleSelector.intersects = intersects
+withRectangleSelector.area = area
 
 export default withRectangleSelector

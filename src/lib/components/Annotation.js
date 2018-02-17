@@ -5,6 +5,10 @@ import compose from '../utils/compose'
 import isMouseHovering from '../utils/isMouseHovering'
 import withRelativeMousePos from '../utils/withRelativeMousePos'
 
+import withRectangleSelector from '../hocs/withRectangleSelector'
+import withPointSelector from '../hocs/withPointSelector'
+
+import Point from './Point'
 import Editor from './Editor'
 import FancyRectangle from './FancyRectangle'
 import Rectangle from './Rectangle'
@@ -21,9 +25,33 @@ export default compose(
     onMouseMove: T.func,
     onClick: T.func,
 
+    type: T.string,
+    selectors: T.arrayOf(
+      function (arr, key, componentName, location, propFullName) {
+        const selector = arr[key]
+        if (typeof selector.TYPE !== 'string') {
+          return new Error(
+            `Invalid prop '${propFullName}.TYPE' supplied to ${componentName}, expected string. Validation failed.`
+          )
+        }
+        if (typeof selector.intersects !== 'function') {
+          return new Error(
+            `Invalid prop '${propFullName}.intersects' supplied to ${componentName}, expected function. Validation failed.`
+          )
+        }
+        if (typeof selector.area !== 'function') {
+          return new Error(
+            `Invalid prop '${propFullName}.area' supplied to ${componentName}, expected function. Validation failed.`
+          )
+        }
+      }
+    ),
+
     value: T.shape({
-      geometry: T.object,
-      data: T.object
+      geometry: T.shape({
+        type: T.string.isRequired
+      }),
+      data: T.object.isRequired
     }),
 
     showSelector: T.bool,
@@ -41,11 +69,29 @@ export default compose(
     onMouseDown: () => {},
     onMouseMove: () => {},
     onClick: () => {},
-    renderSelector: ({ annotation }) => (
-      <FancyRectangle
-        geometry={annotation.geometry}
-      />
-    ),
+    type: withRectangleSelector.TYPE,
+    selectors: [
+      withRectangleSelector,
+      withPointSelector
+    ],
+    renderSelector: ({ annotation }) => {
+      switch (annotation.geometry.type) {
+        case withRectangleSelector.TYPE:
+          return (
+            <FancyRectangle
+              geometry={annotation.geometry}
+            />
+          )
+        case withPointSelector.TYPE:
+          return (
+            <Point
+              geometry={annotation.geometry}
+            />
+          )
+        default:
+          return null
+      }
+    },
     renderEditor: ({ annotation, onChange, onSubmit }) => (
       <Editor
         data={annotation.data}
@@ -55,13 +101,28 @@ export default compose(
         onSubmit={onSubmit}
       />
     ),
-    renderHighlight: ({ key, annotation, active }) => (
-      <Rectangle
-        key={key}
-        geometry={annotation.geometry}
-        active={active}
-      />
-    ),
+    renderHighlight: ({ key, annotation, active }) => {
+      switch (annotation.geometry.type) {
+        case withRectangleSelector.TYPE:
+          return (
+            <Rectangle
+              key={key}
+              geometry={annotation.geometry}
+              active={active}
+            />
+          )
+        case withPointSelector.TYPE:
+          return (
+            <Point
+              key={key}
+              geometry={annotation.geometry}
+              active={active}
+            />
+          )
+        default:
+          return null
+      }
+    },
     renderContent: ({ key, annotation }) => (
       <Content
         key={key}
@@ -78,26 +139,24 @@ export default compose(
   }
 
   getTopAnnotationAt = (x, y) => {
-    const { annotations } = this.props
+    const { annotations, selectors } = this.props
 
     const intersections = annotations
       .map(annotation => {
         const { geometry } = annotation
+        const selector = selectors.find(s => s.TYPE === geometry.type)
 
-        if (x < geometry.x) return false
-        if (y < geometry.y) return false
-        if (x > geometry.x + geometry.width)
-          return false
-        if (y > geometry.y + geometry.height)
-          return false
-
-        return annotation
+        return selector.intersects({ x, y }, geometry)
+          ? annotation
+          : false
       })
       .filter(a => !!a)
-      .sort((a, b) => (
-        (a.geometry.width * a.geometry.height)
-        - (b.geometry.width * b.geometry.height)
-      ))
+      .sort((a, b) => {
+        const aSelector = selectors.find(s => s.TYPE === a.geometry.type)
+        const bSelector = selectors.find(s => s.TYPE === b.geometry.type)
+
+        return aSelector.area(a.geometry) - bSelector.area(b.geometry)
+      })
 
     return intersections[0]
   }

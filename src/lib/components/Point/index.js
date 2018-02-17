@@ -1,13 +1,19 @@
-import styled from 'styled-components'
+import React from 'react'
+import styles from './index.css'
 
-export default styled.div`
-  background: #24B3C8;
-  border: solid 4px white;
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.3),
-    0 0 0 2px rgba(0,0,0,0.2),
-    0 5px 4px rgba(0,0,0,0.4);
-  height: 16px;
-  width: 16px;
-`
+function Point (props) {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: `${props.geometry.y}%`,
+        left: `${props.geometry.x}%`,
+        transform: 'translate3d(-50%, -50%, 0)'
+      }}
+      className={styles.container}
+    />
+  )
+}
+
+
+export default Point
