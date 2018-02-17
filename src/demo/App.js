@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import Annotation, { compose, withAnnotationEditor } from '../lib'
-import { withRectangleSelector } from '../lib/selectors'
-import withPointSelector from '../lib/hocs/withPointSelector'
+import {
+  withPointSelector,
+  withRectangleSelector
+} from '../lib/selectors'
 
 import Root from './components/Root'
 import Button from './components/Button'
