@@ -4,6 +4,7 @@ import { withRectangleSelector } from '../lib/selectors'
 import withPointSelector from '../lib/hocs/withPointSelector'
 
 import Root from './components/Root'
+import Button from './components/Button'
 
 import img from './img.jpeg'
 
@@ -61,12 +62,18 @@ export default compose (
     return (
       <Root>
         <h1>React Annotation</h1>
-        <button onClick={this.onChangeType}>
+        <Button
+          onClick={this.onChangeType}
+          active={withRectangleSelector.TYPE === this.state.type}
+        >
           {withRectangleSelector.TYPE}
-        </button>
-        <button onClick={this.onChangeType}>
+        </Button>
+        <Button
+          onClick={this.onChangeType}
+          active={withPointSelector.TYPE === this.state.type}
+        >
           {withPointSelector.TYPE}
-        </button>
+        </Button>
 
         <Annotation
           src={img}
