@@ -4,8 +4,8 @@ import styled from 'styled-components'
 const Container = styled.div.attrs({
   style: props => ({
     position: 'absolute',
-    left: `${props.annotation.geometry.x}%`,
-    top: `${props.annotation.geometry.y + props.annotation.geometry.height}%`
+    left: `${props.geometry.x}%`,
+    top: `${props.geometry.y + props.geometry.height}%`
   })
 })`
   background: white;
@@ -20,7 +20,7 @@ const Container = styled.div.attrs({
 `
 
 export default (props) => (
-  <Container annotation={props.annotation}>
-    {props.annotation.data.text}
+  <Container geometry={props.geometry}>
+    {props.data.text}
   </Container>
 )

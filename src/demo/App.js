@@ -78,8 +78,21 @@ export default compose (
             />
           )}
 
-          renderHighlight={Rect}
-          renderContent={Content}
+          renderHighlight={({ key, annotation, active }) => (
+            <Rect
+              key={key}
+              geometry={annotation.geometry}
+              active={active}
+            />
+          )}
+
+          renderContent={({ key, annotation }) => (
+            <Content
+              key={key}
+              geometry={annotation.geometry}
+              data={annotation.data}
+            />
+          )}
         />
       </Root>
     )

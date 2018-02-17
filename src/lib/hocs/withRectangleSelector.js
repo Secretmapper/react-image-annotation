@@ -6,6 +6,21 @@ const getCoordPercentage = (e) => ({
   y: e.nativeEvent.offsetY / e.currentTarget.offsetHeight * 100
 })
 
+export function intersects ({ x, y }, geometry) {
+  if (x < geometry.x) return false
+  if (y < geometry.y) return false
+  if (x > geometry.x + geometry.width)
+    return false
+  if (y > geometry.y + geometry.height)
+    return false
+
+  return true
+}
+
+export function area (geometry) {
+  return geometry.height * geometry.width
+}
+
 const withRectangleSelector = (key = 'selector', annotationKey = 'annotation') => DecoratedComponent => {
   class WithRectangleSelector extends Component {
     static propTypes = {

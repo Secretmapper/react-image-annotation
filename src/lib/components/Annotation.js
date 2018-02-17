@@ -74,9 +74,9 @@ export default compose(
     const {
       isMouseHovering,
 
-      renderHighlight: Highlight,
-      renderContent: Content,
-      renderSelector: Selector,
+      renderHighlight,
+      renderContent,
+      renderSelector,
       renderEditor
     } = props
 
@@ -103,23 +103,20 @@ export default compose(
           draggable={false}
           ref={this.setInnerRef}
         />
-        {props.showSelector && <Selector />}
+        {props.showSelector && renderSelector()}
         {props.annotations.map(annotation => (
-          <Highlight
-            key={annotation.data.id}
-            geometry={annotation.geometry}
-            active={
-              topAnnotationAtMouse === annotation
-            }
-          />
+          renderHighlight({
+            key: annotation.data.id,
+            annotation,
+            active: topAnnotationAtMouse === annotation
+          })
         ))}
         {props.annotations.map(annotation => (
           topAnnotationAtMouse === annotation && (
-            <Content
-              key='content'
-              geometry={annotation.geometry}
-              annotation={annotation}
-            />
+            renderContent({
+              key: 'content',
+              annotation: annotation
+            })
           )
         ))}
         <div
