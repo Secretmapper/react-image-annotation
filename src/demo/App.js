@@ -4,10 +4,6 @@ import { withRectangleSelector } from '../lib/selectors'
 
 import Root from './components/Root'
 
-import Rect from '../lib/components/Rectangle'
-import FancyRect from '../lib/components/FancyRectangle'
-import Editor from '../lib/components/Editor'
-
 import img from './img.jpeg'
 
 export default compose (
@@ -32,8 +28,8 @@ export default compose (
     ]
   }
 
-  onSubmit = () => {
-    const { geometry, data } = this.props.annotation
+  onSubmit = (annotation) => {
+    const { geometry, data } = annotation
 
     this.setState({
       annotations: this.state.annotations.concat({
@@ -60,34 +56,17 @@ export default compose (
 
           annotations={this.state.annotations}
 
+          value={{
+            geometry: props.annotation.geometry,
+            data: props.annotation.data
+          }}
           onMouseMove={props.selector.onMouseMove}
           onClick={props.selector.onClick}
+          onChange={props.annotation.setData}
+          onSubmit={this.onSubmit}
 
           showSelector={!!props.annotation.geometry}
-          renderSelector={() => (
-            <FancyRect
-              geometry={props.annotation.geometry}
-            />
-          )}
-
           showEditor={!!props.annotation.showEditor}
-          renderEditor={() => (
-            <Editor
-              data={props.annotation.data}
-              geometry={props.annotation.geometry}
-
-              onChange={props.annotation.setData}
-              onSubmit={this.onSubmit}
-            />
-          )}
-
-          renderHighlight={({ key, annotation, active }) => (
-            <Rect
-              key={key}
-              geometry={annotation.geometry}
-              active={active}
-            />
-          )}
         />
       </Root>
     )

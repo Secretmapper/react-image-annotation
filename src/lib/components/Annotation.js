@@ -4,6 +4,10 @@ import styles from './Annotation.css'
 import compose from '../utils/compose'
 import isMouseHovering from '../utils/isMouseHovering'
 import withRelativeMousePos from '../utils/withRelativeMousePos'
+
+import Editor from './Editor'
+import FancyRectangle from './FancyRectangle'
+import Rectangle from './Rectangle'
 import Content from './Content'
 
 export default compose(
@@ -16,6 +20,11 @@ export default compose(
     onMouseDown: T.func,
     onMouseMove: T.func,
     onClick: T.func,
+
+    value: T.shape({
+      geometry: T.object,
+      data: T.object
+    }),
 
     showSelector: T.bool,
     renderSelector: T.func,
@@ -32,6 +41,27 @@ export default compose(
     onMouseDown: () => {},
     onMouseMove: () => {},
     onClick: () => {},
+    renderSelector: ({ annotation }) => (
+      <FancyRectangle
+        geometry={annotation.geometry}
+      />
+    ),
+    renderEditor: ({ annotation, onChange, onSubmit }) => (
+      <Editor
+        data={annotation.data}
+        geometry={annotation.geometry}
+
+        onChange={onChange}
+        onSubmit={onSubmit}
+      />
+    ),
+    renderHighlight: ({ key, annotation, active }) => (
+      <Rectangle
+        key={key}
+        geometry={annotation.geometry}
+        active={active}
+      />
+    ),
     renderContent: ({ key, annotation }) => (
       <Content
         key={key}
@@ -77,6 +107,10 @@ export default compose(
     this.props.relativeMousePos.onMouseMove(e)
   }
 
+  onSubmit = () => {
+    this.props.onSubmit(this.props.value)
+  }
+
   render () {
     const { props } = this
     const {
@@ -114,7 +148,11 @@ export default compose(
         <div
           className={styles.items}
         >
-          {props.showSelector && renderSelector()}
+          {props.showSelector && (
+            renderSelector({
+              annotation: props.value
+            })
+          )}
           {props.annotations.map(annotation => (
             renderHighlight({
               key: annotation.data.id,
@@ -138,7 +176,13 @@ export default compose(
           onMouseMove={this.onTargetMouseMove}
           className={styles.target}
         />
-        {props.showEditor && renderEditor()}
+        {props.showEditor && (
+          renderEditor({
+            annotation: props.value,
+            onChange: props.onChange,
+            onSubmit: this.onSubmit
+          })
+        )}
       </div>
     )
   }
