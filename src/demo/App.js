@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Annotation, { compose, withAnnotationEditor } from '../lib'
 import { withRectangleSelector } from '../lib/selectors'
+import withPointSelector from '../lib/hocs/withPointSelector'
 
 import Root from './components/Root'
 
@@ -8,9 +9,11 @@ import img from './img.jpeg'
 
 export default compose (
   withAnnotationEditor(),
-  withRectangleSelector()
+  withRectangleSelector(withRectangleSelector.TYPE),
+  withPointSelector(withPointSelector.TYPE),
 )(class App extends Component {
   state = {
+    type: withRectangleSelector.TYPE,
     annotations: [
       {
         geometry:
@@ -45,24 +48,39 @@ export default compose (
     this.props.annotation.clearState()
   }
 
+  onChangeType = (e) => {
+    this.props.annotation.clearState()
+    this.setState({
+      type: e.currentTarget.innerHTML
+    })
+  }
+
   render () {
     const { props } = this
 
     return (
       <Root>
         <h1>React Annotation</h1>
+        <button onClick={this.onChangeType}>
+          {withRectangleSelector.TYPE}
+        </button>
+        <button onClick={this.onChangeType}>
+          {withPointSelector.TYPE}
+        </button>
+
         <Annotation
           src={img}
           alt='Two pebbles anthropomorphized holding hands'
 
           annotations={this.state.annotations}
 
+          type={this.state.type}
           value={{
             geometry: props.annotation.geometry,
             data: props.annotation.data
           }}
-          onMouseMove={props.selector.onMouseMove}
-          onClick={props.selector.onClick}
+          onMouseMove={props[this.state.type].onMouseMove}
+          onClick={props[this.state.type].onClick}
           onChange={props.annotation.setData}
           onSubmit={this.onSubmit}
 
