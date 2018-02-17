@@ -30,8 +30,22 @@ export default compose (
             height: 35
           },
           data: {
-            text: 'Red',
+            text: 'Annotate!',
             id: 1
+          }
+      },
+      {
+        geometry:
+          {
+            type: 'OVAL',
+            x: 53,
+            y: 33,
+            width : 17.5,
+            height: 28
+          },
+          data: {
+            text: 'Supports custom shapes too!',
+            id: 2
           }
       }
     ]
