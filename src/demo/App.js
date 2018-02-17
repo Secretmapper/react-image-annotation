@@ -9,6 +9,7 @@ import {
 import Root from './components/Root'
 import Button from './components/Button'
 
+import mocks from './mocks'
 import img from './img.jpeg'
 
 export default compose (
@@ -19,36 +20,7 @@ export default compose (
 )(class App extends Component {
   state = {
     type: withRectangleSelector.TYPE,
-    annotations: [
-      {
-        geometry:
-          {
-            type: withRectangleSelector.TYPE,
-            x: 25,
-            y: 31,
-            width: 21,
-            height: 35
-          },
-          data: {
-            text: 'Annotate!',
-            id: 1
-          }
-      },
-      {
-        geometry:
-          {
-            type: 'OVAL',
-            x: 53,
-            y: 33,
-            width : 17.5,
-            height: 28
-          },
-          data: {
-            text: 'Supports custom shapes too!',
-            id: 2
-          }
-      }
-    ]
+    annotations: mocks.annotations
   }
 
   onSubmit = (annotation) => {
