@@ -2,6 +2,8 @@ import React from 'react'
 import styles from './index.css'
 
 function Point (props) {
+  if (!props.geometry) return null
+
   return (
     <div
       style={{

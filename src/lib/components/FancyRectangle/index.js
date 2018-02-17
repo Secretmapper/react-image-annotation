@@ -10,6 +10,8 @@ function Box (props) {
 function FancyRectangle (props) {
   const { geometry } = props
 
+  if (!geometry) return null
+
   return (
     <div
       className={`${props.className} ${styles.container}`}
