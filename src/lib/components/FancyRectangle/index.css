@@ -9,7 +9,7 @@
 .box {
   background: rgba(0, 0, 0, 0.2);
   position: absolute;
-  transform-origin: top left;
-  height: 1%;
-  width: 1%;
+}
+
+.top {
 }
