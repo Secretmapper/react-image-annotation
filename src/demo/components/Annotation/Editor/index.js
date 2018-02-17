@@ -71,7 +71,7 @@ export default (props) => (
     <Editor>
       <textarea
         placeholder='Write comment'
-        onChange={e => props.setData({
+        onChange={e => props.onChange({
           text: e.target.value
         })}
         value={props.data.text}

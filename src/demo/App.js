@@ -52,21 +52,34 @@ export default compose (
       <Root>
         <h1>React Annotation</h1>
         <Annotation
-          annotations={this.state.annotations}
           src={img}
           alt='Two pebbles anthropomorphized holding hands'
-
           containerRef={props.annotation.containerRef}
-          annotation={props.annotation}
+
+          annotations={this.state.annotations}
+
           selectorHandlers={props.selector}
 
-          onEditorDataChange={props.annotation.setData}
-          onEditorSubmit={this.onSubmit}
+          showSelector={!!props.annotation.geometry}
+          renderSelector={() => (
+            <FancyRect
+              geometry={props.annotation.geometry}
+            />
+          )}
 
-          Highlight={Rect}
-          Content={Content}
-          Selector={FancyRect}
-          Editor={Editor}
+          showEditor={!!props.annotation.showEditor}
+          renderEditor={() => (
+            <Editor
+              data={props.annotation.data}
+              geometry={props.annotation.geometry}
+
+              onChange={props.annotation.setData}
+              onSubmit={this.onSubmit}
+            />
+          )}
+
+          renderHighlight={Rect}
+          renderContent={Content}
         />
       </Root>
     )

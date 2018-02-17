@@ -11,18 +11,18 @@ export default compose(
 )(class Annotation extends Component {
   static propTypes = {
     containerRef: T.func.isRequired,
-    onEditorDataChange: T.func.isRequired,
-    onEditorSubmit: T.func.isRequired,
-    annotation: T.shape({
-      showEditor: T.bool,
-      selection: T.object,
-      geometry: T.object,
-      data: T.object
-    }).isRequired,
     selectorHandlers: T.shape({
       onClick: T.func,
       onMouseMove: T.func
-    }).isRequired
+    }).isRequired,
+
+    showSelector: T.bool,
+    renderSelector: T.func,
+    showEditor: T.bool,
+    renderEditor: T.func,
+
+    renderHighlight: T.func.isRequired,
+    renderContent: T.func.isRequired
   }
 
   setContainerRef = (el) => {
@@ -64,14 +64,13 @@ export default compose(
   render () {
     const { props } = this
     const {
-      annotation,
       selectorHandlers,
       isMouseHovering,
 
-      Highlight,
-      Content,
-      Selector,
-      Editor
+      renderHighlight: Highlight,
+      renderContent: Content,
+      renderSelector: Selector,
+      renderEditor
     } = props
 
     const topAnnotationAtMouse = this.getTopAnnotationAt(
@@ -97,11 +96,7 @@ export default compose(
           draggable={false}
           ref={this.setContainerRef}
         />
-        {annotation.geometry && (
-          <Selector
-            geometry={annotation.geometry}
-          />
-        )}
+        {props.showSelector && <Selector />}
         {props.annotations.map(annotation => (
           <Highlight
             key={annotation.data.id}
@@ -125,16 +120,7 @@ export default compose(
           onMouseMove={this.onTargetMouseMove}
           className='Annotation__target'
         />
-        {annotation.showEditor && (
-          <Editor
-            isHoveringOver={isMouseHovering.isHoveringOver}
-            data={annotation.data}
-            geometry={annotation.geometry}
-
-            setData={props.onEditorDataChange}
-            onSubmit={props.onEditorSubmit}
-          />
-        )}
+        {props.showEditor && renderEditor()}
       </div>
     )
   }

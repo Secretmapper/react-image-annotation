@@ -1,5 +1,6 @@
 .Annotation {
   position: relative;
+  width: 100%;
 }
 
 .Annotation__img {
