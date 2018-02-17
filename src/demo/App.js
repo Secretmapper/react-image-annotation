@@ -58,7 +58,8 @@ export default compose (
 
           annotations={this.state.annotations}
 
-          selectorHandlers={props.selector}
+          onMouseMove={props.selector.onMouseMove}
+          onClick={props.selector.onClick}
 
           showSelector={!!props.annotation.geometry}
           renderSelector={() => (

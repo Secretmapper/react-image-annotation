@@ -11,10 +11,10 @@ export default compose(
 )(class Annotation extends Component {
   static propTypes = {
     containerRef: T.func.isRequired,
-    selectorHandlers: T.shape({
-      onClick: T.func,
-      onMouseMove: T.func
-    }).isRequired,
+    onMouseUp: T.func,
+    onMouseDown: T.func,
+    onMouseMove: T.func,
+    onClick: T.func,
 
     showSelector: T.bool,
     renderSelector: T.func,
@@ -23,6 +23,13 @@ export default compose(
 
     renderHighlight: T.func.isRequired,
     renderContent: T.func.isRequired
+  }
+
+  static defaultProps = {
+    onMouseUp: () => {},
+    onMouseDown: () => {},
+    onMouseMove: () => {},
+    onClick: () => {}
   }
 
   setContainerRef = (el) => {
@@ -57,14 +64,13 @@ export default compose(
   }
 
   onTargetMouseMove = (e) => {
-    this.props.selectorHandlers.onMouseMove(e)
+    this.props.onMouseMove(e)
     this.props.relativeMousePos.onMouseMove(e)
   }
 
   render () {
     const { props } = this
     const {
-      selectorHandlers,
       isMouseHovering,
 
       renderHighlight: Highlight,
@@ -116,7 +122,9 @@ export default compose(
           )
         ))}
         <div
-          onClick={selectorHandlers.onClick}
+          onClick={props.onClick}
+          onMouseUp={props.onMouseUp}
+          onMouseDown={props.onMouseDown}
           onMouseMove={this.onTargetMouseMove}
           className='Annotation__target'
         />
