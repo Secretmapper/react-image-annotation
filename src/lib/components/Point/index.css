@@ -1,7 +1,8 @@
 .container {
   background: #24B3C8;
-  border: solid 4px white;
+  border: solid 3px white;
   border-radius: 50%;
+  box-sizing: border-box;
   box-shadow:
     0 0 0 1px rgba(0,0,0,0.3),
     0 0 0 2px rgba(0,0,0,0.2),

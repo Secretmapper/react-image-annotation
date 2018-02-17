@@ -1,7 +1,7 @@
 import React, { PureComponent as Component } from 'react'
 import T from 'prop-types'
 
-const MARGIN = 12
+const MARGIN = 6
 
 const getCoordPercentage = (e) => ({
   x: e.nativeEvent.offsetX / e.currentTarget.offsetWidth * 100,
