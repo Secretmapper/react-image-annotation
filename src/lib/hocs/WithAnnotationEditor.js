@@ -11,18 +11,6 @@ const withAnnotationEditor = () => DecoratedComponent => {
   class WithAnnotationEditor extends Component {
     state = initialState()
 
-    setContainer = el => {
-      this.container = el
-    }
-
-    getContainerHeightRatio = (value) => {
-      return (value / this.container.height) * 100
-    }
-
-    getContainerWidthRatio = (value) => {
-      return (value / this.container.width) * 100
-    }
-
     setGeometry = (geometry) => {
       this.setState({ geometry })
     }
@@ -46,11 +34,6 @@ const withAnnotationEditor = () => DecoratedComponent => {
     render () {
       const hocProps = {
         annotation: {
-          innerRef: this.setContainer,
-
-          getContainerHeightRatio: this.getContainerHeightRatio,
-          getContainerWidthRatio: this.getContainerWidthRatio,
-
           showEditor: this.state.showEditor,
           setShowEditor: this.setShowEditor,
 

@@ -1,13 +1,15 @@
 import React, { PureComponent as Component } from 'react'
 import T from 'prop-types'
 
+const getCoordPercentage = (e) => ({
+  x: e.nativeEvent.offsetX / e.currentTarget.offsetWidth * 100,
+  y: e.nativeEvent.offsetY / e.currentTarget.offsetHeight * 100
+})
+
 const withRectangleSelector = (key = 'selector', annotationKey = 'annotation') => DecoratedComponent => {
   class WithRectangleSelector extends Component {
     static propTypes = {
       annotation: T.shape({
-        getContainerHeightRatio: T.func.isRequired,
-        getContainerWidthRatio: T.func.isRequired,
-
         selection: T.object,
         setSelection: T.func.isRequired,
 
@@ -24,10 +26,12 @@ const withRectangleSelector = (key = 'selector', annotationKey = 'annotation') =
       const { annotation } = props
 
       if (!annotation.selection) {
+        const { x: anchorX, y: anchorY } = getCoordPercentage(e)
+
         annotation.setSelection({
           mode: 'SELECTING',
-          anchorX: annotation.getContainerWidthRatio(e.nativeEvent.offsetX),
-          anchorY: annotation.getContainerHeightRatio(e.nativeEvent.offsetY)
+          anchorX,
+          anchorY
         })
       } else {
         switch (annotation.selection.mode) {
@@ -52,8 +56,7 @@ const withRectangleSelector = (key = 'selector', annotationKey = 'annotation') =
 
       if (annotation.selection && annotation.selection.mode === 'SELECTING') {
         const { anchorX, anchorY } = annotation.selection
-        const newX = annotation.getContainerWidthRatio(e.nativeEvent.offsetX)
-        const newY = annotation.getContainerHeightRatio(e.nativeEvent.offsetY)
+        const { x: newX, y: newY } = getCoordPercentage(e)
         const width = newX - anchorX
         const height = newY - anchorY
 

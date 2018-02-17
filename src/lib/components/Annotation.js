@@ -10,7 +10,7 @@ export default compose(
   withRelativeMousePos()
 )(class Annotation extends Component {
   static propTypes = {
-    innerRef: T.func.isRequired,
+    innerRef: T.func,
     onMouseUp: T.func,
     onMouseDown: T.func,
     onMouseMove: T.func,
@@ -26,6 +26,7 @@ export default compose(
   }
 
   static defaultProps = {
+    innerRef: () => {},
     onMouseUp: () => {},
     onMouseDown: () => {},
     onMouseMove: () => {},
