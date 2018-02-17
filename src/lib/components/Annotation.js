@@ -103,22 +103,26 @@ export default compose(
           draggable={false}
           ref={this.setInnerRef}
         />
-        {props.showSelector && renderSelector()}
-        {props.annotations.map(annotation => (
-          renderHighlight({
-            key: annotation.data.id,
-            annotation,
-            active: topAnnotationAtMouse === annotation
-          })
-        ))}
-        {props.annotations.map(annotation => (
-          topAnnotationAtMouse === annotation && (
-            renderContent({
-              key: 'content',
-              annotation: annotation
+        <div
+          className='Annotation__items'
+        >
+          {props.showSelector && renderSelector()}
+          {props.annotations.map(annotation => (
+            renderHighlight({
+              key: annotation.data.id,
+              annotation,
+              active: topAnnotationAtMouse === annotation
             })
-          )
-        ))}
+          ))}
+          {props.annotations.map(annotation => (
+            topAnnotationAtMouse === annotation && (
+              renderContent({
+                key: 'content',
+                annotation: annotation
+              })
+            )
+          ))}
+        </div>
         <div
           onClick={props.onClick}
           onMouseUp={props.onMouseUp}

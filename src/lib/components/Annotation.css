@@ -4,10 +4,11 @@
 }
 
 .Annotation__img {
+  display: block;
   width: 100%;
 }
 
-.Annotation__target {
+.Annotation__items, .Annotation__target {
   position: absolute;
   top: 0;
   left: 0;
