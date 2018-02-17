@@ -6,11 +6,13 @@ import Point from './Point'
 import Editor from './Editor'
 import FancyRectangle from './FancyRectangle'
 import Rectangle from './Rectangle'
+import Oval from './Oval'
 import Content from './Content'
 import Overlay from './Overlay'
 
 import withRectangleSelector from '../hocs/withRectangleSelector'
 import withPointSelector from '../hocs/withPointSelector'
+import withOvalSelector from '../hocs/withOvalSelector'
 
 export default {
   renderSelector: ({ annotation }) => {
@@ -24,6 +26,12 @@ export default {
       case withPointSelector.TYPE:
         return (
           <Point
+            geometry={annotation.geometry}
+          />
+        )
+      case withOvalSelector.TYPE:
+        return (
+          <Oval
             geometry={annotation.geometry}
           />
         )
@@ -53,6 +61,14 @@ export default {
       case withPointSelector.TYPE:
         return (
           <Point
+            key={key}
+            geometry={annotation.geometry}
+            active={active}
+          />
+        )
+      case withOvalSelector.TYPE:
+        return (
+          <Oval
             key={key}
             geometry={annotation.geometry}
             active={active}

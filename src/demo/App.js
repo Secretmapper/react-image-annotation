@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import Annotation, { compose, withAnnotationEditor } from '../lib'
 import {
   withPointSelector,
-  withRectangleSelector
+  withRectangleSelector,
+  withOvalSelector
 } from '../lib/selectors'
 
 import Root from './components/Root'
@@ -14,6 +15,7 @@ export default compose (
   withAnnotationEditor(),
   withRectangleSelector(withRectangleSelector.TYPE),
   withPointSelector(withPointSelector.TYPE),
+  withOvalSelector(withOvalSelector.TYPE)
 )(class App extends Component {
   state = {
     type: withRectangleSelector.TYPE,
@@ -75,6 +77,12 @@ export default compose (
           active={withPointSelector.TYPE === this.state.type}
         >
           {withPointSelector.TYPE}
+        </Button>
+        <Button
+          onClick={this.onChangeType}
+          active={withOvalSelector.TYPE === this.state.type}
+        >
+          {withOvalSelector.TYPE}
         </Button>
 
         <Annotation

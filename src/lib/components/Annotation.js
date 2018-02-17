@@ -7,6 +7,7 @@ import withRelativeMousePos from '../utils/withRelativeMousePos'
 
 import withRectangleSelector from '../hocs/withRectangleSelector'
 import withPointSelector from '../hocs/withPointSelector'
+import withOvalSelector from '../hocs/withOvalSelector'
 import defaultRenders from './defaultRenders'
 
 export default compose(
@@ -70,7 +71,8 @@ export default compose(
     type: withRectangleSelector.TYPE,
     selectors: [
       withRectangleSelector,
-      withPointSelector
+      withPointSelector,
+      withOvalSelector
     ],
     ...defaultRenders
   }
