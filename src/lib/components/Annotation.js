@@ -36,6 +36,7 @@ export default compose(
       data: T.object.isRequired
     }),
 
+    disableAnnotation: T.bool,
     disableSelector: T.bool,
     renderSelector: T.func,
     disableEditor: T.bool,
@@ -99,6 +100,10 @@ export default compose(
   }
 
   callSelectorMethod = (methodName, e) => {
+    if (this.props.disableAnnotation) {
+      return
+    }
+
     if (!!this.props[methodName]) {
       this.props[methodName](e)
     } else {

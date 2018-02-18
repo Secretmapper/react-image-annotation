@@ -22,6 +22,7 @@ export default {
     withPointSelector,
     withOvalSelector
   ],
+  disableAnnotation: false,
   disableSelector: false,
   disableEditor: false,
   disableOverlay: false,
