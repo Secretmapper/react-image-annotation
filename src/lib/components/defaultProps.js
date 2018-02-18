@@ -15,6 +15,13 @@ import withPointSelector from '../hocs/withPointSelector'
 import withOvalSelector from '../hocs/withOvalSelector'
 
 export default {
+  innerRef: () => {},
+  type: withRectangleSelector.TYPE,
+  selectors: [
+    withRectangleSelector,
+    withPointSelector,
+    withOvalSelector
+  ],
   renderSelector: ({ annotation }) => {
     switch (annotation.geometry.type) {
       case withRectangleSelector.TYPE:

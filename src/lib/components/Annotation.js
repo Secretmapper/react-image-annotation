@@ -5,10 +5,7 @@ import compose from '../utils/compose'
 import isMouseHovering from '../utils/isMouseHovering'
 import withRelativeMousePos from '../utils/withRelativeMousePos'
 
-import withRectangleSelector from '../hocs/withRectangleSelector'
-import withPointSelector from '../hocs/withPointSelector'
-import withOvalSelector from '../hocs/withOvalSelector'
-import defaultRenders from './defaultRenders'
+import defaultProps from './defaultProps'
 
 export default compose(
   isMouseHovering(),
@@ -51,16 +48,7 @@ export default compose(
     renderOverlay: T.func.isRequired
   }
 
-  static defaultProps = {
-    innerRef: () => {},
-    type: withRectangleSelector.TYPE,
-    selectors: [
-      withRectangleSelector,
-      withPointSelector,
-      withOvalSelector
-    ],
-    ...defaultRenders
-  }
+  static defaultProps = defaultProps
 
   setInnerRef = (el) => {
     this.container = el
