@@ -1,6 +1,7 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
 
-export default styled.button`
+const styles = css`
   background: #24B3C8;
   border: 0;
   color: white;
@@ -23,4 +24,13 @@ export default styled.button`
   ${props => props.active && `
     background: #176572;
   `}
+`
+
+export default styled.button`
+  ${props => styles}
+`
+
+export const ButtonLink = styled(Link)`
+  text-decoration: none;
+  ${props => styles}
 `
