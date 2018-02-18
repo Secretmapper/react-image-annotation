@@ -1,7 +1,7 @@
 import {
   RectangleSelector,
   OvalSelector
-} from '../lib/selectors'
+} from '../../src/selectors'
 
 export default {
   annotations: [

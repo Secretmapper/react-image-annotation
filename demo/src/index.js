@@ -9,5 +9,5 @@ import jsx from 'react-syntax-highlighter/languages/prism/jsx'
 
 registerLanguage('jsx', jsx)
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('demo'))
 registerServiceWorker()

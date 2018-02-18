@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Annotation from '../../../../lib'
+import Annotation from '../../../../../src'
 
 import Root from '../../Root'
 import img from '../../../img.jpeg'

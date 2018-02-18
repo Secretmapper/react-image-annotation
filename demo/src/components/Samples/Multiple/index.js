@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import Annotation from '../../../../lib'
+import Annotation from '../../../../../src'
 import {
   PointSelector,
   RectangleSelector,
   OvalSelector
-} from '../../../../lib/selectors'
+} from '../../../../../src/selectors'
 
 import Button from '../../Button'
 

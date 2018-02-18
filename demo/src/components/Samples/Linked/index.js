@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Annotation from '../../../../lib'
+import Annotation from '../../../../../src'
 
 import Root from '../../Root'
 import img from '../../../img.jpeg'
