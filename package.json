@@ -1,6 +1,6 @@
 {
-  "name": "react-annnotation",
-  "version": "0.0.0",
+  "name": "react-image-annotation",
+  "version": "0.9.0",
   "description": "React Annotation",
   "main": "build/index.js",
   "scripts": {
