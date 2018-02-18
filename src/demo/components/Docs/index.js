@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Highlight from '../Highlight'
 import Multi from '../Samples/Multiple'
+import Linked from '../Samples/Linked'
 import multicode from '../Samples/Multiple/index.txt'
 
 const Container = styled.main`
@@ -20,6 +21,7 @@ export default class Docs extends Component {
         <Highlight>
           {multicode}
         </Highlight>
+        <Linked />
       </Container>
     )
   }
