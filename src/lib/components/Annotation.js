@@ -35,6 +35,8 @@ export default compose(
       }),
       data: T.object
     }),
+    onChange: T.func,
+    onSubmit: T.func,
 
     disableAnnotation: T.bool,
     disableSelector: T.bool,

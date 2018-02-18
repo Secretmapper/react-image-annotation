@@ -1,6 +1,6 @@
 import {
-  withRectangleSelector,
-  withOvalSelector
+  RectangleSelector,
+  OvalSelector
 } from '../lib/selectors'
 
 export default {
@@ -8,7 +8,7 @@ export default {
     {
       geometry:
       {
-        type: withRectangleSelector.TYPE,
+        type: RectangleSelector.TYPE,
         x: 25,
         y: 31,
         width: 21,
@@ -22,7 +22,7 @@ export default {
     {
       geometry:
       {
-        type: withOvalSelector.TYPE,
+        type: OvalSelector.TYPE,
         x: 53,
         y: 33,
         width : 17.5,
