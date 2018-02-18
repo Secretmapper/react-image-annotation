@@ -12,7 +12,10 @@ module.exports = {
     }
   },
   webpack: {
-   styles: {
+    html: {
+      template: 'demo/src/index.html'
+    },
+    styles: {
       css: [{
         include: /\.css$/,
         css: {
