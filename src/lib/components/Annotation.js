@@ -170,14 +170,6 @@ export default compose(
               active: topAnnotationAtMouse === annotation
             })
           ))}
-          {props.annotations.map(annotation => (
-            topAnnotationAtMouse === annotation && (
-              renderContent({
-                key: 'content',
-                annotation: annotation
-              })
-            )
-          ))}
           {!props.disableSelector
             && props.value
             && props.value.geometry
@@ -188,12 +180,6 @@ export default compose(
             )
           }
         </div>
-        {!props.disableOverlay && (
-          renderOverlay({
-            type: props.type,
-            annotation: props.value
-          })
-        )}
         <div
           onClick={this.onClick}
           onMouseUp={this.onMouseUp}
@@ -201,6 +187,20 @@ export default compose(
           onMouseMove={this.onTargetMouseMove}
           className={styles.target}
         />
+        {!props.disableOverlay && (
+          renderOverlay({
+            type: props.type,
+            annotation: props.value
+          })
+        )}
+        {props.annotations.map(annotation => (
+          topAnnotationAtMouse === annotation && (
+            renderContent({
+              key: 'content',
+              annotation: annotation
+            })
+          )
+        ))}
         {!props.disableEditor
           && props.value
           && props.value.selection

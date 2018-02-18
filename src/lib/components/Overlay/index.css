@@ -6,6 +6,7 @@
   font-size: 12px;
   font-weight: bold;
   padding: 10px;
+  pointer-events: none;
   position: absolute;
   right: 4px;
   user-select: none;
