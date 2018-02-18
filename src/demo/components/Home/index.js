@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Simple from '../Samples/Simple'
-
-import SyntaxHighlighter from 'react-syntax-highlighter/prism-light'
-import prism from 'react-syntax-highlighter/styles/prism/prism'
+import Highlight from '../Highlight'
 
 import simple from './simple.txt'
+
+const Hero = styled.div`
+  text-align: center;
+`
 
 const Title = styled.h1`
   font-size: 36px;
@@ -27,19 +29,21 @@ export default class App extends Component {
   render () {
     return (
       <Container>
-        <Title>React Image Annotation</Title>
-        <Subtitle>
-          An infinitely customizable image annotation library built on React
-        </Subtitle>
+        <Hero>
+          <Title>React Image Annotation</Title>
+          <Subtitle>
+            An infinitely customizable image annotation library built on React
+          </Subtitle>
+        </Hero>
         <h2>Install</h2>
-        <SyntaxHighlighter language='jsx' style={prism}>
+        <Highlight>
           npm install --save react-image-annotation
-        </SyntaxHighlighter>
+        </Highlight>
         <h2>Demo</h2>
         <Simple />
-        <SyntaxHighlighter language='jsx' style={prism}>
+        <Highlight>
           {simple}
-        </SyntaxHighlighter>  
+        </Highlight>  
       </Container>
     )
   }
