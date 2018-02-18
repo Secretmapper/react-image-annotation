@@ -4,6 +4,7 @@ import Highlight from '../Highlight'
 import Multi from '../Samples/Multiple'
 import Linked from '../Samples/Linked'
 import multicode from '../Samples/Multiple/index.txt'
+import linked from '../Samples/Linked/index.txt'
 
 const Container = styled.main`
   margin: 0 auto;
@@ -21,7 +22,12 @@ export default class Docs extends Component {
         <Highlight>
           {multicode}
         </Highlight>
+        <h1>Controlled Active Annotations</h1>
         <Linked />
+        <p>Hover over the text items above and notice how it triggers the active status of their respective annotations</p>
+        <Highlight>
+          {linked}
+        </Highlight>
       </Container>
     )
   }

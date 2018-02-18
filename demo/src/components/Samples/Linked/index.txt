@@ -1,0 +1,54 @@
+classs React extends Component {
+  state = {
+    activeAnnotations: []
+  }
+
+  // ...other React code
+
+  onMouseOver = (id) => e => {
+    this.setState({
+      activeAnnotations: [
+        ...this.state.activeAnnotations,
+        id
+      ]
+    })
+  }
+
+  onMouseOut = (id) => e => {
+    const index = this.state.activeAnnotations.indexOf(id)
+
+    this.setState({
+      activeAnnotations: [
+        ...this.state.activeAnnotations.slice(0, index),
+        ...this.state.activeAnnotations.slice(index + 1)
+      ]
+    })
+  }
+
+  activeAnnotationComparator = (a, b) => {
+    return a.data.id === b
+  }
+
+  render () {
+    return (
+      <Root>
+        <Annotation
+          activeAnnotationComparator={this.activeAnnotationComparator}
+          activeAnnotations={this.state.activeAnnotations}
+          {//other props}
+        />
+        <h4>Annotations</h4>
+        <Comments>
+          {this.state.annotations.map(annotation => (
+            <Comment
+              onMouseOver={this.onMouseOver(annotation.data.id)}
+              onMouseOut={this.onMouseOut(annotation.data.id)}
+              key={annotation.data.id}
+            >
+              {annotation.data.text}
+            </Comment>
+          ))}
+        </Comments>
+      </Root>
+    )
+  }
