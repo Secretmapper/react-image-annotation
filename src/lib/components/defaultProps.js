@@ -22,6 +22,9 @@ export default {
     withPointSelector,
     withOvalSelector
   ],
+  disableSelector: false,
+  disableEditor: false,
+  disableOverlay: false,
   renderSelector: ({ annotation }) => {
     switch (annotation.geometry.type) {
       case withRectangleSelector.TYPE:

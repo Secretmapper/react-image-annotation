@@ -36,9 +36,9 @@ export default compose(
       data: T.object.isRequired
     }),
 
-    showSelector: T.bool,
+    disableSelector: T.bool,
     renderSelector: T.func,
-    showEditor: T.bool,
+    disableEditor: T.bool,
     renderEditor: T.func,
 
     renderHighlight: T.func.isRequired,
@@ -164,11 +164,15 @@ export default compose(
               })
             )
           ))}
-          {props.showSelector && (
-            renderSelector({
-              annotation: props.value
-            })
-          )}
+          {!props.disableSelector
+            && props.value
+            && props.value.geometry
+            && (
+              renderSelector({
+                annotation: props.value
+              })
+            )
+          }
         </div>
         {!props.disableOverlay && (
           renderOverlay({
@@ -183,13 +187,18 @@ export default compose(
           onMouseMove={this.onTargetMouseMove}
           className={styles.target}
         />
-        {props.showEditor && (
-          renderEditor({
-            annotation: props.value,
-            onChange: props.onChange,
-            onSubmit: this.onSubmit
-          })
-        )}
+        {!props.disableEditor
+          && props.value
+          && props.value.selection
+          && props.value.selection.showEditor
+          && (
+            renderEditor({
+              annotation: props.value,
+              onChange: props.onChange,
+              onSubmit: this.onSubmit
+            })
+          )
+        }
       </div>
     )
   }
