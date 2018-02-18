@@ -54,7 +54,7 @@ export default (props) => (
         <Title to='/'>
           {props.title}
         </Title>
-        <Link to='/api'>API</Link>
+        <Link to='/docs'>Docs</Link>
       </Item>
       <Item>
         <a href='//'>
