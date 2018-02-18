@@ -17,7 +17,7 @@ function Editor (props) {
     >
       <div className={styles.editor}>
         <textarea
-          placeholder='Write comment'
+          placeholder='Write description'
           onChange={e => props.onChange({
             ...props.annotation,
             data: {
@@ -33,7 +33,7 @@ function Editor (props) {
         className={styles.button}
         onClick={props.onSubmit}
       >
-        Comment
+        Submit
       </button>
     </div>
   )
