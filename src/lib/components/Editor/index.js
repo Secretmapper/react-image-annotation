@@ -25,7 +25,7 @@ function Editor (props) {
               text: e.target.value
             }
           })}
-          value={props.annotation.data.text}
+          value={props.annotation.data && props.annotation.data.text}
         >
         </textarea>
       </div>

@@ -33,7 +33,7 @@ export default compose(
       geometry: T.shape({
         type: T.string.isRequired
       }),
-      data: T.object.isRequired
+      data: T.object
     }),
 
     disableAnnotation: T.bool,
