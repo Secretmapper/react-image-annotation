@@ -13,7 +13,7 @@ const Main = styled.main`
 `
 
 export default () => (
-  <Router>
+  <Router basename='/react-image-annotation'>
     <Root>
       <NavBar
         title='react-image-annotation'
