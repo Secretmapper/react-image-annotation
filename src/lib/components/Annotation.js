@@ -23,27 +23,16 @@ export default compose(
 
     type: T.string,
     selectors: T.arrayOf(
-      function (arr, key, componentName, location, propFullName) {
-        const selector = arr[key]
-        if (typeof selector.TYPE !== 'string') {
-          return new Error(
-            `Invalid prop '${propFullName}.TYPE' supplied to ${componentName}, expected string. Validation failed.`
-          )
-        }
-        if (typeof selector.intersects !== 'function') {
-          return new Error(
-            `Invalid prop '${propFullName}.intersects' supplied to ${componentName}, expected function. Validation failed.`
-          )
-        }
-        if (typeof selector.area !== 'function') {
-          return new Error(
-            `Invalid prop '${propFullName}.area' supplied to ${componentName}, expected function. Validation failed.`
-          )
-        }
-      }
-    ),
+      T.shape({
+        TYPE: T.string,
+        intersects: T.func.isRequired,
+        area: T.func.isRequired,
+        methods: T.object.isRequired
+      })
+    ).isRequired,
 
     value: T.shape({
+      selection: T.object,
       geometry: T.shape({
         type: T.string.isRequired
       }),
@@ -64,10 +53,6 @@ export default compose(
 
   static defaultProps = {
     innerRef: () => {},
-    onMouseUp: () => {},
-    onMouseDown: () => {},
-    onMouseMove: () => {},
-    onClick: () => {},
     type: withRectangleSelector.TYPE,
     selectors: [
       withRectangleSelector,
@@ -83,14 +68,18 @@ export default compose(
     this.props.innerRef(el)
   }
 
+  getSelectorByType = (type) => {
+    return this.props.selectors.find(s => s.TYPE === type)
+  }
+
   getTopAnnotationAt = (x, y) => {
-    const { annotations, selectors } = this.props
-    const { container } = this
+    const { annotations } = this.props
+    const { container, getSelectorByType } = this
 
     const intersections = annotations
       .map(annotation => {
         const { geometry } = annotation
-        const selector = selectors.find(s => s.TYPE === geometry.type)
+        const selector = getSelectorByType(geometry.type)
 
         return selector.intersects({ x, y }, geometry, container)
           ? annotation
@@ -98,8 +87,8 @@ export default compose(
       })
       .filter(a => !!a)
       .sort((a, b) => {
-        const aSelector = selectors.find(s => s.TYPE === a.geometry.type)
-        const bSelector = selectors.find(s => s.TYPE === b.geometry.type)
+        const aSelector = getSelectorByType(a.geometry.type)
+        const bSelector = getSelectorByType(b.geometry.type)
 
         return aSelector.area(a.geometry, container) - bSelector.area(b.geometry, container)
       })
@@ -108,12 +97,30 @@ export default compose(
   }
 
   onTargetMouseMove = (e) => {
-    this.props.onMouseMove(e)
     this.props.relativeMousePos.onMouseMove(e)
+    this.onMouseMove(e)
   }
+
+  onMouseUp = (e) => this.callSelectorMethod('onMouseUp', e)
+  onMouseDown = (e) => this.callSelectorMethod('onMouseDown', e)
+  onMouseMove = (e) => this.callSelectorMethod('onMouseMove', e)
+  onClick = (e) => this.callSelectorMethod('onClick', e)
 
   onSubmit = () => {
     this.props.onSubmit(this.props.value)
+  }
+
+  callSelectorMethod = (methodName, e) => {
+    if (!!this.props[methodName]) {
+      this.props[methodName](e)
+    } else {
+      const selector = this.getSelectorByType(this.props.type)
+      if (selector && selector.methods[methodName]) {
+        this.props.onChange(
+          selector.methods[methodName](this.props.value, e)
+        )
+      }
+    }
   }
 
   render () {
@@ -182,9 +189,9 @@ export default compose(
           })
         )}
         <div
-          onClick={props.onClick}
-          onMouseUp={props.onMouseUp}
-          onMouseDown={props.onMouseDown}
+          onClick={this.onClick}
+          onMouseUp={this.onMouseUp}
+          onMouseDown={this.onMouseDown}
           onMouseMove={this.onTargetMouseMove}
           className={styles.target}
         />

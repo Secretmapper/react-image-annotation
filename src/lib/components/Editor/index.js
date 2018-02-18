@@ -18,7 +18,12 @@ function Editor (props) {
         <textarea
           placeholder='Write comment'
           onChange={e => props.onChange({
-            text: e.target.value
+            ...props.geometry,
+            ...props.selection,
+            data: {
+              ...props.data,
+              text: e.target.value
+            }
           })}
           value={props.data.text}
         >

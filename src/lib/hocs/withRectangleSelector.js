@@ -82,7 +82,7 @@ export const methods = {
   }
 }
 
-const withRectangleSelector = (key = TYPE, annotationKey = 'annotation') => DecoratedComponent => {
+export const hoc = (key = TYPE, annotationKey = 'annotation') => DecoratedComponent => {
   class WithRectangleSelector extends Component {
     static propTypes = {
       [annotationKey]: T.shape({
@@ -130,8 +130,10 @@ const withRectangleSelector = (key = TYPE, annotationKey = 'annotation') => Deco
   return WithRectangleSelector
 }
 
-withRectangleSelector.TYPE = TYPE
-withRectangleSelector.intersects = intersects
-withRectangleSelector.area = area
-
-export default withRectangleSelector
+export default {
+  TYPE,
+  intersects,
+  area,
+  methods,
+  hoc
+}

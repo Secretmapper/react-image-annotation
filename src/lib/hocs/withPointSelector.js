@@ -54,7 +54,7 @@ export const methods = {
   }
 }
 
-const withPointSelector = (key = 'selector', annotationKey = 'annotation') => DecoratedComponent => {
+export const hoc = (key = 'selector', annotationKey = 'annotation') => DecoratedComponent => {
   class WithPointSelector extends Component {
     static propTypes = {
       [annotationKey]: T.shape({
@@ -93,8 +93,10 @@ const withPointSelector = (key = 'selector', annotationKey = 'annotation') => De
   return WithPointSelector
 }
 
-withPointSelector.TYPE = TYPE
-withPointSelector.intersects = intersects
-withPointSelector.area = area
-
-export default withPointSelector
+export default {
+  TYPE,
+  intersects,
+  area,
+  methods,
+  hoc
+}

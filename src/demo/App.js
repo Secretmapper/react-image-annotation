@@ -13,10 +13,7 @@ import mocks from './mocks'
 import img from './img.jpeg'
 
 export default compose (
-  withAnnotationEditor(),
-  withRectangleSelector(withRectangleSelector.TYPE),
-  withPointSelector(withPointSelector.TYPE),
-  withOvalSelector(withOvalSelector.TYPE)
+  withAnnotationEditor()
 )(class App extends Component {
   state = {
     type: withRectangleSelector.TYPE,
@@ -82,12 +79,11 @@ export default compose (
 
           type={this.state.type}
           value={{
+            selection: annotation.selection,
             geometry: annotation.geometry,
             data: annotation.data
           }}
-          onMouseMove={props[this.state.type].onMouseMove}
-          onClick={props[this.state.type].onClick}
-          onChange={props.annotation.changeData}
+          onChange={props.annotation.change}
           onSubmit={this.onSubmit}
 
           showSelector={!!annotation.geometry}

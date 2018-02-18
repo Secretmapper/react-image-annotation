@@ -83,7 +83,7 @@ export const methods = {
   }
 }
 
-const withOvalSelector = (key = 'selector', annotationKey = 'annotation') => DecoratedComponent => {
+export const hoc = (key = 'selector', annotationKey = 'annotation') => DecoratedComponent => {
   class WithOvalSelector extends Component {
     static propTypes = {
       [annotationKey]: T.shape({
@@ -131,8 +131,10 @@ const withOvalSelector = (key = 'selector', annotationKey = 'annotation') => Dec
   return WithOvalSelector
 }
 
-withOvalSelector.TYPE = TYPE
-withOvalSelector.intersects = intersects
-withOvalSelector.area = area
-
-export default withOvalSelector
+export default {
+  TYPE,
+  intersects,
+  area,
+  methods,
+  hoc
+}
