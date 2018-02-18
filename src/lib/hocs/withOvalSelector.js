@@ -85,58 +85,9 @@ export const methods = {
   }
 }
 
-export const hoc = (key = 'selector', annotationKey = 'annotation') => DecoratedComponent => {
-  class WithOvalSelector extends Component {
-    static propTypes = {
-      [annotationKey]: T.shape({
-        store: T.object.isRequired,
-        change: T.func.isRequired,
-        clear: T.func.isRequired
-      }).isRequired
-    }
-
-    onClick = e => {
-      const annotation = this.props[annotationKey]
-
-      annotation.change(
-        methods.onClick(annotation.store, e)
-      )
-    }
-
-    onMouseMove = e => {
-      const annotation = this.props[annotationKey]
-
-      annotation.change(
-        methods.onMouseMove(annotation.store, e)
-      )
-    }
-
-    render () {
-      const hocProps = {
-        [key]: {
-          onClick: this.onClick,
-          onMouseMove: this.onMouseMove
-        }
-      }
-
-      return (
-        <DecoratedComponent
-          {...this.props}
-          {...hocProps}
-        />
-      )
-    }
-  }
-
-  WithOvalSelector.displayName = `WithOvalSelector(${DecoratedComponent.displayName})`
-
-  return WithOvalSelector
-}
-
 export default {
   TYPE,
   intersects,
   area,
-  methods,
-  hoc
+  methods
 }

@@ -54,49 +54,9 @@ export const methods = {
   }
 }
 
-export const hoc = (key = 'selector', annotationKey = 'annotation') => DecoratedComponent => {
-  class WithPointSelector extends Component {
-    static propTypes = {
-      [annotationKey]: T.shape({
-        store: T.object.isRequired,
-        change: T.func.isRequired,
-        clear: T.func.isRequired
-      }).isRequired
-    }
-
-    onClick = (e) => {
-      const annotation = this.props[annotationKey]
-
-      annotation.change(
-        methods.onClick(annotation.store, e)
-      )
-    }
-
-    render () {
-      const hocProps = {
-        [key]: {
-          onClick: this.onClick
-        }
-      }
-
-      return (
-        <DecoratedComponent
-          {...this.props}
-          {...hocProps}
-        />
-      )
-    }
-  }
-
-  WithPointSelector.displayName = `WithPointSelector(${DecoratedComponent.displayName})`
-
-  return WithPointSelector
-}
-
 export default {
   TYPE,
   intersects,
   area,
-  methods,
-  hoc
+  methods
 }
