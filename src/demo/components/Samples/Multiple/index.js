@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Annotation from '../../../../lib'
 import {
-  withPointSelector,
-  withRectangleSelector,
-  withOvalSelector
+  PointSelector,
+  RectangleSelector,
+  OvalSelector
 } from '../../../../lib/selectors'
 
 import Button from '../../Button'
@@ -13,7 +13,7 @@ import img from '../../../img.jpeg'
 
 export default class Multiple extends Component {
   state = {
-    type: withRectangleSelector.TYPE,
+    type: RectangleSelector.TYPE,
     annotations: mocks.annotations,
     annotation: {}
   }
@@ -49,21 +49,21 @@ export default class Multiple extends Component {
       <div>
         <Button
           onClick={this.onChangeType}
-          active={withRectangleSelector.TYPE === this.state.type}
+          active={RectangleSelector.TYPE === this.state.type}
         >
-          {withRectangleSelector.TYPE}
+          {RectangleSelector.TYPE}
         </Button>
         <Button
           onClick={this.onChangeType}
-          active={withPointSelector.TYPE === this.state.type}
+          active={PointSelector.TYPE === this.state.type}
         >
-          {withPointSelector.TYPE}
+          {PointSelector.TYPE}
         </Button>
         <Button
           onClick={this.onChangeType}
-          active={withOvalSelector.TYPE === this.state.type}
+          active={OvalSelector.TYPE === this.state.type}
         >
-          {withOvalSelector.TYPE}
+          {OvalSelector.TYPE}
         </Button>
 
         <Annotation

@@ -10,17 +10,21 @@ import Oval from './Oval'
 import Content from './Content'
 import Overlay from './Overlay'
 
-import withRectangleSelector from '../hocs/withRectangleSelector'
-import withPointSelector from '../hocs/withPointSelector'
-import withOvalSelector from '../hocs/withOvalSelector'
+import {
+  RectangleSelector,
+  PointSelector,
+  OvalSelector
+} from '../selectors'
 
 export default {
   innerRef: () => {},
-  type: withRectangleSelector.TYPE,
+  onChange: () => {},
+  onSubmit: () => {},
+  type: RectangleSelector.TYPE,
   selectors: [
-    withRectangleSelector,
-    withPointSelector,
-    withOvalSelector
+    RectangleSelector,
+    PointSelector,
+    OvalSelector
   ],
   disableAnnotation: false,
   disableSelector: false,
@@ -28,19 +32,19 @@ export default {
   disableOverlay: false,
   renderSelector: ({ annotation }) => {
     switch (annotation.geometry.type) {
-      case withRectangleSelector.TYPE:
+      case RectangleSelector.TYPE:
         return (
           <FancyRectangle
             annotation={annotation}
           />
         )
-      case withPointSelector.TYPE:
+      case PointSelector.TYPE:
         return (
           <Point
             annotation={annotation}
           />
         )
-      case withOvalSelector.TYPE:
+      case OvalSelector.TYPE:
         return (
           <Oval
             annotation={annotation}
@@ -59,7 +63,7 @@ export default {
   ),
   renderHighlight: ({ key, annotation, active }) => {
     switch (annotation.geometry.type) {
-      case withRectangleSelector.TYPE:
+      case RectangleSelector.TYPE:
         return (
           <Rectangle
             key={key}
@@ -67,7 +71,7 @@ export default {
             active={active}
           />
         )
-      case withPointSelector.TYPE:
+      case PointSelector.TYPE:
         return (
           <Point
             key={key}
@@ -75,7 +79,7 @@ export default {
             active={active}
           />
         )
-      case withOvalSelector.TYPE:
+      case OvalSelector.TYPE:
         return (
           <Oval
             key={key}
@@ -95,13 +99,13 @@ export default {
   ),
   renderOverlay: ({ type, annotation }) => {
     switch (type) {
-      case withRectangleSelector.TYPE:
+      case RectangleSelector.TYPE:
         return (
           <Overlay className={styles.overlay}>
             Click and Drag to Annotate
           </Overlay>
         )
-      case withPointSelector.TYPE:
+      case PointSelector.TYPE:
         return (
           <Overlay className={styles.overlay}>
             Click to Annotate

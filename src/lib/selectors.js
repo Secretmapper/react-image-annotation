@@ -1,3 +1,3 @@
-export { default as withRectangleSelector } from './hocs/withRectangleSelector'
-export { default as withPointSelector } from './hocs/withPointSelector'
-export { default as withOvalSelector } from './hocs/withOvalSelector'
+export { default as RectangleSelector } from './hocs/RectangleSelector'
+export { default as PointSelector } from './hocs/PointSelector'
+export { default as OvalSelector } from './hocs/OvalSelector'
