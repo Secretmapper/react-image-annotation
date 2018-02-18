@@ -2,15 +2,16 @@ import React from 'react'
 import styles from './index.css'
 
 function Editor (props) {
-  if (!props.geometry) return null
+  const { geometry } = props.annotation
+  if (!geometry) return null
 
   return (
     <div
       className={`${styles.container} ${props.className}`}
       style={{
         position: 'absolute',
-        left: `${props.geometry.x}%`,
-        top: `${props.geometry.y + props.geometry.height}%`,
+        left: `${geometry.x}%`,
+        top: `${geometry.y + geometry.height}%`,
         ...props.style
       }}
     >
@@ -18,14 +19,13 @@ function Editor (props) {
         <textarea
           placeholder='Write comment'
           onChange={e => props.onChange({
-            ...props.geometry,
-            ...props.selection,
+            ...props.annotation,
             data: {
               ...props.data,
               text: e.target.value
             }
           })}
-          value={props.data.text}
+          value={props.annotation.data.text}
         >
         </textarea>
       </div>

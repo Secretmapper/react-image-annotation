@@ -2,20 +2,21 @@ import React from 'react'
 import styles from './index.css'
 
 function Content (props) {
-  if (!props.geometry) return null
+  const { geometry } = props.annotation
+  if (!geometry) return null
 
   return (
     <div
       style={{
         position: 'absolute',
-        left: `${props.geometry.x}%`,
-        top: `${props.geometry.y + props.geometry.height}%`,
+        left: `${geometry.x}%`,
+        top: `${geometry.y + geometry.height}%`,
         ...props.style
       }}
       className={`Content ${styles.container}`}
-      geometry={props.geometry}
+      geometry={geometry}
     >
-      {props.data.text}
+      {props.annotation.data && props.annotation.data.text}
     </div>
   )
 }

@@ -8,7 +8,7 @@ function Box (props) {
 }
 
 function FancyRectangle (props) {
-  const { geometry } = props
+  const { geometry } = props.annotation
 
   if (!geometry) return null
 

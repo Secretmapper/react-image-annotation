@@ -27,19 +27,19 @@ export default {
       case withRectangleSelector.TYPE:
         return (
           <FancyRectangle
-            geometry={annotation.geometry}
+            annotation={annotation}
           />
         )
       case withPointSelector.TYPE:
         return (
           <Point
-            geometry={annotation.geometry}
+            annotation={annotation}
           />
         )
       case withOvalSelector.TYPE:
         return (
           <Oval
-            geometry={annotation.geometry}
+            annotation={annotation}
           />
         )
       default:
@@ -48,9 +48,7 @@ export default {
   },
   renderEditor: ({ annotation, onChange, onSubmit }) => (
     <Editor
-      data={annotation.data}
-      geometry={annotation.geometry}
-
+      annotation={annotation}
       onChange={onChange}
       onSubmit={onSubmit}
     />
@@ -61,7 +59,7 @@ export default {
         return (
           <Rectangle
             key={key}
-            geometry={annotation.geometry}
+            annotation={annotation}
             active={active}
           />
         )
@@ -69,7 +67,7 @@ export default {
         return (
           <Point
             key={key}
-            geometry={annotation.geometry}
+            annotation={annotation}
             active={active}
           />
         )
@@ -77,7 +75,7 @@ export default {
         return (
           <Oval
             key={key}
-            geometry={annotation.geometry}
+            annotation={annotation}
             active={active}
           />
         )
@@ -88,8 +86,7 @@ export default {
   renderContent: ({ key, annotation }) => (
     <Content
       key={key}
-      geometry={annotation.geometry}
-      data={annotation.data}
+      annotation={annotation}
     />
   ),
   renderOverlay: ({ type, annotation }) => {
