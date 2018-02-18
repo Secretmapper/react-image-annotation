@@ -118,7 +118,7 @@ This allows you to customize everything about the the look of the annotation int
 - `renderComponent` - auxiliary component that appears when mouse is hovering over the highlight. It is passed an object that contains the annotation being hovered over. `{ annotation }`
 - `renderOverlay` - Component overlay for Annotation (i.e. 'Click and Drag to Annotate')
 
-You can view the default renderProps [here](src/lib/components/defaultProps.js)
+You can view the default renderProps [here](src/components/defaultProps.js)
 
 **Note**: You cannot use `:hover` selectors in css for components returned by `renderSelector` and `renderHighlight`. This is due to the fact that `Annotation` places DOM layers on top of these components, preventing triggering of `:hover`
 
@@ -153,7 +153,7 @@ Selectors are objects that must have the following properties:
 - `area` - method that calculates and returns the area of the annotation geometry
 - `methods` - object that can contain various listener handlers (`onMouseUp`, `onMouseDown`, `onMouseMove`, `onClick`). These listener handlers are called when triggered in the annotation area. These handlers must be reducer-like methods - returning a new annotation object depending on the change of the method
 
-You can view a defined `RectangleSelector` [here](src/lib/hocs/RectangleSelector.js)
+You can view a defined `RectangleSelector` [here](src/hocs/RectangleSelector.js)
 
 ### Connecting selector logic to Redux/MobX
 
