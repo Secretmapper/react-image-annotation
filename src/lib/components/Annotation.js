@@ -109,9 +109,18 @@ export default compose(
     } else {
       const selector = this.getSelectorByType(this.props.type)
       if (selector && selector.methods[methodName]) {
-        this.props.onChange(
-          selector.methods[methodName](this.props.value, e)
-        )
+        const value = selector.methods[methodName](this.props.value, e)
+
+        if (typeof value === 'undefined') {
+          if (process.env.NODE_ENV !== 'production') {
+            console.error(`
+              ${methodName} of selector type ${this.props.type} returned undefined.
+              Make sure to explicitly return the previous state
+            `)
+          }
+        } else {
+          this.props.onChange(value)
+        }
       }
     }
   }

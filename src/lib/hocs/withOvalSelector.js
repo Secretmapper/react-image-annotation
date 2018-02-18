@@ -80,6 +80,8 @@ export const methods = {
         }
       }
     }
+
+    return annotation
   }
 }
 
