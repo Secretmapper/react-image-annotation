@@ -38,6 +38,9 @@ export default compose(
     onChange: T.func,
     onSubmit: T.func,
 
+    activeAnnotationComparator: T.func,
+    activeAnnotations: T.arrayOf(T.any),
+
     disableAnnotation: T.bool,
     disableSelector: T.bool,
     renderSelector: T.func,
@@ -127,6 +130,18 @@ export default compose(
     }
   }
 
+  shouldAnnotationBeActive = (annotation, top) => {
+    if (this.props.activeAnnotations) {
+      const isActive = !!this.props.activeAnnotations.find(active => (
+        this.props.activeAnnotationComparator(annotation, active)
+      ))
+
+      return isActive || top === annotation
+    } else {
+      return top === annotation
+    }
+  }
+
   render () {
     const { props } = this
     const {
@@ -169,7 +184,7 @@ export default compose(
             renderHighlight({
               key: annotation.data.id,
               annotation,
-              active: topAnnotationAtMouse === annotation
+              active: this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse)
             })
           ))}
           {!props.disableSelector
@@ -196,9 +211,10 @@ export default compose(
           })
         )}
         {props.annotations.map(annotation => (
-          topAnnotationAtMouse === annotation && (
+          this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse)
+          && (
             renderContent({
-              key: 'content',
+              key: annotation.data.id,
               annotation: annotation
             })
           )

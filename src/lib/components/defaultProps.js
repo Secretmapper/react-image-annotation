@@ -30,6 +30,7 @@ export default {
   disableSelector: false,
   disableEditor: false,
   disableOverlay: false,
+  activeAnnotationComparator: (a, b) => a === b,
   renderSelector: ({ annotation }) => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
