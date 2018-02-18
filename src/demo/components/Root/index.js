@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export default styled.div`
   font-family: 'Open Sans', sans-serif;
   margin: 0 auto;
-  max-width: 700px;
   font-size: 14px;
 
   h1, h2, h3, h4, h5, h6 {
