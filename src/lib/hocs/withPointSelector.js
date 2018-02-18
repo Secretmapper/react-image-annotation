@@ -1,6 +1,3 @@
-import React, { PureComponent as Component } from 'react'
-import T from 'prop-types'
-
 const MARGIN = 6
 
 const getCoordPercentage = (e) => ({

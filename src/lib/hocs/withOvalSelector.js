@@ -1,6 +1,3 @@
-import React, { PureComponent as Component } from 'react'
-import T from 'prop-types'
-
 const square = n => Math.pow(n, 2)
 
 const getCoordPercentage = (e) => ({

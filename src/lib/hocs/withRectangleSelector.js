@@ -1,6 +1,3 @@
-import React, { PureComponent as Component } from 'react'
-import T from 'prop-types'
-
 const getCoordPercentage = (e) => ({
   x: e.nativeEvent.offsetX / e.currentTarget.offsetWidth * 100,
   y: e.nativeEvent.offsetY / e.currentTarget.offsetHeight * 100
