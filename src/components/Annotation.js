@@ -9,6 +9,7 @@ import defaultProps from './defaultProps'
 import Overlay from './Overlay'
 
 const Container = styled.div`
+  clear: both;
   position: relative;
   width: 100%;
   &:hover ${Overlay} {
