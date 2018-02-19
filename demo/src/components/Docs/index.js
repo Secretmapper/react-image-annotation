@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Highlight from '../Highlight'
 import Multi from '../Samples/Multiple'
 import Linked from '../Samples/Linked'
+import Custom from '../Samples/Custom'
 import multicode from '../Samples/Multiple/index.txt'
 import linked from '../Samples/Linked/index.txt'
 
@@ -28,6 +29,8 @@ export default class Docs extends Component {
         <Highlight>
           {linked}
         </Highlight>
+        <h1>Custom Renderers/Components/Styles</h1>
+        <Custom />
       </Container>
     )
   }
