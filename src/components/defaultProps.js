@@ -98,12 +98,6 @@ export default {
   ),
   renderOverlay: ({ type, annotation }) => {
     switch (type) {
-      case RectangleSelector.TYPE:
-        return (
-          <Overlay>
-            Click and Drag to Annotate
-          </Overlay>
-        )
       case PointSelector.TYPE:
         return (
           <Overlay>
@@ -111,7 +105,11 @@ export default {
           </Overlay>
         )
       default:
-        return null
+        return (
+          <Overlay>
+            Click and Drag to Annotate
+          </Overlay>
+        )
     }
   }
 }
