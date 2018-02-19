@@ -80,7 +80,7 @@ function Editor (props) {
           onChange={e => props.onChange({
             ...props.annotation,
             data: {
-              ...props.data,
+              ...props.annotation.data,
               text: e.target.value
             }
           })}
