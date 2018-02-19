@@ -42,6 +42,11 @@ export default compose(
     onMouseMove: T.func,
     onClick: T.func,
 
+    annotations: T.arrayOf(
+      T.shape({
+        type: T.string
+      })
+    ).isRequired,
     type: T.string,
     selectors: T.arrayOf(
       T.shape({
