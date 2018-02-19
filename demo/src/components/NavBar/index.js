@@ -57,7 +57,7 @@ export default (props) => (
         <Link to='/docs'>Docs</Link>
       </Item>
       <Item>
-        <a href='//'>
+        <a href='//github.com/Secretmapper/react-image-annotation' target='__blank'>
           Github
         </a>
       </Item>

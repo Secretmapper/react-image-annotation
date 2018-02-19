@@ -6,6 +6,7 @@ import NavBar from './components/NavBar'
 import Root from './components/Root'
 import Home from './components/Home'
 import Docs from './components/Docs'
+import Footer from './components/Footer'
 
 const Main = styled.main`
   margin: 0 16px;
@@ -29,6 +30,7 @@ export default () => (
           component={Docs}
         />
       </Main>
+      <Footer />
     </Root>
   </Router>
 )
