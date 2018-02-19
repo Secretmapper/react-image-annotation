@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Simple from '../Samples/Simple'
 import Highlight from '../Highlight'
+import GithubStarLink from '../GithubStarLink'
+import { ButtonLink } from '../Button'
 
 import simple from './simple.txt'
 
@@ -25,6 +27,10 @@ const Container = styled.main`
   max-width: 700px;
 `
 
+const GithubButton = styled.div`
+  margin-bottom: 16px;
+`
+
 export default class App extends Component {
   render () {
     return (
@@ -34,6 +40,12 @@ export default class App extends Component {
           <Subtitle>
             An infinitely customizable image annotation library built on React
           </Subtitle>
+          <GithubButton>
+            <GithubStarLink />
+          </GithubButton>
+          <ButtonLink to='/docs'>
+            More Examples
+          </ButtonLink>
         </Hero>
         <h2>Install</h2>
         <Highlight>
