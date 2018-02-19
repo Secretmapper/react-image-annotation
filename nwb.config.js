@@ -15,15 +15,6 @@ module.exports = {
     html: {
       template: 'demo/src/index.html'
     },
-    styles: {
-      css: [{
-        include: /\.css$/,
-        css: {
-          modules: true,
-          localIdentName: '[name]__[local]__[hash:base64:5]'
-        }
-      }]
-    },
     extra: {
       module: {
         rules: [

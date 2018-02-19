@@ -1,13 +1,20 @@
 import React from 'react'
-import styles from './index.css'
+import styled from 'styled-components'
+
+const Container = styled.div`
+  border: dashed 2px black;
+  box-shadow: 0px 0px 1px 1px white inset;
+  box-sizing: border-box;
+  transition: box-shadow 0.21s ease-in-out;
+`
 
 function Rectangle (props) {
   const { geometry } = props.annotation
   if (!geometry) return null
 
   return (
-    <div
-      className={`${styles.container} ${props.className}`}
+    <Container
+      className={props.className}
       style={{
         position: 'absolute',
         left: `${geometry.x}%`,

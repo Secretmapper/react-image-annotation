@@ -1,11 +1,35 @@
 import React, { Component } from 'react'
 import T from 'prop-types'
-import styles from './Annotation.css'
+import styled from 'styled-components'
 import compose from '../utils/compose'
 import isMouseHovering from '../utils/isMouseHovering'
 import withRelativeMousePos from '../utils/withRelativeMousePos'
 
 import defaultProps from './defaultProps'
+import Overlay from './Overlay'
+
+const Container = styled.div`
+  position: relative;
+  width: 100%;
+  &:hover ${Overlay} {
+    opacity: 1;
+  }
+`
+
+const Img = styled.img`
+  display: block;
+  width: 100%;
+`
+
+const Items = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+`
+
+const Target = Items
 
 export default compose(
   isMouseHovering(),
@@ -159,27 +183,20 @@ export default compose(
       this.props.relativeMousePos.y
     )
 
-    const className = props.className
-      ? `${styles.img} ${props.className}`
-      : styles.img
-
     return (
-      <div
-        className={styles.container}
+      <Container
         style={props.style}
-        ref={isMouseHovering.innerRef}
+        innerRef={isMouseHovering.innerRef}
       >
-        <img
-          className={className}
+        <Img
+          className={props.className}
           style={props.style}
           alt={props.alt}
           src={props.src}
           draggable={false}
-          ref={this.setInnerRef}
+          innerRef={this.setInnerRef}
         />
-        <div
-          className={styles.items}
-        >
+        <Items>
           {props.annotations.map(annotation => (
             renderHighlight({
               key: annotation.data.id,
@@ -196,13 +213,12 @@ export default compose(
               })
             )
           }
-        </div>
-        <div
+        </Items>
+        <Target
           onClick={this.onClick}
           onMouseUp={this.onMouseUp}
           onMouseDown={this.onMouseDown}
           onMouseMove={this.onTargetMouseMove}
-          className={styles.target}
         />
         {!props.disableOverlay && (
           renderOverlay({
@@ -231,7 +247,7 @@ export default compose(
             })
           )
         }
-      </div>
+      </Container>
     )
   }
 })

@@ -1,7 +1,5 @@
 import React from 'react'
 
-import styles from './Annotation.css'
-
 import Point from './Point'
 import Editor from './Editor'
 import FancyRectangle from './FancyRectangle'
@@ -102,13 +100,13 @@ export default {
     switch (type) {
       case RectangleSelector.TYPE:
         return (
-          <Overlay className={styles.overlay}>
+          <Overlay>
             Click and Drag to Annotate
           </Overlay>
         )
       case PointSelector.TYPE:
         return (
-          <Overlay className={styles.overlay}>
+          <Overlay>
             Click to Annotate
           </Overlay>
         )

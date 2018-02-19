@@ -20,7 +20,9 @@
     "test:coverage": "nwb test-react --coverage",
     "test:watch": "nwb test-react --server"
   },
-  "dependencies": {},
+  "dependencies": {
+    "styled-components": "^3.1.6"
+  },
   "peerDependencies": {
     "prop-types": "^15.6.0",
     "react": "16.x",
@@ -35,8 +37,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-syntax-highlighter": "^7.0.0",
-    "standard": "^10.0.3",
-    "styled-components": "^3.1.6"
+    "standard": "^10.0.3"
   },
   "standard": {
     "env": [
