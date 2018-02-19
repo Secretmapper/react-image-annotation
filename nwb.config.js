@@ -22,5 +22,8 @@ module.exports = {
         ]
       }
     }
+  },
+  karma: {
+    testContext: 'tests/index.test.js'
   }
 }
