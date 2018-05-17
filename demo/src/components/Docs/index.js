@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Highlight from '../Highlight'
 import Multi from '../Samples/Multiple'
+import Threaded from '../Samples/Threaded'
 import Linked from '../Samples/Linked'
 import Custom from '../Samples/Custom'
 import multicode from '../Samples/Multiple/index.txt'
@@ -12,6 +13,14 @@ const Container = styled.main`
   padding-top: 16px;
   padding-bottom: 64px;
   max-width: 700px;
+`
+
+const SourceLink = styled.a`
+  display: block;
+  margin-top: 8px;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
 `
 
 export default class Docs extends Component {
@@ -31,6 +40,14 @@ export default class Docs extends Component {
         </Highlight>
         <h1>Custom Renderers/Components/Styles</h1>
         <Custom />
+        <SourceLink target='_blank' href='https://github.com/Secretmapper/react-image-annotation/blob/master/demo/src/components/Samples/Custom/index.js'>
+          View source
+        </SourceLink>
+        <h1>Threaded Comments (Custom Content Overlay)</h1>
+        <Threaded />
+        <SourceLink target='_blank' href='https://github.com/Secretmapper/react-image-annotation/blob/master/demo/src/components/Samples/Threaded/index.js'>
+          View source
+        </SourceLink>
       </Container>
     )
   }
