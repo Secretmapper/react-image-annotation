@@ -40,6 +40,8 @@ function TextEditor (props) {
       <Inner>
         <textarea
           placeholder='Write description'
+          onFocus={props.onFocus}
+          onBlur={props.onBlur}
           onChange={props.onChange}
           value={props.value}
         >
