@@ -100,6 +100,8 @@ export default compose(
     const { annotations } = this.props
     const { container, getSelectorByType } = this
 
+    if (!container) return
+
     const intersections = annotations
       .map(annotation => {
         const { geometry } = annotation
