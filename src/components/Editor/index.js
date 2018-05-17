@@ -88,11 +88,15 @@ function Editor (props) {
         >
         </textarea>
       </Inner>
-      <Button
-        onClick={props.onSubmit}
-      >
-        Submit
-      </Button>
+      {props.annotation.data
+        && props.annotation.data.text
+        && (
+        <Button
+          onClick={props.onSubmit}
+        >
+          Submit
+        </Button>
+      )}
     </Container>
   )
 }
