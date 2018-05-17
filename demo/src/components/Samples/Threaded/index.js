@@ -232,7 +232,6 @@ export default class Threaded extends Component {
 
   onSubmit = (annotation) => {
     const { geometry, data } = annotation
-    console.log(annotation)
 
     this.setState({
       annotation: {},
