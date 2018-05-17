@@ -93,19 +93,6 @@ const UserPill = styled.span`
 class ThreadedEditor extends Component {
   state = { text: '' }
 
-  componentDidMount () {
-    const { props } = this
-    this.props.onChange({
-      ...props.annotation,
-      data: {
-        ...props.annotation.data,
-        comments: [
-          { id: Math.random(), text: '' }
-        ]
-      }
-    })
-  }
-
   onUpdateText = (e) => {
     const { props } = this
 
@@ -117,8 +104,13 @@ class ThreadedEditor extends Component {
       data: {
         ...props.annotation.data,
         comments: [
-          {
+          this.props.annotation.data
+          ? {
             ...this.props.annotation.data.comments[0],
+            text: e.target.value
+          }
+          : {
+            id: Math.random(),
             text: e.target.value
           }
         ]
@@ -144,7 +136,11 @@ class ThreadedEditor extends Component {
         <TextEditor
           onChange={this.onUpdateText}
           onSubmit={props.onSubmit}
-          value={props.annotation.data.comments[0].text}
+          value={
+            props.annotation.data
+              ? props.annotation.data.comments[0].text
+              : ''
+          }
         />
       </EditorContainer>
     )
