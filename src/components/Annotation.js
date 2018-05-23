@@ -127,6 +127,10 @@ export default compose(
     this.onMouseMove(e)
   }
 
+  onTargetMouseLeave = (e) => {
+    this.props.relativeMousePos.onMouseLeave(e)
+  }
+
   onMouseUp = (e) => this.callSelectorMethod('onMouseUp', e)
   onMouseDown = (e) => this.callSelectorMethod('onMouseDown', e)
   onMouseMove = (e) => this.callSelectorMethod('onMouseMove', e)
@@ -195,6 +199,7 @@ export default compose(
       <Container
         style={props.style}
         innerRef={isMouseHovering.innerRef}
+        onMouseLeave={this.onTargetMouseLeave}
       >
         <Img
           className={props.className}

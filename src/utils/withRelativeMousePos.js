@@ -15,11 +15,16 @@ const withRelativeMousePos = (key = 'relativeMousePos') => DecoratedComponent =>
       })
     }
 
+    onMouseLeave = (e) => {
+      this.setState({ x: null, y: null })
+    }
+
     render () {
       const hocProps = {
         [key]: {
           innerRef: this.innerRef,
           onMouseMove: this.onMouseMove,
+          onMouseLeave: this.onMouseLeave,
           x: this.state.x,
           y: this.state.y
         }
