@@ -21,7 +21,7 @@ export function area (geometry) {
 }
 
 export const methods = {
-  onClick (annotation, e) {
+  onMouseDown (annotation, e) {
     if (!annotation.selection) {
       const { x: anchorX, y: anchorY } = getCoordPercentage(e)
 
@@ -35,6 +35,20 @@ export const methods = {
         }
       }
     } else {
+      return {}
+    }
+
+    return annotation
+  },
+
+  onMouseUp (annotation, e) {
+    if (annotation.selection) {
+      const { selection, geometry } = annotation
+
+      if (!geometry) {
+        return {}
+      }
+
       switch (annotation.selection.mode) {
         case 'SELECTING':
           return {
@@ -45,8 +59,6 @@ export const methods = {
               mode: 'EDITING'
             }
           }
-        case 'EDITING':
-          break
         default:
           break
       }
