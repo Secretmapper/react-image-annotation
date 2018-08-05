@@ -47,6 +47,8 @@ export const methods = {
           type: TYPE,
         }
       }
+    } else{
+      return {}
     }
   }
 }
