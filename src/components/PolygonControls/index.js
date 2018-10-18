@@ -30,6 +30,27 @@ const Container = styled.div`
   margin-right: 50%
 `
 
+const Button = styled.div`
+  background: whitesmoke;
+  border: 0;
+  box-sizing: border-box;
+  color: #363636;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0;
+  outline: 0;
+  padding: 8px 16px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+  width: 100%;
+
+  transition: background 0.21s ease-in-out;
+
+  &:focus, &:hover {
+    background: #eeeeee;
+  }
+`
+
 function PolygonControls (props) {
   const { geometry } = props.annotation
   // Only show polygon controls if there are at least three points set
@@ -47,8 +68,8 @@ function PolygonControls (props) {
       <Container
         className={props.className}
       >
-        <button onClick={props.onSelectionClear}>Clear</button>
-        <button onClick={props.onSelectionComplete}>Done</button>
+        <Button onClick={props.onSelectionClear}>Clear</Button>
+        <Button onClick={props.onSelectionComplete}>Done</Button>
       </Container>
     </div>
   )
