@@ -42,6 +42,7 @@ function Editor (props) {
         position: 'absolute',
         left: ((geometry.type === PolygonSelector.TYPE) ? `${getHorizontallyCentralPoint(geometry.points)}%` : `${geometry.x}%`),
         top: ((geometry.type === PolygonSelector.TYPE) ? `${getVerticallyLowestPoint(geometry.points)}%` : `${geometry.y + geometry.height}%`),
+        zIndex: 999,
         ...props.style
       }}
     >

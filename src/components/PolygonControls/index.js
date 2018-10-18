@@ -32,7 +32,8 @@ const Container = styled.div`
 
 function PolygonControls (props) {
   const { geometry } = props.annotation
-  if (!geometry || !geometry.points || geometry.points.length === 0) return null
+  // Only show polygon controls if there are at least three points set
+  if (!geometry || !geometry.points || geometry.points.length < 3) return null
 
   return (
     <div

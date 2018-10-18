@@ -13,7 +13,7 @@ const Container = styled.div`
   padding: 8px 16px;
   margin-top: 8px;
   margin-left: -50%;
-  margin-right: 50%
+  margin-right: 50%;
 `
 
 function Content (props) {
@@ -26,6 +26,7 @@ function Content (props) {
         position: 'absolute',
         left: ((geometry.type === PolygonSelector.TYPE) ? `${getHorizontallyCentralPoint(geometry.points)}%` : `${geometry.x}%`),
         top: ((geometry.type === PolygonSelector.TYPE) ? `${getVerticallyLowestPoint(geometry.points)}%` : `${geometry.y + geometry.height}%`),
+        zIndex: 999,
         ...props.style
       }}
       className={props.className}

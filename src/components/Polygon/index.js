@@ -1,6 +1,17 @@
 import React from 'react'
 import LineTo from 'react-lineto'
+import styled from 'styled-components'
 import './index.css'
+
+const PointDot = styled.div`
+  background: black;
+  border-radius: 3px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  margin-top: -3px;
+  position: absolute;
+`
 
 function edgesFromPoints(points) {
   if (!points || points.length < 3) return [];
@@ -19,7 +30,7 @@ function edgesFromPoints(points) {
 
 function Polygon (props) {
   const { geometry } = props.annotation
-  if (!geometry || !geometry.points || geometry.points.length < 3) return null
+  if (!geometry || !geometry.points || geometry.points.length === 0) return null
 
   return (
     <div
@@ -30,7 +41,7 @@ function Polygon (props) {
         ...props.style
       }}
     >
-      {geometry.points.map((item,i) => { // Iterate over points to create the edge lines
+      {(geometry.points.length >= 3) && geometry.points.map((item,i) => { // Iterate over points to create the edge lines
         let prevItem;
         if (i === 0) { // First point (links from last to first)
           prevItem = geometry.points[geometry.points.length - 1];
@@ -49,6 +60,18 @@ function Polygon (props) {
             borderStyle={'dashed'}
             borderWidth={2}
             className={(!props.active) ? "Polygon-LineTo" : "Polygon-LineToActive"}
+          />
+        )
+      })}
+      {geometry.points.map((item,i) => { // Iterate over points to points
+        return (
+          // Note that each LineTo element must have a unique key (unique relative to the point)
+          <PointDot
+            key={i + "_" + item.x + "_" + item.y}
+            style={{
+              left: item.x + "% ",
+              top: item.y + "%"
+            }}
           />
         )
       })}
