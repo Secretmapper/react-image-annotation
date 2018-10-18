@@ -2,16 +2,19 @@ import React from 'react'
 
 import Point from './Point'
 import Editor from './Editor'
+import PolygonControls from './PolygonControls';
 import FancyRectangle from './FancyRectangle'
 import Rectangle from './Rectangle'
 import Oval from './Oval'
+import Polygon from './Polygon'
 import Content from './Content'
 import Overlay from './Overlay'
 
 import {
   RectangleSelector,
   PointSelector,
-  OvalSelector
+  OvalSelector,
+  PolygonSelector
 } from '../selectors'
 
 export default {
@@ -22,7 +25,8 @@ export default {
   selectors: [
     RectangleSelector,
     PointSelector,
-    OvalSelector
+    OvalSelector,
+    PolygonSelector
   ],
   disableAnnotation: false,
   disableSelector: false,
@@ -49,6 +53,12 @@ export default {
             annotation={annotation}
           />
         )
+      case PolygonSelector.TYPE:
+        return (
+          <Polygon
+            annotation={annotation}
+          />
+        )
       default:
         return null
     }
@@ -58,6 +68,13 @@ export default {
       annotation={annotation}
       onChange={onChange}
       onSubmit={onSubmit}
+    />
+  ),
+  renderPolygonControls: ({ annotation, onSelectionComplete, onSelectionClear }) => (
+    <PolygonControls
+      annotation={annotation}
+      onSelectionComplete={onSelectionComplete}
+      onSelectionClear={onSelectionClear}
     />
   ),
   renderHighlight: ({ key, annotation, active }) => {
@@ -81,6 +98,14 @@ export default {
       case OvalSelector.TYPE:
         return (
           <Oval
+            key={key}
+            annotation={annotation}
+            active={active}
+          />
+        )
+      case PolygonSelector.TYPE:
+        return (
+          <Polygon
             key={key}
             annotation={annotation}
             active={active}

@@ -1,8 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import TextEditor from '../TextEditor'
 import { getHorizontallyCentralPoint, getVerticallyLowestPoint } from '../../utils/pointsUtils'
-import { PolygonSelector } from '../../selectors'
 
 const fadeInScale = keyframes`
   from {
@@ -25,46 +23,39 @@ const Container = styled.div`
     0px 3px 1px -2px rgba(0, 0, 0, 0.12);
   margin-top: 16px;
   transform-origin: top left;
+
   animation: ${fadeInScale} 0.31s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
   margin-left: -50%;
   margin-right: 50%
 `
 
-function Editor (props) {
+function PolygonControls (props) {
   const { geometry } = props.annotation
-  if (!geometry) return null
+  if (!geometry || !geometry.points || geometry.points.length === 0) return null
 
   return (
     <div
-      className={props.className}
       style={{
         position: 'absolute',
-        left: ((geometry.type === PolygonSelector.TYPE) ? `${getHorizontallyCentralPoint(geometry.points)}%` : `${geometry.x}%`),
-        top: ((geometry.type === PolygonSelector.TYPE) ? `${getVerticallyLowestPoint(geometry.points)}%` : `${geometry.y + geometry.height}%`),
+        left: `${getHorizontallyCentralPoint(geometry.points)}%`,
+        top: `${getVerticallyLowestPoint(geometry.points)}%`,
         ...props.style
       }}
     >
-      <Container>
-        <TextEditor
-          onChange={e => props.onChange({
-            ...props.annotation,
-            data: {
-              ...props.annotation.data,
-              text: e.target.value
-            }
-          })}
-          onSubmit={props.onSubmit}
-          value={props.annotation.data && props.annotation.data.text}
-        />
+      <Container
+        className={props.className}
+      >
+        <button onClick={props.onSelectionClear}>Clear</button>
+        <button onClick={props.onSelectionComplete}>Done</button>
       </Container>
     </div>
   )
 }
 
-Editor.defaultProps = {
+PolygonControls.defaultProps = {
   className: '',
   style: {}
 }
 
-export default Editor
+export default PolygonControls

@@ -5,6 +5,8 @@ import compose from '../utils/compose'
 import isMouseHovering from '../utils/isMouseHovering'
 import withRelativeMousePos from '../utils/withRelativeMousePos'
 
+import { PolygonSelector } from '../selectors'
+
 import defaultProps from './defaultProps'
 import Overlay from './Overlay'
 
@@ -42,6 +44,9 @@ export default compose(
     onMouseDown: T.func,
     onMouseMove: T.func,
     onClick: T.func,
+    // For Polygon Selector
+    onSelectionComplete: T.func,
+    onSelectionClear: T.func,
 
     annotations: T.arrayOf(
       T.shape({
@@ -81,7 +86,8 @@ export default compose(
     renderContent: T.func.isRequired,
 
     disableOverlay: T.bool,
-    renderOverlay: T.func.isRequired
+    renderOverlay: T.func.isRequired,
+    renderPolygonControls: T.func.isRequired
   }
 
   static defaultProps = defaultProps
@@ -135,6 +141,8 @@ export default compose(
   onMouseDown = (e) => this.callSelectorMethod('onMouseDown', e)
   onMouseMove = (e) => this.callSelectorMethod('onMouseMove', e)
   onClick = (e) => this.callSelectorMethod('onClick', e)
+  onSelectionComplete = () => this.callSelectorMethod('onSelectionComplete')
+  onSelectionClear = () => this.callSelectorMethod('onSelectionClear')
 
   onSubmit = () => {
     this.props.onSubmit(this.props.value)
@@ -187,7 +195,8 @@ export default compose(
       renderContent,
       renderSelector,
       renderEditor,
-      renderOverlay
+      renderOverlay,
+      renderPolygonControls
     } = props
 
     const topAnnotationAtMouse = this.getTopAnnotationAt(
@@ -257,6 +266,17 @@ export default compose(
               annotation: props.value,
               onChange: props.onChange,
               onSubmit: this.onSubmit
+            })
+          )
+        }
+        {props.value.geometry
+          && (props.value.geometry.type === PolygonSelector.TYPE)
+          && (!props.value.selection || !props.value.selection.showEditor)
+          && (
+            renderPolygonControls({
+              annotation: props.value,
+              onSelectionComplete: this.onSelectionComplete,
+              onSelectionClear: this.onSelectionClear
             })
           )
         }
