@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { getHorizontallyCentralPoint, getVerticallyLowestPoint } from '../../utils/pointsUtils'
+import { PolygonSelector } from '../../selectors'
 
 const Container = styled.div`
   background: white;
@@ -10,7 +12,8 @@ const Container = styled.div`
     0px 3px 1px -2px rgba(0, 0, 0, 0.12);
   padding: 8px 16px;
   margin-top: 8px;
-  margin-left: 8px;
+  margin-left: -50%;
+  margin-right: 50%;
 `
 
 function Content (props) {
@@ -18,18 +21,21 @@ function Content (props) {
   if (!geometry) return null
 
   return (
-    <Container
+    <div
       style={{
         position: 'absolute',
-        left: `${geometry.x}%`,
-        top: `${geometry.y + geometry.height}%`,
+        left: ((geometry.type === PolygonSelector.TYPE) ? `${getHorizontallyCentralPoint(geometry.points)}%` : `${geometry.x}%`),
+        top: ((geometry.type === PolygonSelector.TYPE) ? `${getVerticallyLowestPoint(geometry.points)}%` : `${geometry.y + geometry.height}%`),
+        zIndex: 999,
         ...props.style
       }}
       className={props.className}
       geometry={geometry}
     >
-      {props.annotation.data && props.annotation.data.text}
-    </Container>
+      <Container>
+        {props.annotation.data && props.annotation.data.text}
+      </Container>
+    </div>
   )
 }
 

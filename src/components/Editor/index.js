@@ -1,6 +1,8 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import TextEditor from '../TextEditor'
+import { getHorizontallyCentralPoint, getVerticallyLowestPoint } from '../../utils/pointsUtils'
+import { PolygonSelector } from '../../selectors'
 
 const fadeInScale = keyframes`
   from {
@@ -23,9 +25,10 @@ const Container = styled.div`
     0px 3px 1px -2px rgba(0, 0, 0, 0.12);
   margin-top: 16px;
   transform-origin: top left;
-
   animation: ${fadeInScale} 0.31s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
+  margin-left: -50%;
+  margin-right: 50%
 `
 
 function Editor (props) {
@@ -33,27 +36,30 @@ function Editor (props) {
   if (!geometry) return null
 
   return (
-    <Container
+    <div
       className={props.className}
       style={{
         position: 'absolute',
-        left: `${geometry.x}%`,
-        top: `${geometry.y + geometry.height}%`,
+        left: ((geometry.type === PolygonSelector.TYPE) ? `${getHorizontallyCentralPoint(geometry.points)}%` : `${geometry.x}%`),
+        top: ((geometry.type === PolygonSelector.TYPE) ? `${getVerticallyLowestPoint(geometry.points)}%` : `${geometry.y + geometry.height}%`),
+        zIndex: 999,
         ...props.style
       }}
     >
-      <TextEditor
-        onChange={e => props.onChange({
-          ...props.annotation,
-          data: {
-            ...props.annotation.data,
-            text: e.target.value
-          }
-        })}
-        onSubmit={props.onSubmit}
-        value={props.annotation.data && props.annotation.data.text}
-      />
-    </Container>
+      <Container>
+        <TextEditor
+          onChange={e => props.onChange({
+            ...props.annotation,
+            data: {
+              ...props.annotation.data,
+              text: e.target.value
+            }
+          })}
+          onSubmit={props.onSubmit}
+          value={props.annotation.data && props.annotation.data.text}
+        />
+      </Container>
+    </div>
   )
 }
 
