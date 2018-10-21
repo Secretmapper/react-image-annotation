@@ -2,7 +2,7 @@ import React from 'react'
 
 import Point from './Point'
 import Editor from './Editor'
-import PolygonControls from './PolygonControls';
+import PolygonControls from './PolygonControls'
 import FancyRectangle from './FancyRectangle'
 import Rectangle from './Rectangle'
 import Oval from './Oval'
@@ -127,6 +127,12 @@ export default {
         return (
           <Overlay>
             Click to Annotate
+          </Overlay>
+        )
+      case PolygonSelector.TYPE:
+        return (
+          <Overlay>
+            Click to Add Points to Annotation
           </Overlay>
         )
       default:
