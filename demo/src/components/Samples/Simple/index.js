@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import Annotation from '../../../../../src'
 
-import PolygonSelector from '../../../../../src/hocs/PolygonSelector'
-
 import Root from '../../Root'
 import img from '../../../img.jpeg'
 
 export default class Simple extends Component {
   state = {
     annotations: [],
-    annotation: {},
-    type: PolygonSelector.TYPE
+    annotation: {}
   }
 
   onChange = (annotation) => {

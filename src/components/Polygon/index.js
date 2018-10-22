@@ -16,12 +16,12 @@ const PointDot = styled.div`
 function edgesFromPoints(points) {
   if (!points || points.length < 3) return [];
 
-  const edges = [];
+  const edges = []
   for (let i = 0; i < points.length; ++i) {
     if (i + 1 === points.length) {
-      edges.push(Math.hypot(points[0].x-points[i].x, points[0].y-points[i].y));
+      edges.push(Math.hypot(points[0].x-points[i].x, points[0].y-points[i].y))
     } else {
-      edges.push(Math.hypot(points[i + 1].x-points[i].x, points[i + 1].y-points[i].y));
+      edges.push(Math.hypot(points[i + 1].x-points[i].x, points[i + 1].y-points[i].y))
     }
   }
 
@@ -42,11 +42,11 @@ function Polygon (props) {
       }}
     >
       {(geometry.points.length >= 3) && geometry.points.map((item,i) => { // Iterate over points to create the edge lines
-        let prevItem;
+        let prevItem
         if (i === 0) { // First point (links from last to first)
-          prevItem = geometry.points[geometry.points.length - 1];
+          prevItem = geometry.points[geometry.points.length - 1]
         } else {
-          prevItem = geometry.points[i - 1];
+          prevItem = geometry.points[i - 1]
         }
         return (
           // Note that each LineTo element must have a unique key (unique relative to the connected points)

@@ -269,7 +269,8 @@ export default compose(
             })
           )
         }
-        {props.value.geometry
+        {props.value
+          && props.value.geometry
           && (props.value.geometry.type === PolygonSelector.TYPE)
           && (!props.value.selection || !props.value.selection.showEditor)
           && (
