@@ -54,7 +54,7 @@ const Button = styled.div`
 function PolygonControls (props) {
   const { geometry } = props.annotation
   // Only show polygon controls if there are at least three points set
-  if (!geometry || !geometry.points || geometry.points.length < 3) return null
+  if (!geometry || !geometry.points || geometry.points.length === 0) return null
 
   return (
     <div
@@ -68,6 +68,7 @@ function PolygonControls (props) {
       <Container
         className={props.className}
       >
+        {(geometry.points.length >= 2) && <Button onClick={props.onSelectionUndo}>Undo</Button>}
         <Button onClick={props.onSelectionClear}>Clear</Button>
         <Button onClick={props.onSelectionComplete}>Done</Button>
       </Container>
