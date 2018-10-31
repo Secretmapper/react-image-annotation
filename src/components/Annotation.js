@@ -47,6 +47,7 @@ export default compose(
     // For Polygon Selector
     onSelectionComplete: T.func,
     onSelectionClear: T.func,
+    onSelectionUndo: T.func,
 
     annotations: T.arrayOf(
       T.shape({
@@ -143,6 +144,7 @@ export default compose(
   onClick = (e) => this.callSelectorMethod('onClick', e)
   onSelectionComplete = () => this.callSelectorMethod('onSelectionComplete')
   onSelectionClear = () => this.callSelectorMethod('onSelectionClear')
+  onSelectionUndo = () => this.callSelectorMethod('onSelectionUndo')
 
   onSubmit = () => {
     this.props.onSubmit(this.props.value)
@@ -277,7 +279,8 @@ export default compose(
             renderPolygonControls({
               annotation: props.value,
               onSelectionComplete: this.onSelectionComplete,
-              onSelectionClear: this.onSelectionClear
+              onSelectionClear: this.onSelectionClear,
+              onSelectionUndo: this.onSelectionUndo
             })
           )
         }

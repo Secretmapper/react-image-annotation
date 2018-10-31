@@ -95,6 +95,16 @@ export const methods = {
     }
   },
 
+  onSelectionUndo (annotation) {
+    return {
+      ...annotation,
+      geometry: {
+        ...annotation.geometry,
+        points: annotation.geometry.points.slice(0, -1)
+      }
+    }
+  },
+
   onMouseUp (annotation, e) {
     const coordOfClick = getCoordPercentage(e)
 
