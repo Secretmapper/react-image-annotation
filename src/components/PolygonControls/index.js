@@ -69,7 +69,7 @@ function PolygonControls (props) {
       >
         {(geometry.points.length >= 2) && <Button onClick={props.onSelectionUndo}>Undo</Button>}
         <Button onClick={props.onSelectionClear}>Clear</Button>
-        <Button onClick={props.onSelectionComplete}>Done</Button>
+        {(geometry.points.length >= 3) && <Button onClick={props.onSelectionComplete}>Done</Button>}
       </Container>
     </div>
   )
