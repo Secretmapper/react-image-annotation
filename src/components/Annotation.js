@@ -93,6 +93,18 @@ export default compose(
 
   static defaultProps = defaultProps
 
+  componentDidMount = () => {
+    window.addEventListener("resize", this.windowResizing);
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener("resize", this.windowResizing);
+  }
+
+  windowResizing = () => {
+    this.forceUpdate();
+  }
+
   setInnerRef = (el) => {
     this.container = el
     this.props.relativeMousePos.innerRef(el)
