@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import TextEditor from '../TextEditor'
+import DropdownEditor from '../DropdownEditor'
 import { getHorizontallyCentralPoint, getVerticallyLowestPoint } from '../../utils/pointsUtils'
 import { PolygonSelector } from '../../selectors'
 
@@ -47,17 +48,32 @@ function Editor (props) {
       }}
     >
       <Container>
-        <TextEditor
-          onChange={e => props.onChange({
-            ...props.annotation,
-            data: {
-              ...props.annotation.data,
-              text: e.target.value
-            }
-          })}
-          onSubmit={props.onSubmit}
-          value={props.annotation.data && props.annotation.data.text}
-        />
+        {(geometry.type === PolygonSelector.TYPE) &&
+          <DropdownEditor
+            onChange={e => props.onChange({
+              ...props.annotation,
+              data: {
+                ...props.annotation.data,
+                text: e.target.value
+              }
+            })}
+            onSubmit={props.onSubmit}
+            value={props.annotation.data && props.annotation.data.text}
+          />
+        }
+        {(geometry.type !== PolygonSelector.TYPE) &&
+          <TextEditor
+            onChange={e => props.onChange({
+              ...props.annotation,
+              data: {
+                ...props.annotation.data,
+                text: e.target.value
+              }
+            })}
+            onSubmit={props.onSubmit}
+            value={props.annotation.data && props.annotation.data.text}
+          />
+        }
       </Container>
     </div>
   )
