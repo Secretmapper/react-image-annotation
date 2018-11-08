@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import TextEditor from '../TextEditor'
-import DropdownEditor from '../DropdownEditor'
+import RadioButtonEditor from '../RadioButtonEditor'
 import { getHorizontallyCentralPoint, getVerticallyLowestPoint } from '../../utils/pointsUtils'
 import { PolygonSelector } from '../../selectors'
 
@@ -49,16 +49,24 @@ function Editor (props) {
     >
       <Container>
         {(geometry.type === PolygonSelector.TYPE) &&
-          <DropdownEditor
-            onChange={e => props.onChange({
+          <RadioButtonEditor
+            onChangeAge={e => props.onChange({
               ...props.annotation,
               data: {
                 ...props.annotation.data,
-                text: e.target.value
+                age: e.target.value
+              }
+            })}
+            onChangeRenovationType={e => props.onChange({
+              ...props.annotation,
+              data: {
+                ...props.annotation.data,
+                renovationType: e.target.value
               }
             })}
             onSubmit={props.onSubmit}
-            value={props.annotation.data && props.annotation.data.text}
+            ageValue={props.annotation.data && props.annotation.data.age}
+            renovationTypeValue={props.annotation.data && props.annotation.data.renovationType}
           />
         }
         {(geometry.type !== PolygonSelector.TYPE) &&

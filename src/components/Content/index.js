@@ -33,7 +33,9 @@ function Content (props) {
       geometry={geometry}
     >
       <Container>
-        {props.annotation.data && props.annotation.data.text}
+        {props.annotation.data && props.annotation.data.age}
+        {' - '}
+        {props.annotation.data && props.annotation.data.renovationType}
       </Container>
     </div>
   )
