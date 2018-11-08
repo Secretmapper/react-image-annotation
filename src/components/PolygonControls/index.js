@@ -55,21 +55,36 @@ function PolygonControls (props) {
   // Only show polygon controls if there are at least three points set
   if (!geometry || !geometry.points || geometry.points.length === 0) return null
 
+  const zoomBetweenHalfAndOne = Math.abs(props.imageZoomAmount - 2) / 2;
+
   return (
     <div
       style={{
         position: 'absolute',
         left: `${getHorizontallyCentralPoint(geometry.points)}%`,
-        top: `${(getVerticallyLowestPoint(geometry.points) + 10)}%`,
+        top: `${(getVerticallyLowestPoint(geometry.points) + (10 * zoomBetweenHalfAndOne))}%`,
         ...props.style
       }}
     >
       <Container
         className={props.className}
       >
-        {(geometry.points.length >= 2) && <Button onClick={props.onSelectionUndo}>Undo</Button>}
-        <Button onClick={props.onSelectionClear}>Clear</Button>
-        {(geometry.points.length >= 3) && <Button onClick={props.onSelectionComplete}>Done</Button>}
+        {(geometry.points.length >= 2) && 
+          <Button
+            onClick={props.onSelectionUndo}
+            style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}
+          >Undo</Button>
+        }
+        <Button
+          onClick={props.onSelectionClear}
+          style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}
+        >Clear</Button>
+        {(geometry.points.length >= 3) &&
+          <Button
+            onClick={props.onSelectionComplete}
+            style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}
+          >Done</Button>
+        }
       </Container>
     </div>
   )

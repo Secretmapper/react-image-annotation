@@ -71,12 +71,13 @@ export default {
       onSubmit={onSubmit}
     />
   ),
-  renderPolygonControls: ({ annotation, onSelectionComplete, onSelectionClear, onSelectionUndo }) => (
+  renderPolygonControls: ({ annotation, onSelectionComplete, onSelectionClear, onSelectionUndo, imageZoomAmount }) => (
     <PolygonControls
       annotation={annotation}
       onSelectionComplete={onSelectionComplete}
       onSelectionClear={onSelectionClear}
       onSelectionUndo={onSelectionUndo}
+      imageZoomAmount={imageZoomAmount}
     />
   ),
   renderHighlight: ({ key, annotation, active }) => {

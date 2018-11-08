@@ -310,7 +310,8 @@ export default compose(
               annotation: props.value,
               onSelectionComplete: this.onSelectionComplete,
               onSelectionClear: this.onSelectionClear,
-              onSelectionUndo: this.onSelectionUndo
+              onSelectionUndo: this.onSelectionUndo,
+              imageZoomAmount: props.imageZoomAmount
             })
           )
         }
