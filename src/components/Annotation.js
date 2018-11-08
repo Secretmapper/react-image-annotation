@@ -159,7 +159,7 @@ export default compose(
   onClick = (e) => {
     const { onClickCheckFunc } = this.props;
 
-    if (!onClickCheckFunc || onClickCheckFunc()) {
+    if (!onClickCheckFunc || onClickCheckFunc(e)) {
       return this.callSelectorMethod('onClick', e)
     }
     return;
