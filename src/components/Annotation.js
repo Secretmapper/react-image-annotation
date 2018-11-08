@@ -45,7 +45,7 @@ export default compose(
     onMouseMove: T.func,
     onClick: T.func,
     // This prop represents how zoom the image is (default: 1)
-    imageZoomAmount: T.number;
+    imageZoomAmount: T.number,
     // This function is run before the onClick callback is executed (onClick
     // is only called if onClickCheckFunc resolve to true or doesn't exist)
     onClickCheckFunc: T.func,
