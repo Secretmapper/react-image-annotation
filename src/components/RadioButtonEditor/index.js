@@ -3,14 +3,7 @@ import styled, { keyframes } from 'styled-components'
 
 const Inner = styled.div`
   padding: 8px 16px;
-
-  textarea {
-    border: 0;
-    font-size: 14px;
-    margin: 6px 0;
-    min-height: 60px;
-    outline: 0;
-  }
+  color: #363636!important;
 `
 
 const Button = styled.div`
@@ -35,10 +28,12 @@ const Button = styled.div`
 `
 
 function RadioButtonEditor (props) {
+  const zoomBetweenHalfAndOne = Math.abs(props.imageZoomAmount - 2) / 2;
+
   return (
     <React.Fragment>
-      <Inner>
-        <div><h6 style={{margin: '6px 0'}}> - Coffee Age - </h6></div>
+      <Inner style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}>
+        <div><h6 style={{margin: '0px 0px', textAlign: 'center'}}> - Coffee Age - </h6></div>
         <div>
           <label><input type="radio"
             name="age" 
@@ -56,7 +51,7 @@ function RadioButtonEditor (props) {
           /> Mature</label>
         </div>
 
-        <div><h6 style={{margin: '6px 0'}}> - Renovation Type - </h6></div>
+        <div><h6 style={{margin: '0px 0px', textAlign: 'center'}}> - Renovation Type - </h6></div>
         <div>
           <label><input type="radio"
             name="renovationType" 
@@ -77,6 +72,7 @@ function RadioButtonEditor (props) {
       {(props.ageValue && props.ageValue.length > 0 && props.renovationTypeValue && props.renovationTypeValue.length > 0) &&
         <Button
           onClick={props.onSubmit}
+          style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}
         >
           Submit
         </Button>

@@ -64,11 +64,12 @@ export default {
         return null
     }
   },
-  renderEditor: ({ annotation, onChange, onSubmit }) => (
+  renderEditor: ({ annotation, onChange, onSubmit, imageZoomAmount }) => (
     <Editor
       annotation={annotation}
       onChange={onChange}
       onSubmit={onSubmit}
+      imageZoomAmount={imageZoomAmount}
     />
   ),
   renderPolygonControls: ({ annotation, onSelectionComplete, onSelectionClear, onSelectionUndo, imageZoomAmount }) => (
@@ -118,10 +119,11 @@ export default {
         return null
     }
   },
-  renderContent: ({ key, annotation }) => (
+  renderContent: ({ key, annotation, imageZoomAmount }) => (
     <Content
       key={key}
       annotation={annotation}
+      imageZoomAmount={imageZoomAmount}
     />
   ),
   renderOverlay: ({ type, annotation }) => {

@@ -67,6 +67,7 @@ function Editor (props) {
             onSubmit={props.onSubmit}
             ageValue={props.annotation.data && props.annotation.data.age}
             renovationTypeValue={props.annotation.data && props.annotation.data.renovationType}
+            imageZoomAmount={props.imageZoomAmount}
           />
         }
         {(geometry.type !== PolygonSelector.TYPE) &&

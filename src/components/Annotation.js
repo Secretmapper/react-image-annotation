@@ -285,7 +285,8 @@ export default compose(
           && (
             renderContent({
               key: annotation.data.id,
-              annotation: annotation
+              annotation: annotation,
+              imageZoomAmount: props.imageZoomAmount
             })
           )
         ))}
@@ -297,7 +298,8 @@ export default compose(
             renderEditor({
               annotation: props.value,
               onChange: props.onChange,
-              onSubmit: this.onSubmit
+              onSubmit: this.onSubmit,
+              imageZoomAmount: props.imageZoomAmount
             })
           )
         }
