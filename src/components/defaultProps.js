@@ -32,6 +32,7 @@ export default {
   disableSelector: false,
   disableEditor: false,
   disableOverlay: false,
+  imageZoomAmount: 1,
   activeAnnotationComparator: (a, b) => a === b,
   renderSelector: ({ annotation }) => {
     switch (annotation.geometry.type) {
@@ -63,19 +64,21 @@ export default {
         return null
     }
   },
-  renderEditor: ({ annotation, onChange, onSubmit }) => (
+  renderEditor: ({ annotation, onChange, onSubmit, imageZoomAmount }) => (
     <Editor
       annotation={annotation}
       onChange={onChange}
       onSubmit={onSubmit}
+      imageZoomAmount={imageZoomAmount}
     />
   ),
-  renderPolygonControls: ({ annotation, onSelectionComplete, onSelectionClear, onSelectionUndo }) => (
+  renderPolygonControls: ({ annotation, onSelectionComplete, onSelectionClear, onSelectionUndo, imageZoomAmount }) => (
     <PolygonControls
       annotation={annotation}
       onSelectionComplete={onSelectionComplete}
       onSelectionClear={onSelectionClear}
       onSelectionUndo={onSelectionUndo}
+      imageZoomAmount={imageZoomAmount}
     />
   ),
   renderHighlight: ({ key, annotation, active }) => {
@@ -116,10 +119,11 @@ export default {
         return null
     }
   },
-  renderContent: ({ key, annotation }) => (
+  renderContent: ({ key, annotation, imageZoomAmount }) => (
     <Content
       key={key}
       annotation={annotation}
+      imageZoomAmount={imageZoomAmount}
     />
   ),
   renderOverlay: ({ type, annotation }) => {

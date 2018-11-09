@@ -105,7 +105,7 @@ export const methods = {
     }
   },
 
-  onMouseUp (annotation, e) {
+  onClick (annotation, e) {
     const coordOfClick = getCoordPercentage(e)
 
     return {

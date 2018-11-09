@@ -14,11 +14,14 @@ const Container = styled.div`
   margin-top: 8px;
   margin-left: -50%;
   margin-right: 50%;
+  color: #363636!important;
 `
 
 function Content (props) {
   const { geometry } = props.annotation
   if (!geometry) return null
+
+  const zoomBetweenHalfAndOne = Math.abs(props.imageZoomAmount - 2) / 2;
 
   return (
     <div
@@ -32,8 +35,12 @@ function Content (props) {
       className={props.className}
       geometry={geometry}
     >
-      <Container>
-        {props.annotation.data && props.annotation.data.text}
+      <Container
+        style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}
+      >
+        {props.annotation.data && props.annotation.data.age}
+        {' - '}
+        {props.annotation.data && props.annotation.data.renovationType}
       </Container>
     </div>
   )

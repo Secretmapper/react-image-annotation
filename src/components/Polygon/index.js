@@ -5,11 +5,11 @@ import './index.css'
 
 const PointDot = styled.div`
   background: black;
-  border-radius: 3px;
-  width: 6px;
-  height: 6px;
-  margin-left: -3px;
-  margin-top: -3px;
+  border-radius: 2px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  margin-top: -2px;
   position: absolute;
 `
 

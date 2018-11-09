@@ -44,6 +44,11 @@ export default compose(
     onMouseDown: T.func,
     onMouseMove: T.func,
     onClick: T.func,
+    // This prop represents how zoom the image is (default: 1)
+    imageZoomAmount: T.number,
+    // This function is run before the onClick callback is executed (onClick
+    // is only called if onClickCheckFunc resolve to true or doesn't exist)
+    onClickCheckFunc: T.func,
     // For Polygon Selector
     onSelectionComplete: T.func,
     onSelectionClear: T.func,
@@ -93,6 +98,24 @@ export default compose(
 
   static defaultProps = defaultProps
 
+  componentDidMount = () => {
+    window.addEventListener("resize", this.forceUpdateComponent);
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener("resize", this.forceUpdateComponent);
+  }
+
+  forceUpdateComponent = () => {
+    this.forceUpdate();
+  }
+
+  componentDidUpdate = prevProps => {
+     if (prevProps.imageZoomAmount !== this.props.imageZoomAmount) {
+       this.forceUpdateComponent();
+     }
+   }
+
   setInnerRef = (el) => {
     this.container = el
     this.props.relativeMousePos.innerRef(el)
@@ -141,7 +164,14 @@ export default compose(
   onMouseUp = (e) => this.callSelectorMethod('onMouseUp', e)
   onMouseDown = (e) => this.callSelectorMethod('onMouseDown', e)
   onMouseMove = (e) => this.callSelectorMethod('onMouseMove', e)
-  onClick = (e) => this.callSelectorMethod('onClick', e)
+  onClick = (e) => {
+    const { onClickCheckFunc } = this.props;
+
+    if (!onClickCheckFunc || onClickCheckFunc(e)) {
+      return this.callSelectorMethod('onClick', e)
+    }
+    return;
+  }
   onSelectionComplete = () => this.callSelectorMethod('onSelectionComplete')
   onSelectionClear = () => this.callSelectorMethod('onSelectionClear')
   onSelectionUndo = () => this.callSelectorMethod('onSelectionUndo')
@@ -255,7 +285,8 @@ export default compose(
           && (
             renderContent({
               key: annotation.data.id,
-              annotation: annotation
+              annotation: annotation,
+              imageZoomAmount: props.imageZoomAmount
             })
           )
         ))}
@@ -267,7 +298,8 @@ export default compose(
             renderEditor({
               annotation: props.value,
               onChange: props.onChange,
-              onSubmit: this.onSubmit
+              onSubmit: this.onSubmit,
+              imageZoomAmount: props.imageZoomAmount
             })
           )
         }
@@ -280,7 +312,8 @@ export default compose(
               annotation: props.value,
               onSelectionComplete: this.onSelectionComplete,
               onSelectionClear: this.onSelectionClear,
-              onSelectionUndo: this.onSelectionUndo
+              onSelectionUndo: this.onSelectionUndo,
+              imageZoomAmount: props.imageZoomAmount
             })
           )
         }

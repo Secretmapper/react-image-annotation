@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import TextEditor from '../TextEditor'
+import RadioButtonEditor from '../RadioButtonEditor'
 import { getHorizontallyCentralPoint, getVerticallyLowestPoint } from '../../utils/pointsUtils'
 import { PolygonSelector } from '../../selectors'
 
@@ -47,17 +48,41 @@ function Editor (props) {
       }}
     >
       <Container>
-        <TextEditor
-          onChange={e => props.onChange({
-            ...props.annotation,
-            data: {
-              ...props.annotation.data,
-              text: e.target.value
-            }
-          })}
-          onSubmit={props.onSubmit}
-          value={props.annotation.data && props.annotation.data.text}
-        />
+        {(geometry.type === PolygonSelector.TYPE) &&
+          <RadioButtonEditor
+            onChangeAge={e => props.onChange({
+              ...props.annotation,
+              data: {
+                ...props.annotation.data,
+                age: e.target.value
+              }
+            })}
+            onChangeRenovationType={e => props.onChange({
+              ...props.annotation,
+              data: {
+                ...props.annotation.data,
+                renovationType: e.target.value
+              }
+            })}
+            onSubmit={props.onSubmit}
+            ageValue={props.annotation.data && props.annotation.data.age}
+            renovationTypeValue={props.annotation.data && props.annotation.data.renovationType}
+            imageZoomAmount={props.imageZoomAmount}
+          />
+        }
+        {(geometry.type !== PolygonSelector.TYPE) &&
+          <TextEditor
+            onChange={e => props.onChange({
+              ...props.annotation,
+              data: {
+                ...props.annotation.data,
+                text: e.target.value
+              }
+            })}
+            onSubmit={props.onSubmit}
+            value={props.annotation.data && props.annotation.data.text}
+          />
+        }
       </Container>
     </div>
   )
