@@ -281,14 +281,14 @@ export default compose(
           })
         )}
         {props.annotations.map(annotation => (
-          this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse)
-          && (
+          /* this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse)
+          && ( */
             renderContent({
               key: annotation.data.id,
               annotation: annotation,
               imageZoomAmount: props.imageZoomAmount
             })
-          )
+          // )
         ))}
         {!props.disableEditor
           && props.value

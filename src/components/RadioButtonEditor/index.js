@@ -33,7 +33,7 @@ function RadioButtonEditor (props) {
   return (
     <React.Fragment>
       <Inner style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}>
-        <div><h6 style={{margin: '0px 0px', textAlign: 'center'}}> - Coffee Age - </h6></div>
+        <div><h6 style={{margin: '0px 0px', textAlign: 'center', fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem')}}> - Coffee Age - </h6></div>
         <div>
           <label><input type="radio"
             name="age" 
@@ -51,7 +51,7 @@ function RadioButtonEditor (props) {
           /> Mature</label>
         </div>
 
-        <div><h6 style={{margin: '0px 0px', textAlign: 'center'}}> - Renovation Type - </h6></div>
+        <div><h6 style={{margin: '0px 0px', textAlign: 'center', fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem')}}> - Renovation Type - </h6></div>
         <div>
           <label><input type="radio"
             name="renovationType" 
