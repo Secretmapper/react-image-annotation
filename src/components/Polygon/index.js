@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import './index.css'
 
 const PointDot = styled.div`
-  background: black;
+  background: white;
   border-radius: 1px;
   width: 2px;
   height: 2px;
@@ -56,7 +56,7 @@ function Polygon (props) {
             fromAnchor={item.x + "% " + item.y + "%"}
             to="linesContainer"
             toAnchor={prevItem.x + "% " + prevItem.y + "%"}
-            borderColor={'black'}
+            borderColor={'white'}
             borderStyle={'dashed'}
             borderWidth={2}
             className={(!props.active) ? "Polygon-LineTo" : "Polygon-LineToActive"}
