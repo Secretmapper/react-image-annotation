@@ -56,14 +56,18 @@ function PolygonControls (props) {
   // Only show polygon controls if there are at least three points set
   if (!geometry || !geometry.points || geometry.points.length === 0) return null
 
-  const zoomBetweenHalfAndOne = Math.abs(props.imageZoomAmount - 2) / 2;
+  const zoomBetweenZeroAndOne = Math.abs(((props.imageZoomAmount - 1) / 4) - 1);
+
+  const fontSize = ((1 / 5) + (zoomBetweenZeroAndOne * (4 / 5)));
+  const paddingHorizontal = (((1 / 5) * 8) + ((4 / 5) * 8 * zoomBetweenZeroAndOne));
+  const paddingVertical = (((1 / 5) * 16) + ((4 / 5) * 16 * (zoomBetweenZeroAndOne)));
 
   return (
     <div
       style={{
         position: 'absolute',
         left: `${getHorizontallyCentralPoint(geometry.points)}%`,
-        top: `${(getVerticallyLowestPoint(geometry.points) + (5 + (5 * zoomBetweenHalfAndOne)))}%`,
+        top: `${(getVerticallyLowestPoint(geometry.points) + ((10 * (1 / 5)) + (10 * (4 / 5) * zoomBetweenZeroAndOne)))}%`,
         ...props.style
       }}
     >
@@ -73,17 +77,17 @@ function PolygonControls (props) {
         {(geometry.points.length >= 2) && 
           <Button
             onClick={props.onSelectionUndo}
-            style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}
+            style={{fontSize: (fontSize + 'rem'), padding: paddingHorizontal + 'px ' + paddingVertical + 'px'}}
           >Undo</Button>
         }
         <Button
           onClick={props.onSelectionClear}
-          style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}
+          style={{fontSize: (fontSize + 'rem'), padding: paddingHorizontal + 'px ' + paddingVertical + 'px'}}
         >Clear</Button>
         {(geometry.points.length >= 3) &&
           <Button
             onClick={props.onSelectionComplete}
-            style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}
+            style={{fontSize: (fontSize + 'rem'), padding: paddingHorizontal + 'px ' + paddingVertical + 'px'}}
           >Done</Button>
         }
       </Container>

@@ -21,7 +21,7 @@ function Content (props) {
   const { geometry } = props.annotation
   if (!geometry) return null
 
-  const zoomBetweenHalfAndOne = Math.abs(props.imageZoomAmount - 2) / 2;
+  const zoomBetweenZeroAndOne = Math.abs(((props.imageZoomAmount - 1) / 4) - 1);
 
   return (
     <div
@@ -36,7 +36,7 @@ function Content (props) {
       geometry={geometry}
     >
       <Container
-        style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}
+        style={{fontSize: (((1 / 5) + (zoomBetweenZeroAndOne * (4 / 5))) + 'rem'), padding: ((((1 / 5) * 8) + ((4 / 5) * 8 * zoomBetweenZeroAndOne)) + 'px ' + (((1 / 5) * 16) + ((4 / 5) * 16 * zoomBetweenZeroAndOne)) + 'px')}}
       >
         {props.annotation.data && props.annotation.data.age}
         {' - '}

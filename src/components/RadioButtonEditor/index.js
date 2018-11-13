@@ -28,12 +28,14 @@ const Button = styled.div`
 `
 
 function RadioButtonEditor (props) {
-  const zoomBetweenHalfAndOne = Math.abs(props.imageZoomAmount - 2) / 2;
+  const zoomBetweenZeroAndOne = Math.abs(((props.imageZoomAmount - 1) / 4) - 1);
+
+  const fontSize = ((1 / 5) + (zoomBetweenZeroAndOne * (4 / 5)));
 
   return (
     <React.Fragment>
-      <Inner style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}>
-        <div><h6 style={{margin: '0px 0px', textAlign: 'center', fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem')}}> - Coffee Age - </h6></div>
+      <Inner style={{fontSize: (fontSize + 'rem'), padding: ((((1 / 5) * 8) + ((4 / 5) * 8 * zoomBetweenZeroAndOne)) + 'px ' + (((1 / 5) * 16) + ((4 / 5) * 16 * zoomBetweenZeroAndOne)) + 'px')}}>
+        <div><h6 style={{margin: '0px 0px', textAlign: 'center', fontSize: (fontSize + 'rem')}}> - Coffee Age - </h6></div>
         <div>
           <label><input type="radio"
             name="age" 
@@ -51,7 +53,7 @@ function RadioButtonEditor (props) {
           /> Mature</label>
         </div>
 
-        <div><h6 style={{margin: '0px 0px', textAlign: 'center', fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem')}}> - Renovation Type - </h6></div>
+        <div><h6 style={{margin: '0px 0px', textAlign: 'center', fontSize: (fontSize + 'rem')}}> - Renovation Type - </h6></div>
         <div>
           <label><input type="radio"
             name="renovationType" 
@@ -72,7 +74,7 @@ function RadioButtonEditor (props) {
       {(props.ageValue && props.ageValue.length > 0 && props.renovationTypeValue && props.renovationTypeValue.length > 0) &&
         <Button
           onClick={props.onSubmit}
-          style={{fontSize: ((0.5 + zoomBetweenHalfAndOne) + 'rem'), padding: ((4 + (4 * zoomBetweenHalfAndOne)) + 'px ' + (8 + (8 * zoomBetweenHalfAndOne)) + 'px')}}
+          style={{fontSize: (fontSize + 'rem'), padding: ((((1 / 5) * 8) + ((4 / 5) * 8 * zoomBetweenZeroAndOne)) + 'px ' + (((1 / 5) * 16) + ((4 / 5) * 16 * zoomBetweenZeroAndOne)) + 'px')}}
         >
           Submit
         </Button>
