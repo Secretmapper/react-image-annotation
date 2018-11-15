@@ -21,6 +21,9 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "polygon-lookup": "^2.4.0",
+    "polygon-tools": "^0.4.8",
+    "react-lineto": "^3.1.2",
     "styled-components": "^3.1.6"
   },
   "peerDependencies": {
