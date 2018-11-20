@@ -42,6 +42,7 @@ export default compose(
     onMouseDown: T.func,
     onMouseMove: T.func,
     onClick: T.func,
+    children: T.object,
 
     annotations: T.arrayOf(
       T.shape({
@@ -260,6 +261,7 @@ export default compose(
             })
           )
         }
+        <div>{props.children}</div>
       </Container>
     )
   }
