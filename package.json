@@ -1,6 +1,6 @@
 {
   "name": "react-image-annotation",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "react-image-annotation React component",
   "author": "Arian Allenson Valdez <arianallensonv@gmail.com> (http://arianv.com/)",
   "main": "lib/index.js",
