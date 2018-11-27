@@ -1,3 +1,10 @@
+## 0.9.8
+
+### Improvements
+
+- Add Type Definitions for Typescript (#12) (thanks @danilofuchs)
+- Add support for `children` property (#13) (thanks @federico-bohn)
+
 ## 0.9.7
 
 ### Fixes
