@@ -11,6 +11,9 @@
     "lib",
     "umd"
   ],
+  "watch": {
+    "build": "src/*"
+  },
   "scripts": {
     "build": "nwb build-react-component",
     "deploy": "gh-pages -d demo/dist",
@@ -18,7 +21,8 @@
     "start": "nwb serve-react-demo",
     "test": "nwb test-react",
     "test:coverage": "nwb test-react --coverage",
-    "test:watch": "nwb test-react --server"
+    "test:watch": "nwb test-react --server",
+    "watch": "npm-watch"
   },
   "dependencies": {
     "styled-components": "^3.1.6"
@@ -40,7 +44,8 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-syntax-highlighter": "^7.0.0",
-    "standard": "^10.0.3"
+    "standard": "^10.0.3",
+    "npm-watch": "^0.5.0"
   },
   "standard": {
     "env": [

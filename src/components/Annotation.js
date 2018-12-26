@@ -36,6 +36,14 @@ export default compose(
   isMouseHovering(),
   withRelativeMousePos()
 )(class Annotation extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      showEditor: false
+    }
+  }
+
   static propTypes = {
     innerRef: T.func,
     onMouseUp: T.func,
@@ -179,7 +187,30 @@ export default compose(
     }
   }
 
-  render () {
+  // Show editor by calling renderEditor, if renderEditor returns an element it
+  // will be displayed inline within Annotation
+  onShowEditor = () => {
+    if (!this.state.showEditor) {
+      // prevent spamming parent with multiple show editor events
+      this.setState({ showEditor: true });
+    }
+    const { value, onChange } = this.props;
+    return this.props.renderEditor({
+      annotation: value,
+      onChange: onChange,
+      onSubmit: this.onSubmit
+    });
+  }
+
+  onHideEditor = () => {
+    if (this.state.showEditor) {
+      // prevent spamming parent with multiple hide events
+      this.setState({ showEditor: false });
+      this.props.onHideEditor();
+    }
+  }
+
+  render() {
     const { props } = this
     const {
       isMouseHovering,
@@ -250,16 +281,9 @@ export default compose(
           )
         ))}
         {!props.disableEditor
-          && props.value
-          && props.value.selection
-          && props.value.selection.showEditor
-          && (
-            renderEditor({
-              annotation: props.value,
-              onChange: props.onChange,
-              onSubmit: this.onSubmit
-            })
-          )
+          && (props.value
+            && props.value.selection
+            && props.value.selection.showEditor ? this.onShowEditor() : this.onHideEditor())
         }
         <div>{props.children}</div>
       </Container>
