@@ -19,6 +19,7 @@ export default {
   onChange: () => {},
   onSubmit: () => {},
   onHideEditor: ()=>{},
+  ignoreModifier: (event)=> false,
   type: RectangleSelector.TYPE,
   selectors: [
     RectangleSelector,

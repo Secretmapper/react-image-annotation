@@ -49,6 +49,8 @@ export default compose(
     onMouseUp: T.func,
     onMouseDown: T.func,
     onMouseMove: T.func,
+    onHideEditor: T.func,
+    ignoreModifier: T.func,
     onClick: T.func,
     children: T.object,
 
@@ -152,6 +154,9 @@ export default compose(
   callSelectorMethod = (methodName, e) => {
     if (this.props.disableAnnotation) {
       return
+    }
+    if (this.props.ignoreModifier(e)) {
+      return;
     }
 
     if (!!this.props[methodName]) {
