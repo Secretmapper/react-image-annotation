@@ -1,4 +1,5 @@
 import React, { PureComponent as Component } from 'react'
+import { getOffsetCoordPercentage } from './offsetCoordinates';
 
 const withRelativeMousePos = (key = 'relativeMousePos') => DecoratedComponent => {
   class WithRelativeMousePos extends Component {
@@ -9,10 +10,8 @@ const withRelativeMousePos = (key = 'relativeMousePos') => DecoratedComponent =>
     }
 
     onMouseMove = (e) => {
-      this.setState({
-        x: (e.nativeEvent.offsetX / this.container.width) * 100,
-        y: (e.nativeEvent.offsetY / this.container.height) * 100,
-      })
+      const xystate = getOffsetCoordPercentage(e, this.container);
+      this.setState(xystate);
     }
 
     onMouseLeave = (e) => {
