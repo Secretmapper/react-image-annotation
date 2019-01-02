@@ -1,9 +1,6 @@
-const square = n => Math.pow(n, 2)
+import { getCoordPercentage } from '../utils/offsetCoordinates';
 
-const getCoordPercentage = (e) => ({
-  x: e.nativeEvent.offsetX / e.currentTarget.offsetWidth * 100,
-  y: e.nativeEvent.offsetY / e.currentTarget.offsetHeight * 100
-})
+const square = n => Math.pow(n, 2)
 
 export const TYPE = 'OVAL'
 
