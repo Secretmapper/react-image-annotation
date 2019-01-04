@@ -68,6 +68,9 @@ export default compose(
     }),
     onChange: T.func,
     onSubmit: T.func,
+    onCreate: T.func,
+    onUpdate: T.func,
+    onDelete: T.func,
 
     activeAnnotationComparator: T.func,
     activeAnnotations: T.arrayOf(T.any),
@@ -95,6 +98,22 @@ export default compose(
 
   getSelectorByType = (type) => {
     return this.props.selectors.find(s => s.TYPE === type)
+  }
+
+  // Sort by area, largest to smallest
+  // using this to get stacking order right for selecting existing
+  // annotations
+  getSortedAnnotations = (annotations) => {
+    const { container, getSelectorByType } = this;
+    const ordered = annotations
+      .filter(a => !!a)
+      .sort((a, b) => {
+        const aSelector = getSelectorByType(a.geometry.type)
+        const bSelector = getSelectorByType(b.geometry.type)
+
+        return -(aSelector.area(a.geometry, container) - bSelector.area(b.geometry, container));
+      });
+    return ordered;
   }
 
   getTopAnnotationAt = (x, y) => {
@@ -137,8 +156,13 @@ export default compose(
   onMouseMove = (e) => this.callSelectorMethod('onMouseMove', e)
   onClick = (e) => this.callSelectorMethod('onClick', e)
 
-  onSubmit = () => {
-    this.props.onSubmit(this.props.value)
+  onCreate = () => {
+    if ('onCreate' in this.props) {
+      this.props.onCreate(this.props.value);
+    } else {
+      // deprecate onSubmit for more explicit 'onCreate' name
+      this.props.onSubmit(this.props.value);
+    }
   }
 
   callSelectorMethod = (methodName, e) => {
@@ -179,6 +203,17 @@ export default compose(
     }
   }
 
+  // Handle selection of existing annotations to support update or delete
+  //
+  // Check if parent has enabled edit or delete
+  // Make the selected annotation current and pop open the editor
+  selectAnnotation = (annotation) => {
+    if ('onUpdate' in this.props || 'onDelete' in this.props) {
+      const update = {...annotation, selection: {...annotation.selection, showEditor: true, isUpdate: true} };
+      this.props.onChange(update);
+    }
+  }
+
   render () {
     const { props } = this
     const {
@@ -210,12 +245,18 @@ export default compose(
           draggable={false}
           innerRef={this.setInnerRef}
         />
-        <Items>
-          {props.annotations.map(annotation => (
+        <Items
+          onClick={this.onClick}
+          onMouseUp={this.onMouseUp}
+          onMouseDown={this.onMouseDown}
+          onMouseMove={this.onTargetMouseMove}
+        >
+          {this.getSortedAnnotations(props.annotations).map(annotation => (
             renderHighlight({
               key: annotation.data.id,
               annotation,
-              active: this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse)
+              active: this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse),
+              selectAnnotation: this.selectAnnotation
             })
           ))}
           {!props.disableSelector
@@ -228,12 +269,6 @@ export default compose(
             )
           }
         </Items>
-        <Target
-          onClick={this.onClick}
-          onMouseUp={this.onMouseUp}
-          onMouseDown={this.onMouseDown}
-          onMouseMove={this.onTargetMouseMove}
-        />
         {!props.disableOverlay && (
           renderOverlay({
             type: props.type,
@@ -257,7 +292,9 @@ export default compose(
             renderEditor({
               annotation: props.value,
               onChange: props.onChange,
-              onSubmit: this.onSubmit
+              onCreate: this.onCreate,
+              onUpdate: props.onUpdate,
+              onDelete: props.onDelete
             })
           )
         }

@@ -29,9 +29,9 @@ const Container = styled.div`
 `
 
 function Editor (props) {
-  const { geometry } = props.annotation
+  const { geometry, selection } = props.annotation
   if (!geometry) return null
-
+  
   return (
     <Container
       className={props.className}
@@ -43,6 +43,7 @@ function Editor (props) {
       }}
     >
       <TextEditor
+        annotation={props.annotation}
         onChange={e => props.onChange({
           ...props.annotation,
           data: {
@@ -50,7 +51,10 @@ function Editor (props) {
             text: e.target.value
           }
         })}
-        onSubmit={props.onSubmit}
+        isUpdate={selection.isUpdate}
+        onSubmit={props.onCreate}
+        onUpdate={props.onUpdate}
+        onDelete={props.onDelete}
         value={props.annotation.data && props.annotation.data.text}
       />
     </Container>
