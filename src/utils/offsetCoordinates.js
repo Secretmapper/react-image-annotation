@@ -1,4 +1,4 @@
-function getOffsetCoordinates(e, container) {
+function getOffsetCoordPercentage(e, container) {
     // nativeEvent.offsetX gives inconsistent results when dragging
     // up and to the left rather than the more natural down and to the
     // right. The reason could be browser implementation (it is still experimental)
@@ -8,21 +8,14 @@ function getOffsetCoordinates(e, container) {
     const rect = container.getBoundingClientRect();
     const offsetX = e.clientX - rect.x;
     const offsetY = e.clientY - rect.y;
-    return ({
-        offsetX: offsetX,
-        offsetY: offsetY
-    });
-}
 
-function getOffsetCoordPercentage(e, container) {
-    const { offsetX, offsetY } = getOffsetCoordinates(e, container);
     return {
-        x: offsetX / container.offsetWidth * 100,
-        y: offsetY / container.offsetHeight * 100
+        x: offsetX / rect.width * 100,
+        y: offsetY / rect.height * 100
     };
 }
 
-function getCoordPercentage(e) {    
+function getCoordPercentage(e) {
     return getOffsetCoordPercentage(e, e.currentTarget);
 }
 
