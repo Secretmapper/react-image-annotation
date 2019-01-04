@@ -18,6 +18,7 @@ export default {
   innerRef: () => {},
   onChange: () => {},
   onSubmit: () => {},
+  // onCreate: () => {}, // onCreate should replace onSubmit but it would be a breaking change  
   onHideEditor: ()=>{},
   ignoreModifier: (event)=> false,
   type: RectangleSelector.TYPE,
@@ -55,14 +56,16 @@ export default {
         return null
     }
   },
-  renderEditor: ({ annotation, onChange, onSubmit }) => (
+  renderEditor: ({ annotation, onChange, onCreate, onUpdate, onDelete }) => (
     <Editor
       annotation={annotation}
       onChange={onChange}
-      onSubmit={onSubmit}
+      onCreate={onCreate}
+      onUpdate={onUpdate}
+      onDelete={onDelete}
     />
   ),
-  renderHighlight: ({ key, annotation, active }) => {
+  renderHighlight: ({ key, annotation, active, selectAnnotation }) => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
         return (
@@ -70,6 +73,7 @@ export default {
             key={key}
             annotation={annotation}
             active={active}
+            selectAnnotation={selectAnnotation}
           />
         )
       case PointSelector.TYPE:

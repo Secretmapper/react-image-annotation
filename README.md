@@ -72,6 +72,9 @@ Prop | Description | Default
 `value` | Annotation object currently being created. See [annotation object](#annotation-object)  |
 `onChange` | `onChange` handler for annotation object |
 `onSubmit` | `onSubmit` handler for annotation object |
+`onCreate` | `onCreate` handler for annotation object |
+`onUpdate` | `onUpdate` handler for annotation object |
+`onDelete` | `onDelete` handler for annotation object |
 `type` | Selector type. See [custom shapes](#using-custom-shapes) | `RECTANGLE`
 `selectors` | An array of selectors. See [adding custom selector logic](#adding-custom-selector-logic) | `[RectangleSelector, PointSelector, OvalSelector]`
 `activeAnnotations` | Array of annotations that will be passed as 'active' (active highlight and shows content) |

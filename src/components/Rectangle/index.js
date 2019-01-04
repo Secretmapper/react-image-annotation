@@ -6,6 +6,9 @@ const Container = styled.div`
   box-shadow: 0px 0px 1px 1px white inset;
   box-sizing: border-box;
   transition: box-shadow 0.21s ease-in-out;
+  &:hover {
+    box-shadow: 0 0 1px 1px yellow inset;
+  }
 `
 
 function Rectangle (props) {
@@ -21,9 +24,9 @@ function Rectangle (props) {
         top: `${geometry.y}%`,
         height: `${geometry.height}%`,
         width: `${geometry.width}%`,
-        boxShadow: props.active && '0 0 1px 1px yellow inset',
         ...props.style
       }}
+      onClick={()=>props.selectAnnotation(props.annotation)}
     />
   )
 }

@@ -26,6 +26,7 @@ const Button = styled.div`
   text-align: center;
   text-shadow: 0 1px 0 rgba(0,0,0,0.1);
   width: 100%;
+  display: inline-block;
 
   transition: background 0.21s ease-in-out;
 
@@ -35,6 +36,19 @@ const Button = styled.div`
 `
 
 function TextEditor (props) {
+  let button = null;
+
+  if (props.isUpdate) {
+    const width = (!props.onUpdate != !props.onDelete) ? '100%' : '50%'; // logical XOR
+    button = (
+    <div>
+      {props.onUpdate && <Button onClick={()=>props.onUpdate(props.annotation)} style={{width: width}}>Update</Button>}
+      {props.onDelete && <Button onClick={()=>props.onDelete(props.annotation)} style={{width: width}}>Delete</Button>}
+    </div>
+      );
+  } else {
+    button = (<Button onClick={props.onSubmit}>Submit</Button>)
+  }
   return (
     <React.Fragment>
       <Inner>
@@ -47,13 +61,7 @@ function TextEditor (props) {
         >
         </textarea>
       </Inner>
-      {props.value && (
-        <Button
-          onClick={props.onSubmit}
-        >
-          Submit
-        </Button>
-      )}
+      {props.value && button}
     </React.Fragment>
   )
 }

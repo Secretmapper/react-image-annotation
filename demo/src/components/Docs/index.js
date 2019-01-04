@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Highlight from '../Highlight'
 import Multi from '../Samples/Multiple'
+import EditDelete from '../Samples/EditDelete'
 import Threaded from '../Samples/Threaded'
 import Linked from '../Samples/Linked'
 import Custom from '../Samples/Custom'
@@ -48,6 +49,8 @@ export default class Docs extends Component {
         <SourceLink target='_blank' href='https://github.com/Secretmapper/react-image-annotation/blob/master/demo/src/components/Samples/Threaded/index.js'>
           View source
         </SourceLink>
+        <h1>Edit or Delete Annotations</h1>
+        <EditDelete />
       </Container>
     )
   }
