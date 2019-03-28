@@ -14,8 +14,24 @@ const withRelativeMousePos = (key = 'relativeMousePos') => DecoratedComponent =>
         y: (e.nativeEvent.offsetY / this.container.height) * 100,
       })
     }
+    onTouchMove = (e) => {
+      if (e.nativeEvent.targetTouches.length === 1) {
+        const touch = e.nativeEvent.targetTouches[0]
+
+        const offsetX = touch.pageX - this.container.offsetParent.offsetLeft
+        const offsetY = touch.pageY - this.container.offsetParent.offsetTop
+
+        this.setState({
+          x: (offsetX / this.container.width) * 100,
+          y: (offsetY / this.container.height) * 100
+        })
+      }
+    }
 
     onMouseLeave = (e) => {
+      this.setState({ x: null, y: null })
+    }
+    onTouchLeave = (e) => {
       this.setState({ x: null, y: null })
     }
 
@@ -25,6 +41,8 @@ const withRelativeMousePos = (key = 'relativeMousePos') => DecoratedComponent =>
           innerRef: this.innerRef,
           onMouseMove: this.onMouseMove,
           onMouseLeave: this.onMouseLeave,
+          onTouchMove: this.onTouchMove,
+          onTouchLeave: this.onTouchLeave,
           x: this.state.x,
           y: this.state.y
         }
