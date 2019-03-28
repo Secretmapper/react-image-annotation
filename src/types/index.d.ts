@@ -80,6 +80,7 @@ declare module "react-image-annotation" {
 
     disableOverlay?: boolean;
     renderOverlay?: () => any;
+    allowTouch: boolean;
   }
 
   class Annotation extends React.Component<IAnnotationProps, {}> {}

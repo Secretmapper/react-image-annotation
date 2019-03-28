@@ -15,6 +15,7 @@ const Container = styled.div`
   &:hover ${Overlay} {
     opacity: 1;
   }
+  touch-action: ${(props) => (props.allowTouch ? "pinch-zoom" : "auto")};
 `
 
 const Img = styled.img`
@@ -82,7 +83,8 @@ export default compose(
     renderContent: T.func.isRequired,
 
     disableOverlay: T.bool,
-    renderOverlay: T.func.isRequired
+    renderOverlay: T.func.isRequired,
+    allowTouch: T.bool
   }
 
   static defaultProps = defaultProps
@@ -127,14 +129,24 @@ export default compose(
     this.props.relativeMousePos.onMouseMove(e)
     this.onMouseMove(e)
   }
+  onTargetTouchMove = (e) => {
+    this.props.relativeMousePos.onTouchMove(e)
+    this.onTouchMove(e)
+  }
 
   onTargetMouseLeave = (e) => {
     this.props.relativeMousePos.onMouseLeave(e)
+  }
+  onTargetTouchLeave = (e) => {
+    this.props.relativeMousePos.onTouchLeave(e)
   }
 
   onMouseUp = (e) => this.callSelectorMethod('onMouseUp', e)
   onMouseDown = (e) => this.callSelectorMethod('onMouseDown', e)
   onMouseMove = (e) => this.callSelectorMethod('onMouseMove', e)
+  onTouchStart = (e) => this.callSelectorMethod("onTouchStart", e)
+  onTouchEnd = (e) => this.callSelectorMethod("onTouchEnd", e)
+  onTouchMove = (e) => this.callSelectorMethod("onTouchMove", e)
   onClick = (e) => this.callSelectorMethod('onClick', e)
 
   onSubmit = () => {
@@ -188,7 +200,8 @@ export default compose(
       renderContent,
       renderSelector,
       renderEditor,
-      renderOverlay
+      renderOverlay,
+      allowTouch
     } = props
 
     const topAnnotationAtMouse = this.getTopAnnotationAt(
@@ -201,6 +214,8 @@ export default compose(
         style={props.style}
         innerRef={isMouseHovering.innerRef}
         onMouseLeave={this.onTargetMouseLeave}
+        onTouchCancel={this.onTargetTouchLeave}
+        allowTouch={allowTouch}
       >
         <Img
           className={props.className}
@@ -233,6 +248,9 @@ export default compose(
           onMouseUp={this.onMouseUp}
           onMouseDown={this.onMouseDown}
           onMouseMove={this.onTargetMouseMove}
+          onTouchStart={allowTouch ? this.onTouchStart : undefined}
+          onTouchEnd={allowTouch ? this.onTouchEnd : undefined}
+          onTouchMove={allowTouch ? this.onTargetTouchMove : undefined}
         />
         {!props.disableOverlay && (
           renderOverlay({
