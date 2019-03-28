@@ -18,17 +18,11 @@
     "start": "nwb serve-react-demo",
     "test": "nwb test-react",
     "test:coverage": "nwb test-react --coverage",
-    "test:watch": "nwb test-react --server"
+    "test:watch": "nwb test-react --server",
+    "postinstall": "nwb build-react-component"
   },
   "dependencies": {
-    "styled-components": "^3.1.6"
-  },
-  "peerDependencies": {
-    "prop-types": "^15.6.0",
-    "react": "16.x",
-    "react-dom": ">=0.14"
-  },
-  "devDependencies": {
+    "styled-components": "^3.1.6",
     "chai": "^4.1.2",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -41,6 +35,14 @@
     "react-router-dom": "^4.2.2",
     "react-syntax-highlighter": "^7.0.0",
     "standard": "^10.0.3"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.6.0",
+    "react": "16.x",
+    "react-dom": ">=0.14"
+  },
+  "devDependencies": {
+    
   },
   "standard": {
     "env": [
