@@ -89,6 +89,7 @@ Prop | Description | Default
 `onMouseDown` | `onMouseDown` handler on annotation target |
 `onMouseMove` | `onMouseMove` handler on annotation target |
 `onClick` | `onClick` handler on annotation target |
+`allowTouch` | Set to `true` to allow the target to handle touch events. This disables one-finger scrolling. See [adding custom selector logic](#adding-custom-selector-logic) | `false`
 
 #### Annotation object
 
