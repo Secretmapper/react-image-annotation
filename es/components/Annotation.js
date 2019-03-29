@@ -44,7 +44,22 @@ export default compose(isMouseHovering(), withRelativeMousePos())((_temp2 = _cla
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.setInnerRef = function (el) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.targetRef = React.createRef(), _this.addTargetTouchEventListeners = function () {
+      // Safari does not recognize touch-action CSS property,
+      // so we need to call preventDefault ourselves to stop touch from scrolling
+      // Event handlers must be set via ref to enable e.preventDefault()
+      // https://github.com/facebook/react/issues/9809
+
+      _this.targetRef.current.ontouchstart = _this.onTouchStart;
+      _this.targetRef.current.ontouchend = _this.onTouchEnd;
+      _this.targetRef.current.ontouchmove = _this.onTargetTouchMove;
+      _this.targetRef.current.ontouchcancel = _this.onTargetTouchLeave;
+    }, _this.removeTargetTouchEventListeners = function () {
+      _this.targetRef.current.ontouchstart = undefined;
+      _this.targetRef.current.ontouchend = undefined;
+      _this.targetRef.current.ontouchmove = undefined;
+      _this.targetRef.current.ontouchcancel = undefined;
+    }, _this.setInnerRef = function (el) {
       _this.container = el;
       _this.props.relativeMousePos.innerRef(el);
       _this.props.innerRef(el);
@@ -137,6 +152,23 @@ export default compose(isMouseHovering(), withRelativeMousePos())((_temp2 = _cla
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
+  Annotation.prototype.componentDidMount = function componentDidMount() {
+    if (this.props.allowTouch) {
+      this.addTargetTouchEventListeners();
+    }
+    console.log(this.targetRef.current);
+  };
+
+  Annotation.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
+    if (this.props.allowTouch !== prevProps.allowTouch) {
+      if (this.props.allowTouch) {
+        this.addTargetTouchEventListeners();
+      } else {
+        this.removeTargetTouchEventListeners();
+      }
+    }
+  };
+
   Annotation.prototype.render = function render() {
     var _this3 = this;
 
@@ -184,13 +216,11 @@ export default compose(isMouseHovering(), withRelativeMousePos())((_temp2 = _cla
         })
       ),
       React.createElement(Target, {
+        innerRef: this.targetRef,
         onClick: this.onClick,
         onMouseUp: this.onMouseUp,
         onMouseDown: this.onMouseDown,
-        onMouseMove: this.onTargetMouseMove,
-        onTouchStart: allowTouch ? this.onTouchStart : undefined,
-        onTouchEnd: allowTouch ? this.onTouchEnd : undefined,
-        onTouchMove: allowTouch ? this.onTargetTouchMove : undefined
+        onMouseMove: this.onTargetMouseMove
       }),
       !props.disableOverlay && renderOverlay({
         type: props.type,

@@ -7,6 +7,7 @@ var square = function square(n) {
 var getCoordPercentage = function getCoordPercentage(e) {
   if (isTouchEvent(e)) {
     if (isValidTouchEvent(e)) {
+      e.preventDefault();
       return getTouchRelativeCoordinates(e);
     } else {
       return {
@@ -19,13 +20,13 @@ var getCoordPercentage = function getCoordPercentage(e) {
 };
 
 var isTouchEvent = function isTouchEvent(e) {
-  return e.nativeEvent.targetTouches !== undefined;
+  return e.targetTouches !== undefined;
 };
 var isValidTouchEvent = function isValidTouchEvent(e) {
-  return e.nativeEvent.targetTouches.length === 1;
+  return e.targetTouches.length === 1;
 };
 var getTouchRelativeCoordinates = function getTouchRelativeCoordinates(e) {
-  var touch = e.nativeEvent.targetTouches[0];
+  var touch = e.targetTouches[0];
 
   var offsetX = touch.pageX - e.currentTarget.offsetParent.offsetLeft;
   var offsetY = touch.pageY - e.currentTarget.offsetParent.offsetTop;

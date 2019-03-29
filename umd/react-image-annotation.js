@@ -2592,7 +2592,22 @@ var Target = Items;
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.setInnerRef = function (el) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.targetRef = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createRef(), _this.addTargetTouchEventListeners = function () {
+      // Safari does not recognize touch-action CSS property,
+      // so we need to call preventDefault ourselves to stop touch from scrolling
+      // Event handlers must be set via ref to enable e.preventDefault()
+      // https://github.com/facebook/react/issues/9809
+
+      _this.targetRef.current.ontouchstart = _this.onTouchStart;
+      _this.targetRef.current.ontouchend = _this.onTouchEnd;
+      _this.targetRef.current.ontouchmove = _this.onTargetTouchMove;
+      _this.targetRef.current.ontouchcancel = _this.onTargetTouchLeave;
+    }, _this.removeTargetTouchEventListeners = function () {
+      _this.targetRef.current.ontouchstart = undefined;
+      _this.targetRef.current.ontouchend = undefined;
+      _this.targetRef.current.ontouchmove = undefined;
+      _this.targetRef.current.ontouchcancel = undefined;
+    }, _this.setInnerRef = function (el) {
       _this.container = el;
       _this.props.relativeMousePos.innerRef(el);
       _this.props.innerRef(el);
@@ -2685,6 +2700,23 @@ var Target = Items;
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
+  Annotation.prototype.componentDidMount = function componentDidMount() {
+    if (this.props.allowTouch) {
+      this.addTargetTouchEventListeners();
+    }
+    console.log(this.targetRef.current);
+  };
+
+  Annotation.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
+    if (this.props.allowTouch !== prevProps.allowTouch) {
+      if (this.props.allowTouch) {
+        this.addTargetTouchEventListeners();
+      } else {
+        this.removeTargetTouchEventListeners();
+      }
+    }
+  };
+
   Annotation.prototype.render = function render() {
     var _this3 = this;
 
@@ -2732,13 +2764,11 @@ var Target = Items;
         })
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Target, {
+        innerRef: this.targetRef,
         onClick: this.onClick,
         onMouseUp: this.onMouseUp,
         onMouseDown: this.onMouseDown,
-        onMouseMove: this.onTargetMouseMove,
-        onTouchStart: allowTouch ? this.onTouchStart : undefined,
-        onTouchEnd: allowTouch ? this.onTouchEnd : undefined,
-        onTouchMove: allowTouch ? this.onTargetTouchMove : undefined
+        onMouseMove: this.onTargetMouseMove
       }),
       !props.disableOverlay && renderOverlay({
         type: props.type,
@@ -5513,8 +5543,8 @@ var withRelativeMousePos = function withRelativeMousePos() {
             y: e.nativeEvent.offsetY / _this.container.height * 100
           });
         }, _this.onTouchMove = function (e) {
-          if (e.nativeEvent.targetTouches.length === 1) {
-            var touch = e.nativeEvent.targetTouches[0];
+          if (e.targetTouches.length === 1) {
+            var touch = e.targetTouches[0];
 
             var offsetX = touch.pageX - _this.container.offsetParent.offsetLeft;
             var offsetY = touch.pageY - _this.container.offsetParent.offsetTop;
@@ -5930,6 +5960,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var getCoordPercentage = function getCoordPercentage(e) {
   if (isTouchEvent(e)) {
     if (isValidTouchEvent(e)) {
+      e.preventDefault();
       return getTouchRelativeCoordinates(e);
     } else {
       return {
@@ -5942,20 +5973,23 @@ var getCoordPercentage = function getCoordPercentage(e) {
 };
 
 var isTouchEvent = function isTouchEvent(e) {
-  return e.nativeEvent.targetTouches !== undefined;
+  return e.targetTouches !== undefined;
 };
 var isValidTouchEvent = function isValidTouchEvent(e) {
-  return e.nativeEvent.targetTouches.length === 1;
+  return e.targetTouches.length === 1;
 };
 var getTouchRelativeCoordinates = function getTouchRelativeCoordinates(e) {
-  var touch = e.nativeEvent.targetTouches[0];
+  var touch = e.targetTouches[0];
 
-  var offsetX = touch.pageX - e.currentTarget.offsetParent.offsetLeft;
-  var offsetY = touch.pageY - e.currentTarget.offsetParent.offsetTop;
+  var boundingRect = e.currentTarget.getBoundingClientRect();
+  // https://idiallo.com/javascript/element-postion
+  // https://stackoverflow.com/questions/25630035/javascript-getboundingclientrect-changes-while-scrolling
+  var offsetX = touch.pageX - boundingRect.left;
+  var offsetY = touch.pageY - (boundingRect.top + window.scrollY);
 
   return {
-    x: offsetX / e.currentTarget.offsetWidth * 100,
-    y: offsetY / e.currentTarget.offsetHeight * 100
+    x: offsetX / boundingRect.width * 100,
+    y: offsetY / boundingRect.height * 100
   };
 };
 var getMouseRelativeCoordinates = function getMouseRelativeCoordinates(e) {
@@ -6176,6 +6210,7 @@ var square = function square(n) {
 var getCoordPercentage = function getCoordPercentage(e) {
   if (isTouchEvent(e)) {
     if (isValidTouchEvent(e)) {
+      e.preventDefault();
       return getTouchRelativeCoordinates(e);
     } else {
       return {
@@ -6188,13 +6223,13 @@ var getCoordPercentage = function getCoordPercentage(e) {
 };
 
 var isTouchEvent = function isTouchEvent(e) {
-  return e.nativeEvent.targetTouches !== undefined;
+  return e.targetTouches !== undefined;
 };
 var isValidTouchEvent = function isValidTouchEvent(e) {
-  return e.nativeEvent.targetTouches.length === 1;
+  return e.targetTouches.length === 1;
 };
 var getTouchRelativeCoordinates = function getTouchRelativeCoordinates(e) {
-  var touch = e.nativeEvent.targetTouches[0];
+  var touch = e.targetTouches[0];
 
   var offsetX = touch.pageX - e.currentTarget.offsetParent.offsetLeft;
   var offsetY = touch.pageY - e.currentTarget.offsetParent.offsetTop;
