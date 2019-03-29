@@ -1,6 +1,7 @@
 const getCoordPercentage = (e) => {
   if (isTouchEvent(e)) {
     if (isValidTouchEvent(e)) {
+      e.preventDefault();
       return getTouchRelativeCoordinates(e)
     } else {
       return {
@@ -12,17 +13,20 @@ const getCoordPercentage = (e) => {
   }
 }
 
-const isTouchEvent = (e) => e.nativeEvent.targetTouches !== undefined
-const isValidTouchEvent = (e) => e.nativeEvent.targetTouches.length === 1
+const isTouchEvent = (e) => e.targetTouches !== undefined
+const isValidTouchEvent = (e) => e.targetTouches.length === 1
 const getTouchRelativeCoordinates = (e) => {
-  const touch = e.nativeEvent.targetTouches[0]
+  const touch = e.targetTouches[0]
 
-  const offsetX = touch.pageX - e.currentTarget.offsetParent.offsetLeft
-  const offsetY = touch.pageY - e.currentTarget.offsetParent.offsetTop
+  const boundingRect = e.currentTarget.getBoundingClientRect();
+  // https://idiallo.com/javascript/element-postion
+  // https://stackoverflow.com/questions/25630035/javascript-getboundingclientrect-changes-while-scrolling
+  const offsetX = touch.pageX - boundingRect.left
+  const offsetY = touch.pageY - (boundingRect.top + window.scrollY)
 
   return {
-    x: (offsetX / e.currentTarget.offsetWidth) * 100,
-    y: (offsetY / e.currentTarget.offsetHeight) * 100
+    x: (offsetX / boundingRect.width) * 100,
+    y: (offsetY / boundingRect.height) * 100
   }
 }
 const getMouseRelativeCoordinates = (e) => ({
