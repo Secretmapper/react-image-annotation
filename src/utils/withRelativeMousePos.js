@@ -15,8 +15,8 @@ const withRelativeMousePos = (key = 'relativeMousePos') => DecoratedComponent =>
       })
     }
     onTouchMove = (e) => {
-      if (e.nativeEvent.targetTouches.length === 1) {
-        const touch = e.nativeEvent.targetTouches[0]
+      if (e.targetTouches.length === 1) {
+        const touch = e.targetTouches[0]
 
         const offsetX = touch.pageX - this.container.offsetParent.offsetLeft
         const offsetY = touch.pageY - this.container.offsetParent.offsetTop

@@ -89,6 +89,44 @@ export default compose(
 
   static defaultProps = defaultProps
 
+  targetRef = React.createRef();
+  componentDidMount() {
+    if (this.props.allowTouch) {
+      this.addTargetTouchEventListeners();
+
+    }
+    console.log(this.targetRef.current)
+  }
+
+  addTargetTouchEventListeners = () => {
+    // Safari does not recognize touch-action CSS property,
+    // so we need to call preventDefault ourselves to stop touch from scrolling
+    // Event handlers must be set via ref to enable e.preventDefault()
+    // https://github.com/facebook/react/issues/9809
+    
+    this.targetRef.current.ontouchstart = this.onTouchStart;
+    this.targetRef.current.ontouchend = this.onTouchEnd;
+    this.targetRef.current.ontouchmove = this.onTargetTouchMove;
+    this.targetRef.current.ontouchcancel = this.onTargetTouchLeave;
+    
+  }
+  removeTargetTouchEventListeners = () => {
+    this.targetRef.current.ontouchstart = undefined;
+    this.targetRef.current.ontouchend = undefined;
+    this.targetRef.current.ontouchmove = undefined;
+    this.targetRef.current.ontouchcancel = undefined;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.allowTouch !== prevProps.allowTouch) {
+      if (this.props.allowTouch) {
+        this.addTargetTouchEventListeners()
+      } else {
+        this.removeTargetTouchEventListeners()
+      }
+    }
+  }
+
   setInnerRef = (el) => {
     this.container = el
     this.props.relativeMousePos.innerRef(el)
@@ -191,6 +229,8 @@ export default compose(
     }
   }
 
+  
+
   render () {
     const { props } = this
     const {
@@ -244,13 +284,11 @@ export default compose(
           }
         </Items>
         <Target
+          innerRef={this.targetRef}
           onClick={this.onClick}
           onMouseUp={this.onMouseUp}
           onMouseDown={this.onMouseDown}
           onMouseMove={this.onTargetMouseMove}
-          onTouchStart={allowTouch ? this.onTouchStart : undefined}
-          onTouchEnd={allowTouch ? this.onTouchEnd : undefined}
-          onTouchMove={allowTouch ? this.onTargetTouchMove : undefined}
         />
         {!props.disableOverlay && (
           renderOverlay({
