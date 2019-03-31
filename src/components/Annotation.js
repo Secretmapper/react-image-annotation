@@ -93,7 +93,6 @@ export default compose(
   componentDidMount() {
     if (this.props.allowTouch) {
       this.addTargetTouchEventListeners();
-
     }
   }
 
