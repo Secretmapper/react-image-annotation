@@ -3,6 +3,7 @@ import Annotation from '../../../../../src'
 import {
   PointSelector,
   RectangleSelector,
+  LineSelector,
   OvalSelector
 } from '../../../../../src/selectors'
 
@@ -13,16 +14,16 @@ import img from '../../../img.jpeg'
 
 export default class Multiple extends Component {
   state = {
-    type: RectangleSelector.TYPE,
+    type: LineSelector.TYPE,
     annotations: mocks.annotations,
     annotation: {}
   }
 
-  onChange = (annotation) => {
+  onChange = annotation => {
     this.setState({ annotation })
   }
 
-  onSubmit = (annotation) => {
+  onSubmit = annotation => {
     const { geometry, data } = annotation
 
     this.setState({
@@ -37,41 +38,42 @@ export default class Multiple extends Component {
     })
   }
 
-  onChangeType = (e) => {
+  onChangeType = e => {
     this.setState({
       annotation: {},
       type: e.currentTarget.innerHTML
     })
   }
 
-  render () {
+  render() {
     return (
       <div>
         <Button
           onClick={this.onChangeType}
-          active={RectangleSelector.TYPE === this.state.type}
-        >
+          active={LineSelector.TYPE === this.state.type}>
+          {LineSelector.TYPE}
+        </Button>
+        <Button
+          onClick={this.onChangeType}
+          active={RectangleSelector.TYPE === this.state.type}>
           {RectangleSelector.TYPE}
         </Button>
         <Button
           onClick={this.onChangeType}
-          active={PointSelector.TYPE === this.state.type}
-        >
+          active={PointSelector.TYPE === this.state.type}>
           {PointSelector.TYPE}
         </Button>
         <Button
           onClick={this.onChangeType}
-          active={OvalSelector.TYPE === this.state.type}
-        >
+          active={OvalSelector.TYPE === this.state.type}>
           {OvalSelector.TYPE}
         </Button>
 
         <Annotation
           src={img}
-          alt='Two pebbles anthropomorphized holding hands'
-
+          style={{ width: 300, height: 300 }}
+          alt="Two pebbles anthropomorphized holding hands"
           annotations={this.state.annotations}
-
           type={this.state.type}
           value={this.state.annotation}
           onChange={this.onChange}

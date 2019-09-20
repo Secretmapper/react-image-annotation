@@ -1,13 +1,13 @@
 const square = n => Math.pow(n, 2)
 
-const getCoordPercentage = (e) => ({
-  x: e.nativeEvent.offsetX / e.currentTarget.offsetWidth * 100,
-  y: e.nativeEvent.offsetY / e.currentTarget.offsetHeight * 100
+const getCoordPercentage = e => ({
+  x: (e.nativeEvent.offsetX / e.currentTarget.offsetWidth) * 100,
+  y: (e.nativeEvent.offsetY / e.currentTarget.offsetHeight) * 100
 })
 
 export const TYPE = 'OVAL'
 
-export function intersects ({ x, y }, geometry) {
+export function intersects({ x, y }, geometry) {
   const rx = geometry.width / 2
   const ry = geometry.height / 2
   const h = geometry.x + rx
@@ -18,7 +18,7 @@ export function intersects ({ x, y }, geometry) {
   return value <= 1
 }
 
-export function area (geometry) {
+export function area(geometry) {
   const rx = geometry.width / 2
   const ry = geometry.height / 2
 
@@ -26,7 +26,7 @@ export function area (geometry) {
 }
 
 export const methods = {
-  onMouseDown (annotation, e) {
+  onMouseDown(annotation, e) {
     if (!annotation.selection) {
       const { x: anchorX, y: anchorY } = getCoordPercentage(e)
 
@@ -46,7 +46,7 @@ export const methods = {
     return annotation
   },
 
-  onMouseUp (annotation, e) {
+  onMouseUp(annotation, e) {
     if (annotation.selection) {
       const { selection, geometry } = annotation
 
@@ -72,7 +72,7 @@ export const methods = {
     return annotation
   },
 
-  onMouseMove (annotation, e) {
+  onMouseMove(annotation, e) {
     if (annotation.selection && annotation.selection.mode === 'SELECTING') {
       const { anchorX, anchorY } = annotation.selection
       const { x: newX, y: newY } = getCoordPercentage(e)

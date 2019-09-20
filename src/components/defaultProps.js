@@ -4,12 +4,14 @@ import Point from './Point'
 import Editor from './Editor'
 import FancyRectangle from './FancyRectangle'
 import Rectangle from './Rectangle'
+import Line from './Line'
 import Oval from './Oval'
 import Content from './Content'
 import Overlay from './Overlay'
 
 import {
   RectangleSelector,
+  LineSelector,
   PointSelector,
   OvalSelector
 } from '../selectors'
@@ -19,11 +21,7 @@ export default {
   onChange: () => {},
   onSubmit: () => {},
   type: RectangleSelector.TYPE,
-  selectors: [
-    RectangleSelector,
-    PointSelector,
-    OvalSelector
-  ],
+  selectors: [RectangleSelector, PointSelector, OvalSelector, LineSelector],
   disableAnnotation: false,
   disableSelector: false,
   disableEditor: false,
@@ -32,84 +30,43 @@ export default {
   renderSelector: ({ annotation }) => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
-        return (
-          <FancyRectangle
-            annotation={annotation}
-          />
-        )
+        return <FancyRectangle annotation={annotation} />
+      case LineSelector.TYPE:
+        return <Line annotation={annotation} />
       case PointSelector.TYPE:
-        return (
-          <Point
-            annotation={annotation}
-          />
-        )
+        return <Point annotation={annotation} />
       case OvalSelector.TYPE:
-        return (
-          <Oval
-            annotation={annotation}
-          />
-        )
+        return <Oval annotation={annotation} />
       default:
         return null
     }
   },
   renderEditor: ({ annotation, onChange, onSubmit }) => (
-    <Editor
-      annotation={annotation}
-      onChange={onChange}
-      onSubmit={onSubmit}
-    />
+    <Editor annotation={annotation} onChange={onChange} onSubmit={onSubmit} />
   ),
   renderHighlight: ({ key, annotation, active }) => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
-        return (
-          <Rectangle
-            key={key}
-            annotation={annotation}
-            active={active}
-          />
-        )
+        return <Rectangle key={key} annotation={annotation} active={active} />
+      case LineSelector.TYPE:
+        return <Line key={key} annotation={annotation} active={active} />
       case PointSelector.TYPE:
-        return (
-          <Point
-            key={key}
-            annotation={annotation}
-            active={active}
-          />
-        )
+        return <Point key={key} annotation={annotation} active={active} />
       case OvalSelector.TYPE:
-        return (
-          <Oval
-            key={key}
-            annotation={annotation}
-            active={active}
-          />
-        )
+        return <Oval key={key} annotation={annotation} active={active} />
       default:
         return null
     }
   },
   renderContent: ({ key, annotation }) => (
-    <Content
-      key={key}
-      annotation={annotation}
-    />
+    <Content key={key} annotation={annotation} />
   ),
   renderOverlay: ({ type, annotation }) => {
     switch (type) {
       case PointSelector.TYPE:
-        return (
-          <Overlay>
-            Click to Annotate
-          </Overlay>
-        )
+        return <Overlay>Click to Annotate</Overlay>
       default:
-        return (
-          <Overlay>
-            Click and Drag to Annotate
-          </Overlay>
-        )
+        return <Overlay>Click and Drag to Annotate</Overlay>
     }
   }
 }
