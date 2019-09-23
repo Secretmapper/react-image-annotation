@@ -29,6 +29,8 @@ export const methods = {
 					...annotation.selection,
 					mode: 'SELECTING',
 					anchorX,
+					xPx: e.nativeEvent.offsetX,
+					yPx: e.nativeEvent.offsetY,
 					anchorY
 				}
 			}
@@ -68,9 +70,13 @@ export const methods = {
 	onMouseMove(annotation, e) {
 		if (annotation.selection && annotation.selection.mode === 'SELECTING') {
 			const { anchorX, anchorY } = annotation.selection
+			const { xPx, yPx } = annotation.selection
 			const { x: newX, y: newY } = getCoordPercentage(e)
-			const width = newX - anchorX
-			const height = newY - anchorY
+			const newXpX = e.nativeEvent.offsetX
+			const newYpX = e.nativeEvent.offsetY
+			const width = newXpX - xPx
+			const height = newYpX - yPx
+
 			let angle = (Math.atan(width / height) * 180) / Math.PI
 			if (height < 0) {
 				angle += 180
@@ -78,17 +84,7 @@ export const methods = {
 				angle += 360
 			}
 			const hypotenuse = Math.hypot(height, width)
-			// console.log(
-			// 	'width',
-			// 	width,
-			// 	'height',
-			// 	height,
-			// 	'hypotenuse',
-			// 	hypotenuse
-			// )
-			console.log('anchorX', anchorX, 'anchorY', anchorY)
-			// console.log('newX', newX, 'newY', newY)
-			// console.log(angle)
+			console.log(width, height, hypotenuse)
 			return {
 				...annotation,
 				geometry: {
