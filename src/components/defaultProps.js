@@ -8,11 +8,13 @@ import Line from './Line'
 import Oval from './Oval'
 import Content from './Content'
 import Overlay from './Overlay'
+import Drawing from './Drawing'
 
 import {
   RectangleSelector,
   LineSelector,
   PointSelector,
+  DrawingSelector,
   OvalSelector
 } from '../selectors'
 
@@ -21,7 +23,13 @@ export default {
   onChange: () => {},
   onSubmit: () => {},
   type: RectangleSelector.TYPE,
-  selectors: [RectangleSelector, PointSelector, OvalSelector, LineSelector],
+  selectors: [
+    RectangleSelector,
+    PointSelector,
+    OvalSelector,
+    LineSelector,
+    DrawingSelector
+  ],
   disableAnnotation: false,
   disableSelector: false,
   disableEditor: false,
@@ -33,6 +41,8 @@ export default {
         return <FancyRectangle annotation={annotation} />
       case LineSelector.TYPE:
         return <Line annotation={annotation} />
+      case DrawingSelector.TYPE:
+        return <Drawing annotation={annotation} />
       case PointSelector.TYPE:
         return <Point annotation={annotation} />
       case OvalSelector.TYPE:
@@ -50,6 +60,8 @@ export default {
         return <Rectangle key={key} annotation={annotation} active={active} />
       case LineSelector.TYPE:
         return <Line key={key} annotation={annotation} active={active} />
+      case DrawingSelector.TYPE:
+        return <Drawing key={key} annotation={annotation} active={active} />
       case PointSelector.TYPE:
         return <Point key={key} annotation={annotation} active={active} />
       case OvalSelector.TYPE:

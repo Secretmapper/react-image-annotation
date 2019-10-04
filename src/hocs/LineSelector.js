@@ -84,7 +84,7 @@ export const methods = {
 				angle += 360
 			}
 			const hypotenuse = Math.hypot(height, width)
-			console.log(width, height, hypotenuse)
+
 			return {
 				...annotation,
 				geometry: {

@@ -4,6 +4,7 @@ import {
   PointSelector,
   RectangleSelector,
   LineSelector,
+  DrawingSelector,
   OvalSelector
 } from '../../../../../src/selectors'
 
@@ -14,7 +15,7 @@ import img from '../../../img.jpeg'
 
 export default class Multiple extends Component {
   state = {
-    type: LineSelector.TYPE,
+    type: DrawingSelector.TYPE,
     annotations: mocks.annotations,
     annotation: {}
   }
@@ -52,6 +53,11 @@ export default class Multiple extends Component {
           onClick={this.onChangeType}
           active={LineSelector.TYPE === this.state.type}>
           {LineSelector.TYPE}
+        </Button>
+        <Button
+          onClick={this.onChangeType}
+          active={DrawingSelector.TYPE === this.state.type}>
+          {DrawingSelector.TYPE}
         </Button>
         <Button
           onClick={this.onChangeType}
