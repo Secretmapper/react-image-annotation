@@ -5,6 +5,7 @@ import {
   RectangleSelector,
   LineSelector,
   DrawingSelector,
+  PolygonSelector,
   OvalSelector
 } from '../../../../../src/selectors'
 
@@ -53,6 +54,11 @@ export default class Multiple extends Component {
           onClick={this.onChangeType}
           active={LineSelector.TYPE === this.state.type}>
           {LineSelector.TYPE}
+        </Button>
+        <Button
+          onClick={this.onChangeType}
+          active={PolygonSelector.TYPE === this.state.type}>
+          {PolygonSelector.TYPE}
         </Button>
         <Button
           onClick={this.onChangeType}

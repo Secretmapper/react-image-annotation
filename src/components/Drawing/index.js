@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Container = styled.svg`
   display: block;
-
+  position: absolute;
   width: 100%;
   height: 100%;
   box-shadow: 0px 0px 1px 1px white inset;

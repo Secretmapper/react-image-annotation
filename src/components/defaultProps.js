@@ -9,13 +9,15 @@ import Oval from './Oval'
 import Content from './Content'
 import Overlay from './Overlay'
 import Drawing from './Drawing'
-
+import Polygon from './Polygon'
+import PolygonControls from './PolygonControls'
 import {
   RectangleSelector,
   LineSelector,
   PointSelector,
   DrawingSelector,
-  OvalSelector
+  OvalSelector,
+  PolygonSelector
 } from '../selectors'
 
 export default {
@@ -27,12 +29,14 @@ export default {
     RectangleSelector,
     PointSelector,
     OvalSelector,
+    PolygonSelector,
     LineSelector,
     DrawingSelector
   ],
   disableAnnotation: false,
   disableSelector: false,
   disableEditor: false,
+  imageZoomAmount: 1,
   disableOverlay: false,
   activeAnnotationComparator: (a, b) => a === b,
   renderSelector: ({ annotation }) => {
@@ -41,10 +45,12 @@ export default {
         return <FancyRectangle annotation={annotation} />
       case LineSelector.TYPE:
         return <Line annotation={annotation} />
-      case DrawingSelector.TYPE:
-        return <Drawing annotation={annotation} />
       case PointSelector.TYPE:
         return <Point annotation={annotation} />
+      case DrawingSelector.TYPE:
+        return <Drawing annotation={annotation} />
+      case PolygonSelector.TYPE:
+        return <Polygon annotation={annotation} />
       case OvalSelector.TYPE:
         return <Oval annotation={annotation} />
       default:
@@ -53,6 +59,21 @@ export default {
   },
   renderEditor: ({ annotation, onChange, onSubmit }) => (
     <Editor annotation={annotation} onChange={onChange} onSubmit={onSubmit} />
+  ),
+  renderPolygonControls: ({
+    annotation,
+    onSelectionComplete,
+    onSelectionClear,
+    onSelectionUndo,
+    imageZoomAmount
+  }) => (
+    <PolygonControls
+      annotation={annotation}
+      onSelectionComplete={onSelectionComplete}
+      onSelectionClear={onSelectionClear}
+      onSelectionUndo={onSelectionUndo}
+      imageZoomAmount={imageZoomAmount}
+    />
   ),
   renderHighlight: ({ key, annotation, active }) => {
     switch (annotation.geometry.type) {
@@ -66,6 +87,8 @@ export default {
         return <Point key={key} annotation={annotation} active={active} />
       case OvalSelector.TYPE:
         return <Oval key={key} annotation={annotation} active={active} />
+      case PolygonSelector.TYPE:
+        return <Polygon key={key} annotation={annotation} active={active} />
       default:
         return null
     }
@@ -75,6 +98,8 @@ export default {
   ),
   renderOverlay: ({ type, annotation }) => {
     switch (type) {
+      case PolygonSelector.TYPE:
+        return <Overlay>Click to Add Points to Annotation</Overlay>
       case PointSelector.TYPE:
         return <Overlay>Click to Annotate</Overlay>
       default:
