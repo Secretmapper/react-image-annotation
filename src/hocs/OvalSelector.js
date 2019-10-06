@@ -1,9 +1,9 @@
 const square = n => Math.pow(n, 2)
 
-const getCoordPercentage = (e) => {
+const getCoordPercentage = e => {
   if (isTouchEvent(e)) {
     if (isValidTouchEvent(e)) {
-      e.preventDefault();
+      isTouchMoveEvent(e) && e.preventDefault()
       return getTouchRelativeCoordinates(e)
     } else {
       return {
@@ -15,9 +15,10 @@ const getCoordPercentage = (e) => {
   }
 }
 
-const isTouchEvent = (e) => e.targetTouches !== undefined
-const isValidTouchEvent = (e) => e.targetTouches.length === 1
-const getTouchRelativeCoordinates = (e) => {
+const isTouchEvent = e => e.targetTouches !== undefined
+const isValidTouchEvent = e => e.targetTouches.length === 1
+const isTouchMoveEvent = e => e.type === 'touchmove'
+const getTouchRelativeCoordinates = e => {
   const touch = e.targetTouches[0]
 
   const offsetX = touch.pageX - e.currentTarget.offsetParent.offsetLeft
@@ -28,14 +29,14 @@ const getTouchRelativeCoordinates = (e) => {
     y: (offsetY / e.currentTarget.offsetHeight) * 100
   }
 }
-const getMouseRelativeCoordinates = (e) => ({
+const getMouseRelativeCoordinates = e => ({
   x: (e.nativeEvent.offsetX / e.currentTarget.offsetWidth) * 100,
   y: (e.nativeEvent.offsetY / e.currentTarget.offsetHeight) * 100
 })
 
 export const TYPE = 'OVAL'
 
-export function intersects ({ x, y }, geometry) {
+export function intersects({ x, y }, geometry) {
   const rx = geometry.width / 2
   const ry = geometry.height / 2
   const h = geometry.x + rx
@@ -46,7 +47,7 @@ export function intersects ({ x, y }, geometry) {
   return value <= 1
 }
 
-export function area (geometry) {
+export function area(geometry) {
   const rx = geometry.width / 2
   const ry = geometry.height / 2
 
@@ -119,7 +120,7 @@ function pointerUp(annotation, e) {
 }
 
 function pointerMove(annotation, e) {
-  if (annotation.selection && annotation.selection.mode === "SELECTING") {
+  if (annotation.selection && annotation.selection.mode === 'SELECTING') {
     const { anchorX, anchorY } = annotation.selection
     const { x: newX, y: newY } = getCoordPercentage(e)
     const width = newX - anchorX

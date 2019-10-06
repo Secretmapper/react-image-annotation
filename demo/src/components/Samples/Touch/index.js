@@ -19,11 +19,11 @@ export default class Multiple extends Component {
     allowTouch: true
   }
 
-  onChange = (annotation) => {
+  onChange = annotation => {
     this.setState({ annotation })
   }
 
-  onSubmit = (annotation) => {
+  onSubmit = annotation => {
     const { geometry, data } = annotation
 
     this.setState({
@@ -38,7 +38,7 @@ export default class Multiple extends Component {
     })
   }
 
-  onChangeType = (e) => {
+  onChangeType = e => {
     this.setState({
       annotation: {},
       type: e.currentTarget.innerHTML
@@ -46,17 +46,17 @@ export default class Multiple extends Component {
   }
 
   toggleAllowTouch = () => {
-    this.setState((prevState) => (
-      {allowTouch: !prevState.allowTouch}
-    ))
+    this.setState(prevState => ({ allowTouch: !prevState.allowTouch }))
   }
 
-  render () {
+  render() {
     return (
       <div>
         <div>
           <Button onClick={this.toggleAllowTouch}>
-            {this.state.allowTouch ? "Stop allowing touch" : "Start allowing touch"}
+            {this.state.allowTouch
+              ? 'Stop allowing touch'
+              : 'Start allowing touch'}
           </Button>
         </div>
         <div>
@@ -82,11 +82,9 @@ export default class Multiple extends Component {
         </div>
         <Annotation
           src={img}
-          alt='Two pebbles anthropomorphized holding hands'
+          alt="Two pebbles anthropomorphized holding hands"
           annotations={this.state.annotations}
-          
           allowTouch={this.state.allowTouch}
-
           type={this.state.type}
           value={this.state.annotation}
           onChange={this.onChange}

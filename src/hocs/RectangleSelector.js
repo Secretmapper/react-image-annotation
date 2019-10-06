@@ -1,7 +1,7 @@
-const getCoordPercentage = (e) => {
+const getCoordPercentage = e => {
   if (isTouchEvent(e)) {
     if (isValidTouchEvent(e)) {
-      e.preventDefault();
+      isTouchMoveEvent(e) && e.preventDefault()
       return getTouchRelativeCoordinates(e)
     } else {
       return {
@@ -13,12 +13,13 @@ const getCoordPercentage = (e) => {
   }
 }
 
-const isTouchEvent = (e) => e.targetTouches !== undefined
-const isValidTouchEvent = (e) => e.targetTouches.length === 1
-const getTouchRelativeCoordinates = (e) => {
+const isTouchEvent = e => e.targetTouches !== undefined
+const isValidTouchEvent = e => e.targetTouches.length === 1
+const isTouchMoveEvent = e => e.type === 'touchmove'
+const getTouchRelativeCoordinates = e => {
   const touch = e.targetTouches[0]
 
-  const boundingRect = e.currentTarget.getBoundingClientRect();
+  const boundingRect = e.currentTarget.getBoundingClientRect()
   // https://idiallo.com/javascript/element-postion
   // https://stackoverflow.com/questions/25630035/javascript-getboundingclientrect-changes-while-scrolling
   const offsetX = touch.pageX - boundingRect.left
@@ -29,25 +30,23 @@ const getTouchRelativeCoordinates = (e) => {
     y: (offsetY / boundingRect.height) * 100
   }
 }
-const getMouseRelativeCoordinates = (e) => ({
+const getMouseRelativeCoordinates = e => ({
   x: (e.nativeEvent.offsetX / e.currentTarget.offsetWidth) * 100,
   y: (e.nativeEvent.offsetY / e.currentTarget.offsetHeight) * 100
 })
 
 export const TYPE = 'RECTANGLE'
 
-export function intersects ({ x, y }, geometry) {
+export function intersects({ x, y }, geometry) {
   if (x < geometry.x) return false
   if (y < geometry.y) return false
-  if (x > geometry.x + geometry.width)
-    return false
-  if (y > geometry.y + geometry.height)
-    return false
+  if (x > geometry.x + geometry.width) return false
+  if (y > geometry.y + geometry.height) return false
 
   return true
 }
 
-export function area (geometry) {
+export function area(geometry) {
   return geometry.height * geometry.width
 }
 
@@ -79,7 +78,7 @@ function pointerDown(annotation, e) {
       ...annotation,
       selection: {
         ...annotation.selection,
-        mode: "SELECTING",
+        mode: 'SELECTING',
         anchorX,
         anchorY
       }
@@ -96,16 +95,16 @@ function pointerUp(annotation, e) {
       return {}
     }
     switch (annotation.selection.mode) {
-      case "SELECTING":
+      case 'SELECTING':
         return {
           ...annotation,
           selection: {
             ...annotation.selection,
             showEditor: true,
-            mode: "EDITING"
+            mode: 'EDITING'
           }
         }
-        default:
+      default:
         break
     }
   }
@@ -113,7 +112,7 @@ function pointerUp(annotation, e) {
 }
 
 function pointerMove(annotation, e) {
-  if (annotation.selection && annotation.selection.mode === "SELECTING") {
+  if (annotation.selection && annotation.selection.mode === 'SELECTING') {
     const { anchorX, anchorY } = annotation.selection
     const { x: newX, y: newY } = getCoordPercentage(e)
     const width = newX - anchorX
