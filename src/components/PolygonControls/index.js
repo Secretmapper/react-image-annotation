@@ -63,7 +63,7 @@ function PolygonControls(props) {
   const fontSize = 1 / 5 + zoomBetweenZeroAndOne * (4 / 5)
   const paddingHorizontal = (1 / 5) * 8 + (4 / 5) * 8 * zoomBetweenZeroAndOne
   const paddingVertical = (1 / 5) * 16 + (4 / 5) * 16 * zoomBetweenZeroAndOne
-  console.log(10 * (1 / 5) + 10 * (4 / 5) * zoomBetweenZeroAndOne)
+
   return (
     <div
       style={{

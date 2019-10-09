@@ -1,17 +1,6 @@
 import React from 'react'
 import LineTo from 'react-lineto'
 import styled from 'styled-components'
-import './index.css'
-
-const PointDot = styled.div`
-  background: red;
-  border-radius: 1px;
-  width: 4px;
-  height: 4px;
-  margin-left: -1px;
-  margin-top: -1px;
-  position: absolute;
-`
 
 function edgesFromPoints(points) {
   if (!points || points.length < 3) return []
@@ -86,11 +75,20 @@ function Polygon(props) {
         // Iterate over points to points
         return (
           // Note that each LineTo element must have a unique key (unique relative to the point)
-          <PointDot
+          <div
             key={i + '_' + item.x + '_' + item.y}
             style={{
               left: item.x + '% ',
-              top: item.y + '%'
+              top: item.y + '%',
+              border: 'solid 3px white',
+              borderRadius: '50%',
+              boxSizing: 'border-box',
+              boxShadow:
+                '0 0 0 1px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba(0, 0, 0, 0.2), 0 5px 4px rgba(0, 0, 0, 0.4)',
+              height: 5,
+              position: 'absolute',
+              transform: 'translate3d(-50%, -50%, 0)',
+              width: 5
             }}
           />
         )

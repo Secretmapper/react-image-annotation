@@ -75,7 +75,7 @@ export default {
       imageZoomAmount={imageZoomAmount}
     />
   ),
-  renderHighlight: ({ key, annotation, active }) => {
+  renderHighlight: ({ key, annotation, active, onChange, onSubmit }) => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
         return <Rectangle key={key} annotation={annotation} active={active} />
@@ -84,7 +84,15 @@ export default {
       case DrawingSelector.TYPE:
         return <Drawing key={key} annotation={annotation} active={active} />
       case PointSelector.TYPE:
-        return <Point key={key} annotation={annotation} active={active} />
+        return (
+          <Point
+            key={key}
+            annotation={annotation}
+            active={active}
+            onChange={onChange}
+            onSubmit={onSubmit}
+          />
+        )
       case OvalSelector.TYPE:
         return <Oval key={key} annotation={annotation} active={active} />
       case PolygonSelector.TYPE:

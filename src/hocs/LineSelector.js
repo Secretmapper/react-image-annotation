@@ -1,8 +1,4 @@
-const getCoordPercentage = e => ({
-	x: (e.nativeEvent.offsetX / e.currentTarget.offsetWidth) * 100,
-	y: (e.nativeEvent.offsetY / e.currentTarget.offsetHeight) * 100
-})
-
+import { getCoordPercentage } from '../utils/offsetCoordinates'
 export const TYPE = 'LINE'
 
 export function intersects({ x, y }, geometry) {

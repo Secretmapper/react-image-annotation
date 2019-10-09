@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import compose from '../utils/compose'
 import isMouseHovering from '../utils/isMouseHovering'
 import withRelativeMousePos from '../utils/withRelativeMousePos'
-
+import { Rnd as Resizable } from 'react-rnd'
 import { PolygonSelector } from '../selectors'
 
 import defaultProps from './defaultProps'
@@ -257,6 +257,8 @@ export default compose(
             {props.annotations.map(annotation =>
               renderHighlight({
                 key: annotation.data.id,
+                onSubmit: this.onSubmit,
+                onChange: props.onChange,
                 annotation,
                 active: this.shouldAnnotationBeActive(
                   annotation,
@@ -273,6 +275,7 @@ export default compose(
           </Items>
           <Target
             onClick={this.onClick}
+            onDragStop={this.onDragStop}
             onMouseUp={this.onMouseUp}
             onMouseDown={this.onMouseDown}
             onMouseMove={this.onTargetMouseMove}
@@ -282,16 +285,12 @@ export default compose(
               type: props.type,
               annotation: props.value
             })}
-          {props.annotations.map(
-            annotation =>
-              /* this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse)
-          && ( */
-              renderContent({
-                key: annotation.data.id,
-                annotation: annotation,
-                imageZoomAmount: props.imageZoomAmount
-              })
-            // )
+          {props.annotations.map(annotation =>
+            renderContent({
+              key: annotation.data.id,
+              annotation: annotation,
+              imageZoomAmount: props.imageZoomAmount
+            })
           )}
           {!props.disableEditor &&
             props.value &&
