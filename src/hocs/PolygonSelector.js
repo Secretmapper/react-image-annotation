@@ -125,11 +125,14 @@ export const methods = {
       geometry: {
         ...annotation.geometry,
         type: TYPE,
+
         points: !annotation.geometry
           ? [coordOfClick]
           : [...annotation.geometry.points, coordOfClick]
       },
       selection: {
+        xPx: e.nativeEvent.offsetX,
+        yPx: e.nativeEvent.offsetY,
         ...annotation.selection,
         mode: 'SELECTING'
       }

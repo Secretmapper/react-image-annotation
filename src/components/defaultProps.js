@@ -39,7 +39,7 @@ export default {
   imageZoomAmount: 1,
   disableOverlay: false,
   activeAnnotationComparator: (a, b) => a === b,
-  renderSelector: ({ annotation }) => {
+  renderSelector: ({ annotation, onChange }) => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
         return <FancyRectangle annotation={annotation} />
@@ -78,11 +78,35 @@ export default {
   renderHighlight: ({ key, annotation, active, onChange, onSubmit }) => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
-        return <Rectangle key={key} annotation={annotation} active={active} />
+        return (
+          <Rectangle
+            key={key}
+            annotation={annotation}
+            onChange={onChange}
+            onSubmit={onSubmit}
+            active={active}
+          />
+        )
       case LineSelector.TYPE:
-        return <Line key={key} annotation={annotation} active={active} />
+        return (
+          <Line
+            key={key}
+            annotation={annotation}
+            active={active}
+            onChange={onChange}
+            onSubmit={onSubmit}
+          />
+        )
       case DrawingSelector.TYPE:
-        return <Drawing key={key} annotation={annotation} active={active} />
+        return (
+          <Drawing
+            key={key}
+            annotation={annotation}
+            onChange={onChange}
+            onSubmit={onSubmit}
+            active={active}
+          />
+        )
       case PointSelector.TYPE:
         return (
           <Point
@@ -94,9 +118,25 @@ export default {
           />
         )
       case OvalSelector.TYPE:
-        return <Oval key={key} annotation={annotation} active={active} />
+        return (
+          <Oval
+            key={key}
+            annotation={annotation}
+            onChange={onChange}
+            onSubmit={onSubmit}
+            active={active}
+          />
+        )
       case PolygonSelector.TYPE:
-        return <Polygon key={key} annotation={annotation} active={active} />
+        return (
+          <Polygon
+            key={key}
+            annotation={annotation}
+            onChange={onChange}
+            onSubmit={onSubmit}
+            active={active}
+          />
+        )
       default:
         return null
     }

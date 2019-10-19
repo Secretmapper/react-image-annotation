@@ -275,7 +275,6 @@ export default compose(
           </Items>
           <Target
             onClick={this.onClick}
-            onDragStop={this.onDragStop}
             onMouseUp={this.onMouseUp}
             onMouseDown={this.onMouseDown}
             onMouseMove={this.onTargetMouseMove}

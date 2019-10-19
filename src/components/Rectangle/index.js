@@ -1,28 +1,62 @@
 import React from 'react'
-import styled from 'styled-components'
+import { Rnd as Resizable } from 'react-rnd'
 
-const Container = styled.div`
-  border: dashed 2px black;
-  box-shadow: 0px 0px 1px 1px white inset;
-  box-sizing: border-box;
-  transition: box-shadow 0.21s ease-in-out;
-`
-
-function Rectangle (props) {
-  const { geometry } = props.annotation
+function Rectangle(props) {
+  const { geometry, data, color = 'black' } = props.annotation
   if (!geometry) return null
-
   return (
-    <Container
-      className={props.className}
+    <Resizable
+      id={data.id}
       style={{
-        position: 'absolute',
-        left: `${geometry.x}%`,
-        top: `${geometry.y}%`,
-        height: `${geometry.height}%`,
+        border: 'dashed 2px ' + color,
+        pointerEvents: 'auto',
+        zIndex: 1000
+      }}
+      onDragStop={(e, d, k) => {
+        if (
+          props.annotation.geometry.xPx !== d.x ||
+          props.annotation.geometry.yPx !== d.y
+        ) {
+          props.annotation.geometry.x =
+            (d.x * props.annotation.geometry.x) / props.annotation.geometry.xPx
+          props.annotation.geometry.y =
+            (d.y * props.annotation.geometry.y) / props.annotation.geometry.yPx
+          props.annotation.geometry.xPx = d.x
+          props.annotation.geometry.yPx = d.y
+          props.onChange(props.annotation)
+          props.onSubmit()
+        }
+      }}
+      onResizeStop={(e, direction, ref, d) => {
+        var newAnnotation = Object.assign({}, props.annotation)
+        if (
+          direction === 'top' ||
+          direction === 'left' ||
+          direction === 'topLeft'
+        ) {
+          props.annotation.geometry.x =
+            ((newAnnotation.geometry.xPx - d.width) *
+              props.annotation.geometry.x) /
+            props.annotation.geometry.xPx
+          props.annotation.geometry.y =
+            ((newAnnotation.geometry.yPx - d.height) *
+              props.annotation.geometry.y) /
+            props.annotation.geometry.yPx
+          newAnnotation.geometry.xPx -= d.width
+          newAnnotation.geometry.yPx -= d.height
+        }
+        newAnnotation.geometry.width = parseFloat(ref.style.width)
+        newAnnotation.geometry.height = parseFloat(ref.style.height)
+        props.onChange(newAnnotation)
+        props.onSubmit()
+      }}
+      position={{
+        x: geometry.xPx,
+        y: geometry.yPx
+      }}
+      size={{
         width: `${geometry.width}%`,
-        boxShadow: props.active && '0 0 1px 1px yellow inset',
-        ...props.style
+        height: `${geometry.height}%`
       }}
     />
   )

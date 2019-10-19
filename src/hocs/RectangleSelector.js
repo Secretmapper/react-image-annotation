@@ -27,6 +27,8 @@ export const methods = {
         ...annotation,
         selection: {
           ...annotation.selection,
+          anchorXpX: e.nativeEvent.offsetX,
+          anchorYpX: e.nativeEvent.offsetY,
           mode: 'SELECTING',
           anchorX,
           anchorY
@@ -53,6 +55,7 @@ export const methods = {
             ...annotation,
             selection: {
               ...annotation.selection,
+
               showEditor: true,
               mode: 'EDITING'
             }
@@ -67,7 +70,8 @@ export const methods = {
 
   onMouseMove(annotation, e) {
     if (annotation.selection && annotation.selection.mode === 'SELECTING') {
-      const { anchorX, anchorY } = annotation.selection
+      const { anchorX, anchorY, anchorXpX, anchorYpX } = annotation.selection
+
       const { x: newX, y: newY } = getCoordPercentage(e)
       const width = newX - anchorX
       const height = newY - anchorY
@@ -79,6 +83,8 @@ export const methods = {
           type: TYPE,
           x: width > 0 ? anchorX : newX,
           y: height > 0 ? anchorY : newY,
+          xPx: width > 0 ? anchorXpX : e.nativeEvent.offsetX,
+          yPx: height > 0 ? anchorYpX : e.nativeEvent.offsetY,
           width: Math.abs(width),
           height: Math.abs(height)
         }
