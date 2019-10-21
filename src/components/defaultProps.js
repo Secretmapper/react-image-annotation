@@ -23,6 +23,7 @@ import {
 export default {
   innerRef: () => {},
   onChange: () => {},
+  onLoad: () => {},
   onSubmit: () => {},
   type: RectangleSelector.TYPE,
   selectors: [

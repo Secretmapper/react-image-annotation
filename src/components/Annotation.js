@@ -248,6 +248,7 @@ export default compose(
           <Img
             className={props.className}
             style={props.style}
+            onLoad={props.onLoad}
             alt={props.alt}
             src={props.src}
             draggable={false}
