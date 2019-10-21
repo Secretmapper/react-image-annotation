@@ -60,9 +60,9 @@ function Polygon(props) {
                 '_' +
                 prevItem.y
               }
-              from="linesContainer"
+              from={item.x + '_' + item.y}
               fromAnchor={item.x + '% ' + item.y + '%'}
-              to="linesContainer"
+              to={prevItem.x + '_' + prevItem.y}
               toAnchor={prevItem.x + '% ' + prevItem.y + '%'}
               borderColor={'white'}
               borderStyle={'dashed'}
@@ -80,6 +80,7 @@ function Polygon(props) {
 
           <Resizable
             key={i + '_' + item.x + '_' + item.y}
+            className={item.x + '_' + item.y}
             style={{
               border: 'solid 3px white',
               borderRadius: '50%',
@@ -97,6 +98,9 @@ function Polygon(props) {
             enableResizing={false}
             onDragStop={(e, d, k) => {
               if (!selection && (item.x !== d.x || item.y !== d.y)) {
+                let p = annotation.geometry
+                  ? Object.assign([], annotation.geometry.points)
+                  : []
                 annotation.geometry.points[i].x =
                   (d.x * annotation.geometry.points[i].x) /
                   annotation.geometry.points[i].xPx
@@ -106,23 +110,21 @@ function Polygon(props) {
                 annotation.geometry.points[i].xPx = d.x
                 annotation.geometry.points[i].yPx = d.y
 
-                annotation.geometry.x = annotation.geometry.points.sort(
-                  (a, b) => (a.x < b.x ? -1 : 1)
+                annotation.geometry.x = p.sort((a, b) =>
+                  a.x < b.x ? -1 : 1
                 )[0].x
 
-                annotation.geometry.y = annotation.geometry.points.sort(
-                  (a, b) => (a.y < b.y ? -1 : 1)
+                annotation.geometry.y = p.sort((a, b) =>
+                  a.y < b.y ? -1 : 1
                 )[0].y
 
                 annotation.geometry.width =
-                  annotation.geometry.points.sort((a, b) =>
-                    a.x > b.x ? -1 : 1
-                  )[0].x - annotation.geometry.x
+                  p.sort((a, b) => (a.x > b.x ? -1 : 1))[0].x -
+                  annotation.geometry.x
 
                 annotation.geometry.height =
-                  annotation.geometry.points.sort((a, b) =>
-                    a.y > b.y ? -1 : 1
-                  )[0].y - annotation.geometry.y
+                  p.sort((a, b) => (a.y > b.y ? -1 : 1))[0].y -
+                  annotation.geometry.y
                 onChange(annotation)
                 onSubmit()
               }
