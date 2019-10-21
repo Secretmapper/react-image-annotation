@@ -7,7 +7,7 @@ export function intersects({ x, y }, geometry) {
 	if (x > geometry.x + geometry.width) return false
 	if (y > geometry.y + geometry.height) return false
 
-	return false
+	return true
 }
 
 export function area(geometry) {
@@ -21,6 +21,7 @@ export const methods = {
 
 			return {
 				...annotation,
+				id: Math.random(),
 				selection: {
 					...annotation.selection,
 					mode: 'SELECTING',
