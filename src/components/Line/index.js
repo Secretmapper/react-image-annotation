@@ -10,7 +10,7 @@ function Line(props) {
   if (!geometry) return null
   return (
     <div
-      className={'linesContainer'}
+      className={`linesContainer ${props.className}`}
       style={{
         width: '100%',
 
