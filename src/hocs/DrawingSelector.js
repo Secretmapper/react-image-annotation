@@ -50,7 +50,6 @@ export const methods = {
 
 function onPointerDown(annotation, e) {
 	if (!annotation.geometry) {
-		console.log('GG')
 		const newPoint = relativeCoordinatesForEvent(e)
 		return {
 			...annotation,

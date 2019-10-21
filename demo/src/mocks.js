@@ -22,6 +22,8 @@ export default {
         type: OvalSelector.TYPE,
         x: 53,
         y: 33,
+        xPx: 375,
+        yPx: 165,
         width: 17.5,
         height: 28
       },

@@ -10,7 +10,7 @@ function Rectangle(props) {
       style={{
         border: 'dashed 2px ' + color,
         pointerEvents: 'auto',
-        zIndex: 1000
+        zIndex: 10
       }}
       onDragStop={(e, d, k) => {
         if (

@@ -7,7 +7,7 @@ export function intersects({ x, y }, geometry) {
 	if (x > geometry.x + geometry.width) return false
 	if (y > geometry.y + geometry.height) return false
 
-	return true
+	return false
 }
 
 export function area(geometry) {
@@ -25,8 +25,8 @@ export const methods = {
 					...annotation.selection,
 					mode: 'SELECTING',
 					anchorX,
-					xPx: e.nativeEvent.offsetX,
-					yPx: e.nativeEvent.offsetY,
+					anchorXpX: e.nativeEvent.offsetX,
+					anchorYpX: e.nativeEvent.offsetY,
 					anchorY
 				}
 			}
@@ -66,20 +66,21 @@ export const methods = {
 	onMouseMove(annotation, e) {
 		if (annotation.selection && annotation.selection.mode === 'SELECTING') {
 			const { anchorX, anchorY } = annotation.selection
-			const { xPx, yPx } = annotation.selection
+			const { anchorXpX, anchorYpX } = annotation.selection
 			const { x: newX, y: newY } = getCoordPercentage(e)
 			const newXpX = e.nativeEvent.offsetX
 			const newYpX = e.nativeEvent.offsetY
-			const width = newXpX - xPx
-			const height = newYpX - yPx
-
-			let angle = (Math.atan(width / height) * 180) / Math.PI
-			if (height < 0) {
+			const widthPx = newXpX - anchorXpX
+			const heightPx = newYpX - anchorYpX
+			const width = newX - anchorX
+			const height = newY - anchorY
+			let angle = (Math.atan(widthPx / heightPx) * 180) / Math.PI
+			if (heightPx < 0) {
 				angle += 180
-			} else if (height > 0 && width < 0) {
+			} else if (heightPx > 0 && widthPx < 0) {
 				angle += 360
 			}
-			const hypotenuse = Math.hypot(height, width)
+			const hypotenuse = Math.hypot(heightPx, widthPx)
 
 			return {
 				...annotation,
@@ -87,11 +88,19 @@ export const methods = {
 					...annotation.geometry,
 					type: TYPE,
 					x: anchorX,
+					xPx: anchorXpX,
+					yPx: anchorYpX,
 					y: anchorY,
+					x2: newX,
+					y2: newY,
+					x2Px: newXpX,
+					y2Px: newYpX,
 					angle: angle,
 					hypotenuse: hypotenuse,
-					width: width,
-					height: height
+					widthPx: Math.abs(widthPx),
+					heightPx: Math.abs(heightPx),
+					width: Math.abs(width),
+					height: Math.abs(height)
 				}
 			}
 		}

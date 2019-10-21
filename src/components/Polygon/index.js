@@ -1,6 +1,7 @@
 import React from 'react'
 import LineTo from 'react-lineto'
 import styled from 'styled-components'
+import { Rnd as Resizable } from 'react-rnd'
 
 function edgesFromPoints(points) {
   if (!points || points.length < 3) return []
@@ -22,7 +23,8 @@ function edgesFromPoints(points) {
 }
 
 function Polygon(props) {
-  const { geometry } = props.annotation
+  const { onChange, onSubmit, annotation } = props
+  const { geometry, data, color = 'white', selection } = annotation
   if (!geometry || !geometry.points || geometry.points.length === 0) return null
 
   return (
@@ -75,20 +77,59 @@ function Polygon(props) {
         // Iterate over points to points
         return (
           // Note that each LineTo element must have a unique key (unique relative to the point)
-          <div
+
+          <Resizable
             key={i + '_' + item.x + '_' + item.y}
             style={{
-              left: item.x + '% ',
-              top: item.y + '%',
               border: 'solid 3px white',
               borderRadius: '50%',
               boxSizing: 'border-box',
               boxShadow:
                 '0 0 0 1px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba(0, 0, 0, 0.2), 0 5px 4px rgba(0, 0, 0, 0.4)',
-              height: 5,
+              zIndex: 10,
               position: 'absolute',
-              transform: 'translate3d(-50%, -50%, 0)',
-              width: 5
+              transform: 'translate3d(-50%, -50%, 0)'
+            }}
+            size={{
+              width: 5,
+              height: 5
+            }}
+            enableResizing={false}
+            onDragStop={(e, d, k) => {
+              if (!selection && (item.x !== d.x || item.y !== d.y)) {
+                annotation.geometry.points[i].x =
+                  (d.x * annotation.geometry.points[i].x) /
+                  annotation.geometry.points[i].xPx
+                annotation.geometry.points[i].y =
+                  (d.y * annotation.geometry.points[i].y) /
+                  annotation.geometry.points[i].yPx
+                annotation.geometry.points[i].xPx = d.x
+                annotation.geometry.points[i].yPx = d.y
+
+                annotation.geometry.x = annotation.geometry.points.sort(
+                  (a, b) => (a.x < b.x ? -1 : 1)
+                )[0].x
+
+                annotation.geometry.y = annotation.geometry.points.sort(
+                  (a, b) => (a.y < b.y ? -1 : 1)
+                )[0].y
+
+                annotation.geometry.width =
+                  annotation.geometry.points.sort((a, b) =>
+                    a.x > b.x ? -1 : 1
+                  )[0].x - annotation.geometry.x
+
+                annotation.geometry.height =
+                  annotation.geometry.points.sort((a, b) =>
+                    a.y > b.y ? -1 : 1
+                  )[0].y - annotation.geometry.y
+                onChange(annotation)
+                onSubmit()
+              }
+            }}
+            position={{
+              x: item.xPx,
+              y: item.yPx
             }}
           />
         )

@@ -120,20 +120,35 @@ export const methods = {
   onClick(annotation, e) {
     const coordOfClick = getCoordPercentage(e)
 
+    const x = !annotation.geometry
+      ? coordOfClick.x
+      : annotation.geometry.points.sort((a, b) => (a.x < b.x ? -1 : 1))[0].x
+    const y = !annotation.geometry
+      ? coordOfClick.y
+      : annotation.geometry.points.sort((a, b) => (a.y < b.y ? -1 : 1))[0].y
+    const width = !annotation.geometry
+      ? 0
+      : annotation.geometry.points.sort((a, b) => (a.x > b.x ? -1 : 1))[0].x - x
+    const height = !annotation.geometry
+      ? 0
+      : annotation.geometry.points.sort((a, b) => (a.y > b.y ? -1 : 1))[0].y - y
+
     return {
       ...annotation,
       geometry: {
         ...annotation.geometry,
         type: TYPE,
-
+        x,
+        y,
+        width,
+        height,
         points: !annotation.geometry
           ? [coordOfClick]
           : [...annotation.geometry.points, coordOfClick]
       },
       selection: {
-        xPx: e.nativeEvent.offsetX,
-        yPx: e.nativeEvent.offsetY,
         ...annotation.selection,
+
         mode: 'SELECTING'
       }
     }
