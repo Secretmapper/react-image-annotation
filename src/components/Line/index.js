@@ -6,7 +6,7 @@ import Point from '../Point/index'
 function Line(props) {
   const { onChange, onSubmit, annotation } = props
   const { geometry, data, color = 'white', selection } = annotation
-
+  console.log(annotation)
   if (!geometry) return null
   return (
     <div
