@@ -120,18 +120,24 @@ export const methods = {
   onClick(annotation, e) {
     const coordOfClick = getCoordPercentage(e)
 
-    const x = !annotation.geometry
-      ? coordOfClick.x
-      : annotation.geometry.points.sort((a, b) => (a.x < b.x ? -1 : 1))[0].x
-    const y = !annotation.geometry
-      ? coordOfClick.y
-      : annotation.geometry.points.sort((a, b) => (a.y < b.y ? -1 : 1))[0].y
-    const width = !annotation.geometry
-      ? 0
-      : annotation.geometry.points.sort((a, b) => (a.x > b.x ? -1 : 1))[0].x - x
-    const height = !annotation.geometry
-      ? 0
-      : annotation.geometry.points.sort((a, b) => (a.y > b.y ? -1 : 1))[0].y - y
+    const x =
+      !annotation.geometry || annotation.geometry.points.length === 0
+        ? coordOfClick.x
+        : annotation.geometry.points.sort((a, b) => (a.x < b.x ? -1 : 1))[0].x
+    const y =
+      !annotation.geometry || annotation.geometry.points.length === 0
+        ? coordOfClick.y
+        : annotation.geometry.points.sort((a, b) => (a.y < b.y ? -1 : 1))[0].y
+    const width =
+      !annotation.geometry || annotation.geometry.points.length === 0
+        ? 0
+        : annotation.geometry.points.sort((a, b) => (a.x > b.x ? -1 : 1))[0].x -
+          x
+    const height =
+      !annotation.geometry || annotation.geometry.points.length === 0
+        ? 0
+        : annotation.geometry.points.sort((a, b) => (a.y > b.y ? -1 : 1))[0].y -
+          y
 
     return {
       ...annotation,
