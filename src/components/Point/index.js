@@ -40,8 +40,8 @@ function Point(props) {
         }
       }}
       position={{
-        x: geometry.xPx,
-        y: geometry.yPx
+        x: geometry.xPx - 8,
+        y: geometry.yPx - 8
       }}
     />
   )
