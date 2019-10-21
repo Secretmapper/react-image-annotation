@@ -19,6 +19,7 @@ function Line(props) {
         ...props.style
       }}>
       <Resizable
+        key={geometry.xPx + '_' + geometry.yPx}
         style={{
           border: 'solid 2px ' + color,
           borderRadius: '50%',
@@ -32,8 +33,8 @@ function Line(props) {
           transform: 'translate3d(-50%, -50%, 0)'
         }}
         size={{
-          width: 16,
-          height: 16
+          width: 10,
+          height: 10
         }}
         enableResizing={false}
         onDragStop={(e, d, k) => {
@@ -47,8 +48,8 @@ function Line(props) {
           }
         }}
         position={{
-          x: geometry.xPx - 8,
-          y: geometry.yPx - 8
+          x: geometry.xPx - 5,
+          y: geometry.yPx - 5
         }}
       />
 
@@ -66,6 +67,7 @@ function Line(props) {
       />
       {!selection && (
         <Resizable
+          key={geometry.x2Px + '_' + geometry.y2Px}
           style={{
             border: 'solid 2px ' + color,
             borderRadius: '50%',
@@ -79,8 +81,8 @@ function Line(props) {
             transform: 'translate3d(-50%, -50%, 0)'
           }}
           size={{
-            width: 16,
-            height: 16
+            width: 10,
+            height: 10
           }}
           enableResizing={false}
           onDragStop={(e, d, k) => {
@@ -94,8 +96,8 @@ function Line(props) {
             }
           }}
           position={{
-            x: geometry.x2Px - 8,
-            y: geometry.y2Px - 8
+            x: geometry.x2Px - 5,
+            y: geometry.y2Px - 5
           }}
         />
       )}
