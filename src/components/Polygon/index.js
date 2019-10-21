@@ -60,9 +60,9 @@ function Polygon(props) {
                 '_' +
                 prevItem.y
               }
-              from={item.x + '_' + item.y}
+              from="linesContainer"
               fromAnchor={item.x + '% ' + item.y + '%'}
-              to={prevItem.x + '_' + prevItem.y}
+              to="linesContainer"
               toAnchor={prevItem.x + '% ' + prevItem.y + '%'}
               borderColor={'white'}
               borderStyle={'dashed'}
@@ -80,7 +80,6 @@ function Polygon(props) {
 
           <Resizable
             key={i + '_' + item.x + '_' + item.y}
-            className={item.x + '_' + item.y}
             style={{
               border: 'solid 3px white',
               borderRadius: '50%',
