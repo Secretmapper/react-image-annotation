@@ -2,7 +2,7 @@ import React from 'react'
 import { Rnd as Resizable } from 'react-rnd'
 
 function Point(props) {
-  const { geometry, data, color = 'white' } = props.annotation
+  const { geometry, data, color } = props.annotation
   if (!geometry) return null
 
   return (

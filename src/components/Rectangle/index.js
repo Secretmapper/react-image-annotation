@@ -2,7 +2,7 @@ import React from 'react'
 import { Rnd as Resizable } from 'react-rnd'
 
 function Rectangle(props) {
-  const { geometry, data, color = 'black' } = props.annotation
+  const { geometry, data, color } = props.annotation
   if (!geometry) return null
   return (
     <Resizable

@@ -23,8 +23,8 @@ function edgesFromPoints(points) {
 }
 
 function Polygon(props) {
-  const { onChange, onSubmit, annotation } = props
-  const { geometry, data, color = 'white', selection } = annotation
+  const { onChange, onSubmit, annotation, color } = props
+  const { geometry, data, selection } = annotation
   if (!geometry || !geometry.points || geometry.points.length === 0) return null
 
   return (
@@ -60,13 +60,14 @@ function Polygon(props) {
                 '_' +
                 prevItem.y
               }
+              delay={0}
               from="linesContainer"
               fromAnchor={item.x + '% ' + item.y + '%'}
               to="linesContainer"
               toAnchor={prevItem.x + '% ' + prevItem.y + '%'}
-              borderColor={'white'}
+              borderColor={color}
               borderStyle={'dashed'}
-              borderWidth={2}
+              borderWidth={3}
               className={
                 !props.active ? 'Polygon-LineTo' : 'Polygon-LineToActive'
               }
@@ -81,7 +82,7 @@ function Polygon(props) {
           <Resizable
             key={i + '_' + item.x + '_' + item.y}
             style={{
-              border: 'solid 3px white',
+              border: 'solid 3px ' + color,
               borderRadius: '50%',
               boxSizing: 'border-box',
               boxShadow:
