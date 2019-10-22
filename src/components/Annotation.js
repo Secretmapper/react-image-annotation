@@ -258,6 +258,7 @@ export default compose(
             {props.annotations.map(annotation =>
               renderHighlight({
                 key: annotation.data.id,
+                color: props.color,
                 onSubmit: this.onSubmit,
                 onChange: props.onChange,
                 annotation,
