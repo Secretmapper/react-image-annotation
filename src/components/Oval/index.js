@@ -25,22 +25,7 @@ function Oval(props) {
         height: `${geometry.height}%`,
         width: `${geometry.width}%`
       }}
-      onDragStop={(e, d, k) => {
-        if (
-          !selection &&
-          (props.annotation.geometry.xPx !== d.x ||
-            props.annotation.geometry.yPx !== d.y)
-        ) {
-          props.annotation.geometry.x =
-            (d.x * props.annotation.geometry.x) / props.annotation.geometry.xPx
-          props.annotation.geometry.y =
-            (d.y * props.annotation.geometry.y) / props.annotation.geometry.yPx
-          props.annotation.geometry.xPx = d.x
-          props.annotation.geometry.yPx = d.y
-          props.onChange(props.annotation)
-          props.onSubmit()
-        }
-      }}
+      disableDragging={true}
       enableResizing={
         !selection
           ? { bottom: true, top: true, left: true, right: true }
