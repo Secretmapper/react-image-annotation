@@ -1,92 +1,92 @@
-import { getCoordPercentage } from "../utils/offsetCoordinates";
-export const TYPE = "LINE";
+import { getCoordPercentage } from '../utils/offsetCoordinates'
+export const TYPE = 'LINE'
 
 export function intersects({ x, y }, geometry) {
-	if (x < geometry.x) return false;
-	if (y < geometry.y) return false;
-	if (x > geometry.x + geometry.width) return false;
-	if (y > geometry.y + geometry.height) return false;
+	if (x < geometry.x) return false
+	if (y < geometry.y) return false
+	if (x > geometry.x + geometry.width) return false
+	if (y > geometry.y + geometry.height) return false
 
-	return true;
+	return true
 }
 
 export function area(geometry) {
-	return geometry.height * geometry.width;
+	return geometry.height * geometry.width
 }
 
 export const methods = {
 	onMouseDown(annotation, e) {
 		if (!annotation.selection) {
-			const { x: anchorX, y: anchorY } = getCoordPercentage(e);
+			const { x: anchorX, y: anchorY } = getCoordPercentage(e)
 
 			return {
 				...annotation,
 				id: Math.random(),
 				selection: {
 					...annotation.selection,
-					mode: "SELECTING",
+					mode: 'SELECTING',
 					anchorX,
 					anchorXpX: e.nativeEvent.offsetX,
 					anchorYpX: e.nativeEvent.offsetY,
 					anchorY
 				}
-			};
+			}
 		} else {
-			return {};
+			return {}
 		}
 
-		return annotation;
+		return annotation
 	},
 
 	onMouseUp(annotation, e) {
 		if (annotation.selection) {
-			const { selection, geometry } = annotation;
+			const { selection, geometry } = annotation
 
 			if (!geometry) {
-				return {};
+				return {}
 			}
 
 			switch (annotation.selection.mode) {
-				case "SELECTING":
+				case 'SELECTING':
 					return {
 						...annotation,
 						selection: {
 							...annotation.selection,
 							showEditor: true,
-							mode: "EDITING"
+							mode: 'EDITING'
 						}
-					};
+					}
 				default:
-					break;
+					break
 			}
 		}
 
-		return annotation;
+		return annotation
 	},
 
 	onMouseMove(annotation, e) {
-		if (annotation.selection && annotation.selection.mode === "SELECTING") {
-			const { anchorX, anchorY } = annotation.selection;
-			const { x: newX, y: newY } = getCoordPercentage(e);
+		if (annotation.selection && annotation.selection.mode === 'SELECTING') {
+			const { anchorX, anchorY } = annotation.selection
+			const { x: newX, y: newY } = getCoordPercentage(e)
 
-			const { anchorXpX, anchorYpX } = annotation.selection;
-			const newXpX = e.nativeEvent.offsetX;
-			const newYpX = e.nativeEvent.offsetY;
-			const x = anchorX < newX ? anchorX : newX;
-			const y = anchorY < newY ? anchorY : newY;
-			const x1 = anchorX;
-			const y1 = anchorY;
-			const x2 = newX;
-			const y2 = newY;
+			const { anchorXpX, anchorYpX } = annotation.selection
+			const newXpX = e.nativeEvent.offsetX
+			const newYpX = e.nativeEvent.offsetY
+			const x = anchorX < newX ? anchorX : newX
+			const y = anchorY < newY ? anchorY : newY
+			const x1 = anchorX
+			const y1 = anchorY
+			const x2 = newX
+			const y2 = newY
 
-			const xPx = anchorXpX;
-			const yPx = anchorYpX;
-			const x2Px = newXpX;
-			const y2Px = newYpX;
-			const widthPx = xPx - x2Px;
-			const heightPx = yPx - y2Px;
-			const width = x - x2;
-			const height = y - y2;
+			const xPx = anchorXpX
+			const yPx = anchorYpX
+			const x2Px = newXpX
+			const y2Px = newYpX
+			const widthPx = xPx - x2Px
+			const heightPx = yPx - y2Px
+			const width = x - x2
+			const height = y - y2
 
 			return {
 				...annotation,
@@ -108,16 +108,16 @@ export const methods = {
 					width: Math.abs(width),
 					height: Math.abs(height)
 				}
-			};
+			}
 		}
 
-		return annotation;
+		return annotation
 	}
-};
+}
 
 export default {
 	TYPE,
 	intersects,
 	area,
 	methods
-};
+}
