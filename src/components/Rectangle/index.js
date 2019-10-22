@@ -13,7 +13,21 @@ function Rectangle(props) {
         pointerEvents: 'auto',
         zIndex: 10
       }}
-      disableDragging={true}
+      onDragStop={(e, d, k) => {
+        if (
+          props.annotation.geometry.xPx !== d.x ||
+          props.annotation.geometry.yPx !== d.y
+        ) {
+          props.annotation.geometry.x =
+            (d.x * props.annotation.geometry.x) / props.annotation.geometry.xPx
+          props.annotation.geometry.y =
+            (d.y * props.annotation.geometry.y) / props.annotation.geometry.yPx
+          props.annotation.geometry.xPx = d.x
+          props.annotation.geometry.yPx = d.y
+          props.onChange(props.annotation)
+          props.onSubmit()
+        }
+      }}
       onResizeStop={(e, direction, ref, d) => {
         var newAnnotation = Object.assign({}, props.annotation)
         if (
