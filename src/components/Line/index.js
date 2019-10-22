@@ -75,12 +75,14 @@ function Line(props) {
             geometry.y2
           }
           from="linesContainer"
+          delay={0}
           fromAnchor={geometry.x1 + '% ' + geometry.y1 + '%'}
           to="linesContainer"
           toAnchor={geometry.x2 + '% ' + geometry.y2 + '%'}
           borderColor={color}
           borderStyle={'dashed'}
           borderWidth={4}
+          className={!props.active ? 'Polygon-LineTo' : 'Polygon-LineToActive'}
         />
       )}
 
