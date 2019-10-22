@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { Rnd as Resizable } from 'react-rnd'
 
 function Oval(props) {
-  const { onChange, onSubmit, annotation } = props
-  const { geometry, data, color, selection } = annotation
+  const { onChange, onSubmit, annotation, color } = props
+  const { geometry, data, selection } = annotation
   if (!geometry) return null
 
   return (
