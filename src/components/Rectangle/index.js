@@ -8,7 +8,7 @@ function Rectangle(props) {
     <Resizable
       id={data.id}
       style={{
-        border: 'dashed 2px ' + color,
+        border: 'dashed 4px ' + color,
         pointerEvents: 'auto',
         zIndex: 10
       }}

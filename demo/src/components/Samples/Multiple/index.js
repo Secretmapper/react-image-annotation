@@ -83,6 +83,7 @@ export default class Multiple extends Component {
 
         <Annotation
           src={img}
+          color="green"
           alt="Two pebbles anthropomorphized holding hands"
           annotations={this.state.annotations}
           type={this.state.type}

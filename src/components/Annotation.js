@@ -259,7 +259,6 @@ export default compose(
             {props.annotations.map(annotation =>
               renderHighlight({
                 key: annotation.data.id,
-
                 onSubmit: this.onSubmit,
                 onChange: props.onChange,
                 annotation,
@@ -273,7 +272,8 @@ export default compose(
               props.value &&
               props.value.geometry &&
               renderSelector({
-                annotation: props.value
+                annotation: props.value,
+                color: props.color
               })}
           </Items>
           <Target

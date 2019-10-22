@@ -40,20 +40,20 @@ export default {
   imageZoomAmount: 1,
   disableOverlay: false,
   activeAnnotationComparator: (a, b) => a === b,
-  renderSelector: ({ annotation, onChange }) => {
+  renderSelector: ({ annotation, onChange, color }) => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
         return <FancyRectangle annotation={annotation} />
       case LineSelector.TYPE:
-        return <Line annotation={annotation} />
+        return <Line annotation={annotation} color={color} />
       case PointSelector.TYPE:
-        return <Point annotation={annotation} />
+        return <Point annotation={annotation} color={color} />
       case DrawingSelector.TYPE:
-        return <Drawing annotation={annotation} />
+        return <Drawing annotation={annotation} color={color} />
       case PolygonSelector.TYPE:
-        return <Polygon annotation={annotation} />
+        return <Polygon annotation={annotation} color={color} />
       case OvalSelector.TYPE:
-        return <Oval annotation={annotation} />
+        return <Oval annotation={annotation} color={color} />
       default:
         return null
     }
