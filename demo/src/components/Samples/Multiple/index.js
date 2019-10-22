@@ -31,6 +31,7 @@ export default class Multiple extends Component {
     this.setState({
       annotation: {},
       annotations: this.state.annotations.concat({
+        color: 'red',
         geometry,
         data: {
           ...data,

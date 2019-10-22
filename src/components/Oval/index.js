@@ -47,29 +47,27 @@ function Oval(props) {
           : false
       }
       onResizeStop={(e, direction, ref, d) => {
-        if (!selection) {
-          var newAnnotation = Object.assign({}, props.annotation)
-          if (
-            direction === 'top' ||
-            direction === 'left' ||
-            direction === 'topLeft'
-          ) {
-            props.annotation.geometry.x =
-              ((newAnnotation.geometry.xPx - d.width) *
-                props.annotation.geometry.x) /
-              props.annotation.geometry.xPx
-            props.annotation.geometry.y =
-              ((newAnnotation.geometry.yPx - d.height) *
-                props.annotation.geometry.y) /
-              props.annotation.geometry.yPx
-            newAnnotation.geometry.xPx -= d.width
-            newAnnotation.geometry.yPx -= d.height
-          }
-          newAnnotation.geometry.width = parseFloat(ref.style.width)
-          newAnnotation.geometry.height = parseFloat(ref.style.height)
-          props.onChange(newAnnotation)
-          props.onSubmit()
+        var newAnnotation = Object.assign({}, props.annotation)
+        if (
+          direction === 'top' ||
+          direction === 'left' ||
+          direction === 'topLeft'
+        ) {
+          props.annotation.geometry.x =
+            ((newAnnotation.geometry.xPx - d.width) *
+              props.annotation.geometry.x) /
+            props.annotation.geometry.xPx
+          props.annotation.geometry.y =
+            ((newAnnotation.geometry.yPx - d.height) *
+              props.annotation.geometry.y) /
+            props.annotation.geometry.yPx
+          newAnnotation.geometry.xPx -= d.width
+          newAnnotation.geometry.yPx -= d.height
         }
+        newAnnotation.geometry.width = parseFloat(ref.style.width)
+        newAnnotation.geometry.height = parseFloat(ref.style.height)
+        props.onChange(newAnnotation)
+        props.onSubmit()
       }}
       position={{
         x: geometry.xPx,
