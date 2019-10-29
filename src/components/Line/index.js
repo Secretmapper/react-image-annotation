@@ -20,6 +20,7 @@ function Line(props) {
       }}>
       <Resizable
         key={geometry.xPx + '_' + geometry.yPx + '_1'}
+        className={geometry.xPx + '_' + geometry.yPx + '_1'}
         style={{
           border: 'solid 2px ' + color,
           borderRadius: '50%',
@@ -74,11 +75,9 @@ function Line(props) {
             '_' +
             geometry.y2
           }
-          from="linesContainer"
+          from={geometry.xPx + '_' + geometry.yPx + '_1'}
           delay={0}
-          fromAnchor={geometry.x1 + '% ' + geometry.y1 + '%'}
-          to="linesContainer"
-          toAnchor={geometry.x2 + '% ' + geometry.y2 + '%'}
+          to={geometry.x2Px + '_' + geometry.y2Px + '_2'}
           borderColor={color}
           borderStyle={'dashed'}
           borderWidth={4}
@@ -88,6 +87,7 @@ function Line(props) {
 
       <Resizable
         key={geometry.x2Px + '_' + geometry.y2Px + '_2'}
+        className={geometry.x2Px + '_' + geometry.y2Px + '_2'}
         style={{
           border: 'solid 2px ' + color,
           borderRadius: '50%',
