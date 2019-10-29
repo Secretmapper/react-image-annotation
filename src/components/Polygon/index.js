@@ -33,6 +33,8 @@ function Polygon(props) {
       style={{
         width: '100%',
         position: 'absolute',
+        top: 0,
+        left: 0,
         height: '100%',
         ...props.style
       }}>
