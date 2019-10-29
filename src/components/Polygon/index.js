@@ -29,7 +29,7 @@ function Polygon(props) {
 
   return (
     <div
-      className={`linesContainer annotationWrapper ${props.className}`}
+      className={`linesContainer ${props.className}`}
       style={{
         width: '100%',
         position: 'absolute',
@@ -60,7 +60,7 @@ function Polygon(props) {
                 '_' +
                 prevItem.y
               }
-              within="annotationWrapper"
+              within="linesContainer"
               delay={0}
               from="linesContainer"
               fromAnchor={item.x + '% ' + item.y + '%'}

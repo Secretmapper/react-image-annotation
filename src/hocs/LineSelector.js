@@ -50,6 +50,7 @@ export const methods = {
 				case 'SELECTING':
 					return {
 						...annotation,
+
 						selection: {
 							...annotation.selection,
 							showEditor: true,
@@ -90,6 +91,7 @@ export const methods = {
 
 			return {
 				...annotation,
+				id: Math.random(),
 				geometry: {
 					...annotation.geometry,
 					type: TYPE,
