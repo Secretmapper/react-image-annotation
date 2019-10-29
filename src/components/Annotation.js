@@ -255,7 +255,7 @@ export default compose(
             draggable={false}
             innerRef={this.setInnerRef}
           />
-          <Items>
+          <Items className={'GG'}>
             {props.annotations.map(annotation =>
               renderHighlight({
                 key: annotation.data.id,
