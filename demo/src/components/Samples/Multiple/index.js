@@ -50,7 +50,7 @@ export default class Multiple extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ height: 400, overflow: 'auto' }}>
         <Button
           onClick={this.onChangeType}
           active={LineSelector.TYPE === this.state.type}>
