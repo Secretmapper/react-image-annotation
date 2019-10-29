@@ -15,6 +15,8 @@ function Line(props) {
       style={{
         width: '100%',
         position: 'absolute',
+        top: 0,
+        left: 0,
         height: '100%',
         ...props.style
       }}>
@@ -76,7 +78,7 @@ function Line(props) {
           }
           from="linesContainer"
           delay={0}
-          within="linesContainer"
+          within="annotationWrapper"
           fromAnchor={geometry.x1 + '% ' + geometry.y1 + '%'}
           to="linesContainer"
           toAnchor={geometry.x2 + '% ' + geometry.y2 + '%'}

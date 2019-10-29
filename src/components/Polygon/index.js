@@ -62,7 +62,7 @@ function Polygon(props) {
                 '_' +
                 prevItem.y
               }
-              within="linesContainer"
+              within="annotationWrapper"
               delay={0}
               from="linesContainer"
               fromAnchor={item.x + '% ' + item.y + '%'}
