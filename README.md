@@ -73,6 +73,7 @@ Prop | Description | Default
 `onChange` | `onChange` handler for annotation object |
 `onSubmit` | `onSubmit` handler for annotation object |
 `type` | Selector type. See [custom shapes](#using-custom-shapes) | `RECTANGLE`
+`allowTouch` | Set to `true` to allow the target to handle touch events. This disables one-finger scrolling | `false`
 `selectors` | An array of selectors. See [adding custom selector logic](#adding-custom-selector-logic) | `[RectangleSelector, PointSelector, OvalSelector]`
 `activeAnnotations` | Array of annotations that will be passed as 'active' (active highlight and shows content) |
 `activeAnnotationComparator` | Method to compare annotation and `activeAnnotation` item (from `props.activeAnnotations`). Return `true` if it's the annotations are equal | `(a, b) => a === b`

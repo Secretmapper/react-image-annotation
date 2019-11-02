@@ -25,7 +25,7 @@
   },
   "peerDependencies": {
     "prop-types": "^15.6.0",
-    "react": "16.x",
+    "react": "^16.3",
     "react-dom": ">=0.14"
   },
   "devDependencies": {
@@ -35,8 +35,8 @@
     "gh-pages": "^1.1.0",
     "nwb": "0.21.x",
     "raw-loader": "^0.5.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-syntax-highlighter": "^7.0.0",

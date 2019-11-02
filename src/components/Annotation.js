@@ -15,6 +15,7 @@ const Container = styled.div`
   &:hover ${Overlay} {
     opacity: 1;
   }
+  touch-action: ${(props) => (props.allowTouch ? "pinch-zoom" : "auto")};
 `
 
 const Img = styled.img`
@@ -82,10 +83,47 @@ export default compose(
     renderContent: T.func.isRequired,
 
     disableOverlay: T.bool,
-    renderOverlay: T.func.isRequired
+    renderOverlay: T.func.isRequired,
+    allowTouch: T.bool
   }
 
   static defaultProps = defaultProps
+
+  targetRef = React.createRef();
+  componentDidMount() {
+    if (this.props.allowTouch) {
+      this.addTargetTouchEventListeners();
+    }
+  }
+
+  addTargetTouchEventListeners = () => {
+    // Safari does not recognize touch-action CSS property,
+    // so we need to call preventDefault ourselves to stop touch from scrolling
+    // Event handlers must be set via ref to enable e.preventDefault()
+    // https://github.com/facebook/react/issues/9809
+    
+    this.targetRef.current.ontouchstart = this.onTouchStart;
+    this.targetRef.current.ontouchend = this.onTouchEnd;
+    this.targetRef.current.ontouchmove = this.onTargetTouchMove;
+    this.targetRef.current.ontouchcancel = this.onTargetTouchLeave;
+    
+  }
+  removeTargetTouchEventListeners = () => {
+    this.targetRef.current.ontouchstart = undefined;
+    this.targetRef.current.ontouchend = undefined;
+    this.targetRef.current.ontouchmove = undefined;
+    this.targetRef.current.ontouchcancel = undefined;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.allowTouch !== prevProps.allowTouch) {
+      if (this.props.allowTouch) {
+        this.addTargetTouchEventListeners()
+      } else {
+        this.removeTargetTouchEventListeners()
+      }
+    }
+  }
 
   setInnerRef = (el) => {
     this.container = el
@@ -127,14 +165,24 @@ export default compose(
     this.props.relativeMousePos.onMouseMove(e)
     this.onMouseMove(e)
   }
+  onTargetTouchMove = (e) => {
+    this.props.relativeMousePos.onTouchMove(e)
+    this.onTouchMove(e)
+  }
 
   onTargetMouseLeave = (e) => {
     this.props.relativeMousePos.onMouseLeave(e)
+  }
+  onTargetTouchLeave = (e) => {
+    this.props.relativeMousePos.onTouchLeave(e)
   }
 
   onMouseUp = (e) => this.callSelectorMethod('onMouseUp', e)
   onMouseDown = (e) => this.callSelectorMethod('onMouseDown', e)
   onMouseMove = (e) => this.callSelectorMethod('onMouseMove', e)
+  onTouchStart = (e) => this.callSelectorMethod("onTouchStart", e)
+  onTouchEnd = (e) => this.callSelectorMethod("onTouchEnd", e)
+  onTouchMove = (e) => this.callSelectorMethod("onTouchMove", e)
   onClick = (e) => this.callSelectorMethod('onClick', e)
 
   onSubmit = () => {
@@ -179,6 +227,8 @@ export default compose(
     }
   }
 
+  
+
   render () {
     const { props } = this
     const {
@@ -188,7 +238,8 @@ export default compose(
       renderContent,
       renderSelector,
       renderEditor,
-      renderOverlay
+      renderOverlay,
+      allowTouch
     } = props
 
     const topAnnotationAtMouse = this.getTopAnnotationAt(
@@ -201,6 +252,8 @@ export default compose(
         style={props.style}
         innerRef={isMouseHovering.innerRef}
         onMouseLeave={this.onTargetMouseLeave}
+        onTouchCancel={this.onTargetTouchLeave}
+        allowTouch={allowTouch}
       >
         <Img
           className={props.className}
@@ -229,6 +282,7 @@ export default compose(
           }
         </Items>
         <Target
+          innerRef={this.targetRef}
           onClick={this.onClick}
           onMouseUp={this.onMouseUp}
           onMouseDown={this.onMouseDown}
