@@ -1,44 +1,5 @@
-import React, { Component } from 'react'
-import Annotation from 'react-image-annotation'
-import {
-  PointSelector,
-  RectangleSelector,
-  OvalSelector
-} from 'react-image-annotation/lib/selectors'
-
-export default class Multiple extends Component {
-  state = {
-    type: RectangleSelector.TYPE,
-    annotations: mocks.annotations,
-    annotation: {},
-    allowTouch: true
-  }
-
-  onChange = (annotation) => {
-    this.setState({ annotation })
-  }
-
-  onSubmit = (annotation) => {
-    const { geometry, data } = annotation
-
-    this.setState({
-      annotation: {},
-      annotations: this.state.annotations.concat({
-        geometry,
-        data: {
-          ...data,
-          id: Math.random()
-        }
-      })
-    })
-  }
-
-  onChangeType = (e) => {
-    this.setState({
-      annotation: {},
-      type: e.currentTarget.innerHTML
-    })
-  }
+class Touch extends Component {
+  state = { allowTouch: true }
 
   toggleAllowTouch = () => {
     this.setState((prevState) => (
@@ -51,28 +12,10 @@ export default class Multiple extends Component {
       <div>
         <div>
           <Button onClick={this.toggleAllowTouch}>
-            {this.state.allowTouch ? "Stop allowing touch" : "Start allowing touch"}
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={this.onChangeType}
-            active={RectangleSelector.TYPE === this.state.type}
-          >
-            {RectangleSelector.TYPE}
-          </Button>
-          <Button
-            onClick={this.onChangeType}
-            active={PointSelector.TYPE === this.state.type}
-          >
-            {PointSelector.TYPE}
-          </Button>
-
-          <Button
-            onClick={this.onChangeType}
-            active={OvalSelector.TYPE === this.state.type}
-          >
-            {OvalSelector.TYPE}
+            {this.state.allowTouch
+              ? "Stop allowing touch"
+              : "Start allowing touch"
+            }
           </Button>
         </div>
         <Annotation
