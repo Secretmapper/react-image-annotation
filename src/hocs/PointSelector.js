@@ -1,9 +1,5 @@
+import { getCoordPercentage } from '../utils/offsetCoordinates';
 const MARGIN = 6
-
-const getCoordPercentage = (e) => ({
-  x: e.nativeEvent.offsetX / e.currentTarget.offsetWidth * 100,
-  y: e.nativeEvent.offsetY / e.currentTarget.offsetHeight * 100
-})
 
 const marginToPercentage = (container) => ({
   marginX: MARGIN / container.width * 100,
