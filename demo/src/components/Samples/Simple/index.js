@@ -42,6 +42,7 @@ export default class Simple extends Component {
           value={this.state.annotation}
           onChange={this.onChange}
           onSubmit={this.onSubmit}
+          allowTouch
         />
       </Root>
     )
