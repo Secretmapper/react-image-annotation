@@ -15,6 +15,7 @@ const getMouseRelativeCoordinates = e => {
     };
 }
 
+const clamp = (a, b, i) => Math.max(a, Math.min(b, i))
 const getTouchRelativeCoordinates = e => {
   const touch = e.targetTouches[0]
 
@@ -25,8 +26,8 @@ const getTouchRelativeCoordinates = e => {
   const offsetY = touch.pageY - (boundingRect.top + window.scrollY)
 
   return {
-    x: (offsetX / boundingRect.width) * 100,
-    y: (offsetY / boundingRect.height) * 100
+    x: clamp(0, 100, (offsetX / boundingRect.width) * 100),
+    y: clamp(0, 100, (offsetY / boundingRect.height) * 100)
   }
 }
 
