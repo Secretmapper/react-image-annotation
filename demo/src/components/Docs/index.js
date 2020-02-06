@@ -29,7 +29,7 @@ export default class Docs extends Component {
   render () {
     return (
       <Container>
-        <h1>Multiple Type/Shape Support</h1>
+        <h1>Multiple Type/Shape/Style Support</h1>
         <Multi />
         <Highlight>
           {multiCode}

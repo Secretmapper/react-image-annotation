@@ -32,11 +32,15 @@ export default {
   renderSelector: ({ annotation }) => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
-        return (
-          <FancyRectangle
-            annotation={annotation}
-          />
-        )
+        if (annotation.style) {
+          return <Rectangle annotation={annotation} />
+        } else {
+          return (
+            <FancyRectangle
+              annotation={annotation}
+            />
+          )
+        }
       case PointSelector.TYPE:
         return (
           <Point

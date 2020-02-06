@@ -10,13 +10,14 @@ const Container = styled.div`
 `
 
 function Oval (props) {
-  const { geometry } = props.annotation
+  const { geometry, style } = props.annotation
   if (!geometry) return null
 
   return (
     <Container
       className={props.className}
       style={{
+        ...style,
         position: 'absolute',
         left: `${geometry.x}%`,
         top: `${geometry.y}%`,
