@@ -9,20 +9,20 @@ const Container = styled.div`
 `
 
 function Rectangle (props) {
-  const { geometry } = props.annotation
+  const { geometry, style } = props.annotation
   if (!geometry) return null
 
   return (
     <Container
       className={props.className}
       style={{
+        ...style,
         position: 'absolute',
         left: `${geometry.x}%`,
         top: `${geometry.y}%`,
         height: `${geometry.height}%`,
         width: `${geometry.width}%`,
         boxShadow: props.active && '0 0 1px 1px yellow inset',
-        ...props.style
       }}
     />
   )

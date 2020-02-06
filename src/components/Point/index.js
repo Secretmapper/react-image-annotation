@@ -16,12 +16,13 @@ const Container = styled.div`
 ` 
 
 function Point (props) {
-  const { geometry } = props.annotation
+  const { geometry, style } = props.annotation
   if (!geometry) return null
 
   return (
     <Container
       style={{
+        ...style,
         top: `${geometry.y}%`,
         left: `${geometry.x}%`
       }}
