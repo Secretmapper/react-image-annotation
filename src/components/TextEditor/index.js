@@ -38,14 +38,12 @@ function TextEditor (props) {
   return (
     <React.Fragment>
       <Inner>
-        <textarea
-          placeholder='Write description'
-          onFocus={props.onFocus}
-          onBlur={props.onBlur}
-          onChange={props.onChange}
-          value={props.value}
-        >
-        </textarea>
+        {props.renderInputArea({
+          onFocus: props.onFocus,
+          onBlur: props.onBlur,
+          onChange: props.onChange,
+          value: props.value
+        })}
       </Inner>
       {props.value && (
         <Button

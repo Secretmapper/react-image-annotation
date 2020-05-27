@@ -84,7 +84,9 @@ export default compose(
 
     disableOverlay: T.bool,
     renderOverlay: T.func.isRequired,
-    allowTouch: T.bool
+    allowTouch: T.bool,
+
+    renderInputArea: T.func
   }
 
   static defaultProps = defaultProps
@@ -311,7 +313,8 @@ export default compose(
             renderEditor({
               annotation: props.value,
               onChange: props.onChange,
-              onSubmit: this.onSubmit
+              onSubmit: this.onSubmit,
+              renderInputArea: props.renderInputArea
             })
           )
         }

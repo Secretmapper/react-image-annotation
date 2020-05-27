@@ -52,6 +52,7 @@ function Editor (props) {
         })}
         onSubmit={props.onSubmit}
         value={props.annotation.data && props.annotation.data.text}
+        renderInputArea={props.renderInputArea}
       />
     </Container>
   )

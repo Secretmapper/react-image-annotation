@@ -111,5 +111,15 @@ export default {
           </Overlay>
         )
     }
-  }
+  },
+  renderInputArea: ({onFocus, onBlur, onChange, value}) => (
+    <textarea
+      placeholder="Write description"
+      onFocus={onFocus}
+      onBlur={onBlur}
+      onChange={onChange}
+      value={value}
+    >
+    </textarea>
+  )
 }
