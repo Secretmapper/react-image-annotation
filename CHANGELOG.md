@@ -1,3 +1,15 @@
+## 0.9.12
+
+### Improvements
+
+- Fix safari problems
+
+## 0.9.11
+
+### Improvements
+
+- Add zoom support
+
 ## 0.9.8
 
 ### Improvements
