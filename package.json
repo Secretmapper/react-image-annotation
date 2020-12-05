@@ -1,7 +1,7 @@
 {
-  "name": "react-image-annotation",
+  "name": "react-image-annotation-with-zoom",
   "version": "0.9.10",
-  "description": "react-image-annotation React component",
+  "description": "react-image-annotation-with-zoom React component",
   "author": "Arian Allenson Valdez <arianallensonv@gmail.com> (http://arianv.com/)",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -21,6 +21,7 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "react-zoom-pan-pinch": "^1.6.1",
     "styled-components": "^3.1.6"
   },
   "peerDependencies": {
@@ -57,7 +58,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Secretmapper/react-image-annotation"
+    "url": "https://github.com/Scriptor-Group/react-image-annotation"
   },
   "keywords": [
     "react-component"

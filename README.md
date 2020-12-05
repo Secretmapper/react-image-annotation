@@ -1,5 +1,4 @@
-React Image Annotation
-=========================
+# React Image Annotation (With zoom)
 
 An infinitely customizable image annotation library built on React
 
@@ -8,9 +7,9 @@ An infinitely customizable image annotation library built on React
 ## Installation
 
 ```
-npm install --save react-image-annotation
+npm install --save react-image-annotation-with-zoom
 # or
-yarn add react-image-annotation
+yarn add react-image-annotation-with-zoom
 ```
 
 ## Usage
@@ -19,15 +18,15 @@ yarn add react-image-annotation
 export default class Simple extends Component {
   state = {
     annotations: [],
-    annotation: {}
-  }
+    annotation: {},
+  };
 
   onChange = (annotation) => {
-    this.setState({ annotation })
-  }
+    this.setState({ annotation });
+  };
 
   onSubmit = (annotation) => {
-    const { geometry, data } = annotation
+    const { geometry, data } = annotation;
 
     this.setState({
       annotation: {},
@@ -35,61 +34,59 @@ export default class Simple extends Component {
         geometry,
         data: {
           ...data,
-          id: Math.random()
-        }
-      })
-    })
-  }
+          id: Math.random(),
+        },
+      }),
+    });
+  };
 
-  render () {
+  render() {
     return (
       <Root>
         <Annotation
           src={img}
-          alt='Two pebbles anthropomorphized holding hands'
-
+          alt="Two pebbles anthropomorphized holding hands"
           annotations={this.state.annotations}
-
           type={this.state.type}
           value={this.state.annotation}
           onChange={this.onChange}
           onSubmit={this.onSubmit}
         />
       </Root>
-    )
+    );
   }
 }
 ```
 
-
 ### Props
 
-Prop | Description | Default
----- | ----------- | -------
-`src` | Image src attribute |
-`alt` | Image alt attribute |
-`annotations` | Array of annotations |
-`value` | Annotation object currently being created. See [annotation object](#annotation-object)  |
-`onChange` | `onChange` handler for annotation object |
-`onSubmit` | `onSubmit` handler for annotation object |
-`type` | Selector type. See [custom shapes](#using-custom-shapes) | `RECTANGLE`
-`allowTouch` | Set to `true` to allow the target to handle touch events. This disables one-finger scrolling | `false`
-`selectors` | An array of selectors. See [adding custom selector logic](#adding-custom-selector-logic) | `[RectangleSelector, PointSelector, OvalSelector]`
-`activeAnnotations` | Array of annotations that will be passed as 'active' (active highlight and shows content) |
-`activeAnnotationComparator` | Method to compare annotation and `activeAnnotation` item (from `props.activeAnnotations`). Return `true` if it's the annotations are equal | `(a, b) => a === b`
-`disableAnnotation` | Set to `true` to disable creating of annotations (note that no callback methods will be called if this is `true`) | `false`
-`disableSelector` | Set to `true` to not render `Selector` | `false`
-`disableEditor` | Set to `true` to not render `Editor` | `false`
-`disableOverlay` | Set to `true` to not render `Overlay` | `false`
-`renderSelector` | Function that renders `Selector` Component | See [custom components](#using-custom-components)
-`renderEditor` | Function that renders `Editor` Component | See [custom components](#using-custom-components)
-`renderHighlight` | Function that renders `Highlight` Component | See [custom components](#using-custom-components)
-`renderContent` | Function that renders `Content` | See [custom components](#using-custom-components)
-`renderOverlay` | Function that renders `Overlay` | See [custom components](#using-custom-components)
-`onMouseUp` | `onMouseUp` handler on annotation target |
-`onMouseDown` | `onMouseDown` handler on annotation target |
-`onMouseMove` | `onMouseMove` handler on annotation target |
-`onClick` | `onClick` handler on annotation target |
+| Prop                         | Description                                                                                                                                | Default                                            |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- |
+| `src`                        | Image src attribute                                                                                                                        |
+| `alt`                        | Image alt attribute                                                                                                                        |
+| `annotations`                | Array of annotations                                                                                                                       |
+| `value`                      | Annotation object currently being created. See [annotation object](#annotation-object)                                                     |
+| `onChange`                   | `onChange` handler for annotation object                                                                                                   |
+| `onSubmit`                   | `onSubmit` handler for annotation object                                                                                                   |
+| `type`                       | Selector type. See [custom shapes](#using-custom-shapes)                                                                                   | `RECTANGLE`                                        |
+| `allowTouch`                 | Set to `true` to allow the target to handle touch events. This disables one-finger scrolling                                               | `false`                                            |
+| `selectors`                  | An array of selectors. See [adding custom selector logic](#adding-custom-selector-logic)                                                   | `[RectangleSelector, PointSelector, OvalSelector]` |
+| `activeAnnotations`          | Array of annotations that will be passed as 'active' (active highlight and shows content)                                                  |
+| `activeAnnotationComparator` | Method to compare annotation and `activeAnnotation` item (from `props.activeAnnotations`). Return `true` if it's the annotations are equal | `(a, b) => a === b`                                |
+| `disableAnnotation`          | Set to `true` to disable creating of annotations (note that no callback methods will be called if this is `true`)                          | `false`                                            |
+| `disableSelector`            | Set to `true` to not render `Selector`                                                                                                     | `false`                                            |
+| `disableEditor`              | Set to `true` to not render `Editor`                                                                                                       | `false`                                            |
+| `disableZoom`                | Set to `true` to not active `zoom`                                                                                                         | `false`                                            |
+| `disableOverlay`             | Set to `true` to not render `Overlay`                                                                                                      | `false`                                            |
+| `renderSelector`             | Function that renders `Selector` Component                                                                                                 | See [custom components](#using-custom-components)  |
+| `renderEditor`               | Function that renders `Editor` Component                                                                                                   | See [custom components](#using-custom-components)  |
+| `renderHighlight`            | Function that renders `Highlight` Component                                                                                                | See [custom components](#using-custom-components)  |
+| `renderContent`              | Function that renders `Content`                                                                                                            | See [custom components](#using-custom-components)  |
+| `renderOverlay`              | Function that renders `Overlay`                                                                                                            | See [custom components](#using-custom-components)  |
+| `onMouseUp`                  | `onMouseUp` handler on annotation target                                                                                                   |
+| `onMouseDown`                | `onMouseDown` handler on annotation target                                                                                                 |
+| `onMouseMove`                | `onMouseMove` handler on annotation target                                                                                                 |
+| `onClick`                    | `onClick` handler on annotation target                                                                                                     |
 
 #### Annotation object
 
@@ -98,13 +95,14 @@ An Annotation object is an object that conforms to the object shape
 ```js
 ({
   selection: T.object, // temporary object for selector logic
-  geometry: T.shape({ // geometry data for annotation
-    type: T.string.isRequired // type is used to resolve Highlighter/Selector renderer
+  geometry: T.shape({
+    // geometry data for annotation
+    type: T.string.isRequired, // type is used to resolve Highlighter/Selector renderer
   }),
   // auxiliary data object for application.
   // Content data can be stored here (text, image, primary key, etc.)
-  data: T.object
-})
+  data: T.object,
+});
 ```
 
 ## Using custom components
@@ -133,12 +131,10 @@ You can switch the shape selector by passing the appropriate `type` as a propert
 import {
   PointSelector,
   RectangleSelector,
-  OvalSelector
-} from 'react-image-annotation/lib/selectors'
+  OvalSelector,
+} from "react-image-annotation-with-zoom/lib/selectors";
 
-<Annotation
-  type={PointSelector.TYPE}
-/>
+<Annotation type={PointSelector.TYPE} />;
 ```
 
 ### Adding custom selector logic
@@ -162,7 +158,7 @@ First see [Selectors](#adding-custom-selector-logic)
 
 You can use `Selector` methods to connect these method logic to your stores. This is due to the fact that selector methods function as reducers, returning new state depending on the event.
 
-***Note that it is not necessary to connect the selector logic with redux/mobx. Connecting the annotation and annotations state is more than enough for most use cases.***
+**_Note that it is not necessary to connect the selector logic with redux/mobx. Connecting the annotation and annotations state is more than enough for most use cases._**
 
 ## License
 
