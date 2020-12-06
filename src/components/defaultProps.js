@@ -7,29 +7,35 @@ import Rectangle from './Rectangle'
 import Oval from './Oval'
 import Content from './Content'
 import Overlay from './Overlay'
+import Drawing from './Drawing'
+import Highlighter from './Highlighter'
 
 import {
   RectangleSelector,
   PointSelector,
-  OvalSelector
+  OvalSelector,
+  DrawingSelector,
+  HighlighterSelector
 } from '../selectors'
 
 export default {
-  innerRef: () => {},
-  onChange: () => {},
-  onSubmit: () => {},
+  innerRef: () => { },
+  onChange: () => { },
+  onSubmit: () => { },
   type: RectangleSelector.TYPE,
   selectors: [
     RectangleSelector,
     PointSelector,
-    OvalSelector
+    OvalSelector,
+    DrawingSelector,
+    HighlighterSelector
   ],
   disableAnnotation: false,
   disableSelector: false,
   disableEditor: false,
   disableOverlay: false,
   activeAnnotationComparator: (a, b) => a === b,
-  renderSelector: ({ annotation }) => {
+  renderSelector: ({ annotation, options }) => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
         return (
@@ -46,6 +52,18 @@ export default {
       case OvalSelector.TYPE:
         return (
           <Oval
+            annotation={annotation}
+          />
+        )
+      case DrawingSelector.TYPE:
+        return (
+          <Drawing
+            annotation={annotation}
+          />
+        )
+      case HighlighterSelector.TYPE:
+        return (
+          <Highlighter
             annotation={annotation}
           />
         )
@@ -86,14 +104,34 @@ export default {
             active={active}
           />
         )
+      case DrawingSelector.TYPE:
+        return (
+          <Drawing
+            key={key}
+            annotation={annotation}
+            active={active}
+          />
+        )
+      case HighlighterSelector.TYPE:
+        return (
+          <Highlighter
+            key={key}
+            annotation={annotation}
+            active={active}
+          />
+        )
       default:
         return null
     }
   },
-  renderContent: ({ key, annotation }) => (
+  renderContent: ({ key, annotation, mouse, positionX, positionY, scale }) => (
     <Content
       key={key}
       annotation={annotation}
+      mouse={mouse}
+      positionX={positionX}
+      positionY={positionY}
+      scale={scale}
     />
   ),
   renderOverlay: ({ type, annotation }) => {

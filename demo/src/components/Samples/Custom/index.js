@@ -3,7 +3,8 @@ import Annotation from '../../../../../src'
 import {
   PointSelector,
   RectangleSelector,
-  OvalSelector
+  OvalSelector,
+  DrawingSelector
 } from '../../../../../src/selectors'
 
 import Button from '../../Button'
@@ -26,7 +27,7 @@ const Box = ({ children, geometry, style }) => (
   </div>
 )
 
-function renderSelector ({ annotation, active }) {
+function renderSelector({ annotation, active }) {
   const { geometry } = annotation
   if (!geometry) return null
 
@@ -43,7 +44,7 @@ function renderSelector ({ annotation, active }) {
   )
 }
 
-function renderHighlight ({ annotation, active }) {
+function renderHighlight({ annotation, active }) {
   const { geometry } = annotation
   if (!geometry) return null
 
@@ -62,7 +63,7 @@ function renderHighlight ({ annotation, active }) {
   )
 }
 
-function renderContent ({ annotation }) {
+function renderContent({ annotation }) {
   const { geometry } = annotation
   return (
     <div
@@ -83,7 +84,7 @@ function renderContent ({ annotation }) {
   )
 }
 
-function renderEditor (props) {
+function renderEditor(props) {
   const { geometry } = props.annotation
   if (!geometry) return null
 
@@ -112,7 +113,7 @@ function renderEditor (props) {
   )
 }
 
-function renderOverlay () {
+function renderOverlay() {
   return (
     <div
       style={{
@@ -162,7 +163,7 @@ export default class Custom extends Component {
     })
   }
 
-  render () {
+  render() {
     return (
       <div>
         <Annotation

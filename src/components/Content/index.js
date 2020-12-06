@@ -13,7 +13,7 @@ const Container = styled.div`
   margin-left: 8px;
 `
 
-function Content (props) {
+function Content(props) {
   const { geometry } = props.annotation
   if (!geometry) return null
 
@@ -21,8 +21,9 @@ function Content (props) {
     <Container
       style={{
         position: 'absolute',
-        left: `${geometry.x}%`,
-        top: `${geometry.y + geometry.height}%`,
+        pointerEvents: 'none',
+        left: `${props.mouse.x}%`,
+        top: `${props.mouse.y}%`,
         ...props.style
       }}
       className={props.className}

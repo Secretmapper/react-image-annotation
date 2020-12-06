@@ -88,7 +88,7 @@ export default compose(
     disableZoom: T.bool,
     disableOverlay: T.bool,
     renderOverlay: T.func.isRequired,
-    allowTouch: T.bool
+    allowTouch: T.bool,
   }
 
   static defaultProps = defaultProps
@@ -261,12 +261,13 @@ export default compose(
         }}
         pan={{ lockAxisX: !movingMode, lockAxisY: !movingMode }}
       >
-        {({ scale, positionX, positionY, setPositionX, setPositionY }) => {
+        {({ scale, positionX, positionY, setPositionX, setPositionY, ...rest }) => {
           const pointerEventNone = scale === 1 && (positionX !== 0 || positionY !== 0);
           if (pointerEventNone) {
             setPositionX(0, 0);
             setPositionY(0, 0);
           }
+
           return (
             <React.Fragment>
               <Container
@@ -299,7 +300,7 @@ export default compose(
                       && props.value.geometry
                       && (
                         renderSelector({
-                          annotation: props.value
+                          annotation: props.value,
                         })
                       )
                     }
@@ -319,33 +320,41 @@ export default compose(
                     annotation: props.value
                   })
                 )}
-                {props.annotations.map(annotation => (
-                  this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse)
-                  && (
-                    renderContent({
-                      key: annotation.data.id,
-                      annotation: annotation
-                    })
-                  )
-                ))}
-                {!props.disableEditor
-                  && props.value
-                  && props.value.selection
-                  && props.value.selection.showEditor
-                  && (
-                    renderEditor({
-                      annotation: props.value,
-                      onChange: props.onChange,
-                      onSubmit: this.onSubmit
-                    })
-                  )
-                }
+                <div style={{ width: `${scale * 100}%`, height: `${scale * 100}%`, pointerEvents: 'none', position: 'absolute', left: positionX, top: positionY }}>
+                  <div style={{ pointerEvents: 'all' }}>
+                    {props.annotations.map(annotation => (
+                      this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse)
+                      && (
+                        renderContent({
+                          key: annotation.data.id,
+                          annotation: annotation,
+                          mouse: this.props.relativeMousePos,
+                          positionX, positionY, scale
+                        })
+                      )
+                    ))}
+
+                    {!props.disableEditor
+                      && props.value
+                      && props.value.selection
+                      && props.value.selection.showEditor
+                      && (
+                        renderEditor({
+                          annotation: props.value,
+                          onChange: props.onChange,
+                          onSubmit: this.onSubmit
+                        })
+                      )
+                    }
+                  </div>
+                </div>
                 <div>{props.children}</div>
               </Container>
             </React.Fragment>
           )
-        }}
-      </TransformWrapper>
+        }
+        }
+      </TransformWrapper >
     )
   }
 })

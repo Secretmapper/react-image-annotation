@@ -3,7 +3,9 @@ import Annotation from '../../../../../src'
 import {
   PointSelector,
   RectangleSelector,
-  OvalSelector
+  OvalSelector,
+  DrawingSelector,
+  HighlighterSelector
 } from '../../../../../src/selectors'
 
 import Button from '../../Button'
@@ -68,6 +70,18 @@ export default class Multiple extends Component {
         </Button>
         <Button
           onClick={this.onChangeType}
+          active={DrawingSelector.TYPE === this.state.type}
+        >
+          {DrawingSelector.TYPE}
+        </Button>
+        <Button
+          onClick={this.onChangeType}
+          active={HighlighterSelector.TYPE === this.state.type}
+        >
+          {HighlighterSelector.TYPE}
+        </Button>
+        <Button
+          onClick={this.onChangeType}
           active={PointSelector.TYPE === this.state.type}
         >
           {PointSelector.TYPE}
@@ -82,7 +96,6 @@ export default class Multiple extends Component {
         <Annotation
           src={img}
           alt='Two pebbles anthropomorphized holding hands'
-
           annotations={this.state.annotations}
           movingMode={this.state.movingMode}
           type={this.state.type}
