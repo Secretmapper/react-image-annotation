@@ -47,7 +47,7 @@ export default compose(
     onMouseMove: T.func,
     onClick: T.func,
     children: T.object,
-
+    movingMode: T.bool,
     annotations: T.arrayOf(
       T.shape({
         type: T.string
@@ -195,7 +195,7 @@ export default compose(
   }
 
   callSelectorMethod = (methodName, e) => {
-    if (this.props.disableAnnotation) {
+    if (this.props.disableAnnotation || this.props.movingMode) {
       return
     }
 
@@ -237,6 +237,7 @@ export default compose(
     const {
       isMouseHovering,
       disableZoom,
+      movingMode,
       renderHighlight,
       renderContent,
       renderSelector,
@@ -258,7 +259,7 @@ export default compose(
         options={{
           disabled: disableZoom
         }}
-        pan={{ lockAxisX: true, lockAxisY: true }}
+        pan={{ lockAxisX: !movingMode, lockAxisY: !movingMode }}
       >
         {({ scale, positionX, positionY, setPositionX, setPositionY }) => {
           const pointerEventNone = scale === 1 && (positionX !== 0 || positionY !== 0);
@@ -269,7 +270,7 @@ export default compose(
           return (
             <React.Fragment>
               <Container
-                style={{ ...props.style, pointerEvents: pointerEventNone ? 'none' : 'all' }}
+                style={props.style}
                 innerRef={isMouseHovering.innerRef}
                 onMouseLeave={this.onTargetMouseLeave}
                 onTouchCancel={this.onTargetTouchLeave}

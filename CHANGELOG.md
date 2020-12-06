@@ -1,3 +1,10 @@
+## 0.9.13
+
+### Improvements
+
+- Fix mobiles unZoom
+- Add `movingMode` option
+
 ## 0.9.12
 
 ### Improvements

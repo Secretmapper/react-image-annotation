@@ -4,6 +4,10 @@ An infinitely customizable image annotation library built on React
 
 ![Annotation demo](demo.gif)
 
+## Zoom mode
+
+![Annotation demo with zoom](demo-zoom.gif)
+
 ## Installation
 
 ```
@@ -76,6 +80,7 @@ export default class Simple extends Component {
 | `disableAnnotation`          | Set to `true` to disable creating of annotations (note that no callback methods will be called if this is `true`)                          | `false`                                            |
 | `disableSelector`            | Set to `true` to not render `Selector`                                                                                                     | `false`                                            |
 | `disableEditor`              | Set to `true` to not render `Editor`                                                                                                       | `false`                                            |
+| `movingMode`                 | Set to `true` to active moving mode                                                                                                        | `false`                                            |
 | `disableZoom`                | Set to `true` to not active `zoom`                                                                                                         | `false`                                            |
 | `disableOverlay`             | Set to `true` to not render `Overlay`                                                                                                      | `false`                                            |
 | `renderSelector`             | Function that renders `Selector` Component                                                                                                 | See [custom components](#using-custom-components)  |

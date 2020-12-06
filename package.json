@@ -1,6 +1,6 @@
 {
   "name": "react-image-annotation-with-zoom",
-  "version": "0.9.12",
+  "version": "0.9.13",
   "description": "react-image-annotation-with-zoom React component",
   "author": "Arian Allenson Valdez <arianallensonv@gmail.com> (http://arianv.com/)",
   "main": "lib/index.js",

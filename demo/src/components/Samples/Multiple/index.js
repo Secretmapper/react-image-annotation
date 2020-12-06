@@ -15,7 +15,8 @@ export default class Multiple extends Component {
   state = {
     type: RectangleSelector.TYPE,
     annotations: mocks.annotations,
-    annotation: {}
+    annotation: {},
+    movingMode: false,
   }
 
   onChange = (annotation) => {
@@ -37,6 +38,12 @@ export default class Multiple extends Component {
     })
   }
 
+  toggleMoveMode = () => {
+    this.setState({
+      movingMode: !this.state.movingMode
+    })
+  }
+
   onChangeType = (e) => {
     this.setState({
       annotation: {},
@@ -44,9 +51,15 @@ export default class Multiple extends Component {
     })
   }
 
-  render () {
+  render() {
     return (
       <div>
+        <Button
+          onClick={this.toggleMoveMode}
+          active={this.state.movingMode}
+        >
+          Move mode
+        </Button>
         <Button
           onClick={this.onChangeType}
           active={RectangleSelector.TYPE === this.state.type}
@@ -71,7 +84,7 @@ export default class Multiple extends Component {
           alt='Two pebbles anthropomorphized holding hands'
 
           annotations={this.state.annotations}
-
+          movingMode={this.state.movingMode}
           type={this.state.type}
           value={this.state.annotation}
           onChange={this.onChange}
