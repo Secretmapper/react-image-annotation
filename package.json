@@ -4,6 +4,7 @@
   "description": "react-image-annotation React component",
   "author": "Arian Allenson Valdez <arianallensonv@gmail.com> (http://arianv.com/)",
   "main": "lib/index.js",
+  "types": "src/types/index.d.ts",
   "module": "es/index.js",
   "files": [
     "css",
