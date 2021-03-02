@@ -10,7 +10,8 @@
     "css",
     "es",
     "lib",
-    "umd"
+    "umd",
+    "src/types/index.d.ts"
   ],
   "scripts": {
     "build": "nwb build-react-component",
