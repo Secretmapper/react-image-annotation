@@ -4,14 +4,17 @@
   "description": "react-image-annotation React component",
   "author": "Arian Allenson Valdez <arianallensonv@gmail.com> (http://arianv.com/)",
   "main": "lib/index.js",
+  "types": "src/types/index.d.ts",
   "module": "es/index.js",
   "files": [
     "css",
     "es",
     "lib",
-    "umd"
+    "umd",
+    "src/types/index.d.ts"
   ],
   "scripts": {
+    "prepare": "nwb build-react-component",
     "build": "nwb build-react-component",
     "deploy": "gh-pages -d demo/dist",
     "clean": "nwb clean-module && nwb clean-demo",
