@@ -38,7 +38,6 @@ export default compose(
   withRelativeMousePos()
 )(class Annotation extends Component {
   static propTypes = {
-    innerRef: T.func,
     onMouseUp: T.func,
     onMouseDown: T.func,
     onMouseMove: T.func,
@@ -89,8 +88,11 @@ export default compose(
 
   static defaultProps = defaultProps
 
+  imgRef = React.createRef();
   targetRef = React.createRef();
+
   componentDidMount() {
+    this.setInnerRef(this.imgRef)
     if (this.props.allowTouch) {
       this.addTargetTouchEventListeners();
     }
@@ -125,10 +127,11 @@ export default compose(
     }
   }
 
-  setInnerRef = (el) => {
+  setInnerRef = (ref) => {
+    const el = ref.current
     this.container = el
+    this.props.isMouseHovering.innerRef(el)
     this.props.relativeMousePos.innerRef(el)
-    this.props.innerRef(el)
   }
 
   getSelectorByType = (type) => {
@@ -250,7 +253,6 @@ export default compose(
     return (
       <Container
         style={props.style}
-        innerRef={isMouseHovering.innerRef}
         onMouseLeave={this.onTargetMouseLeave}
         onTouchCancel={this.onTargetTouchLeave}
         allowTouch={allowTouch}
@@ -261,7 +263,7 @@ export default compose(
           alt={props.alt}
           src={props.src}
           draggable={false}
-          innerRef={this.setInnerRef}
+          ref={this.imgRef}
         />
         <Items>
           {props.annotations.map(annotation => (
@@ -282,7 +284,7 @@ export default compose(
           }
         </Items>
         <Target
-          innerRef={this.targetRef}
+          ref={this.targetRef}
           onClick={this.onClick}
           onMouseUp={this.onMouseUp}
           onMouseDown={this.onMouseDown}
