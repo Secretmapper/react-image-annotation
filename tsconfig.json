@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "declaration": false,
+    "esModuleInterop": false,
+    "inlineSources": true,
+    "jsx": "preserve",
+    "rootDirs": ["./demo/src", "./src"],
+    "lib": [
+      "dom",
+      "es6",
+      "es2016",
+      "es2017",
+      "dom.iterable",
+      "scripthost",
+      "esnext.asynciterable"
+    ],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "es2017",
+    "types": [
+      "node"
+    ],
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.js",
+    "src/**/*.tsx",
+    "src/**/*.jsx"
+  ]
+}
