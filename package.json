@@ -21,7 +21,7 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "styled-components": "^3.1.6"
+    "styled-components": "^5.3.1"
   },
   "peerDependencies": {
     "prop-types": "^15.6.0",
@@ -29,18 +29,26 @@
     "react-dom": ">=0.14"
   },
   "devDependencies": {
+    "@types/react": "^17.0.30",
+    "@types/react-syntax-highlighter": "^13.5.2",
+    "awesome-typescript-loader": "^5.2.1",
     "chai": "^4.1.2",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "gh-pages": "^1.1.0",
-    "nwb": "0.21.x",
-    "raw-loader": "^0.5.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
-    "react-syntax-highlighter": "^7.0.0",
-    "standard": "^10.0.3"
+    "gh-pages": "^3.2.3",
+    "nwb": "0.25.2",
+    "prettier": "^2.4.1",
+    "raw-loader": "^4.0.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
+    "react-syntax-highlighter": "^15.4.4",
+    "standard": "^16.0.4",
+    "ts-loader": "^8.1.0",
+    "typescript": "^4.4.4",
+    "webpack": "^4.42.0",
+    "whatwg-fetch": "^3.6.2"
   },
   "standard": {
     "env": [

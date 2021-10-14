@@ -6,3 +6,8 @@
 /umd
 npm-debug.log*
 .vscode/
+.envrc
+.idea/
+*.iml
+.yarn
+.yarnrc
