@@ -28,7 +28,10 @@
     "target": "es2017",
     "types": [
       "node"
-    ]
+    ],
+    "paths": {
+      "react-syntax-highlighter/*": ["./node_modules/react-syntax-highlighter/*"]
+    }
   },
   "include": [
     "src/**/*.ts",
