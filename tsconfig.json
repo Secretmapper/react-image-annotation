@@ -29,18 +29,11 @@
     "types": [
       "node"
     ],
-    "paths": {
-      "react-syntax-highlighter/*": ["./node_modules/react-syntax-highlighter/*"]
-    }
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.js",
     "src/**/*.tsx",
-    "src/**/*.jsx",
-    "demo/src/**/*.ts",
-    "demo/src/**/*.js",
-    "demo/src/**/*.tsx",
-    "demo/src/**/*.jsx"
+    "src/**/*.jsx"
   ]
 }
