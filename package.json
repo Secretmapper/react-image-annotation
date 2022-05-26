@@ -4,14 +4,17 @@
   "description": "react-image-annotation React component",
   "author": "Arian Allenson Valdez <arianallensonv@gmail.com> (http://arianv.com/)",
   "main": "lib/index.js",
+  "types": "src/types/index.d.ts",
   "module": "es/index.js",
   "files": [
     "css",
     "es",
     "lib",
-    "umd"
+    "umd",
+    "src/types/index.d.ts"
   ],
   "scripts": {
+    "prepare": "nwb build-react-component",
     "build": "nwb build-react-component",
     "deploy": "gh-pages -d demo/dist",
     "clean": "nwb clean-module && nwb clean-demo",
@@ -21,11 +24,11 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "styled-components": "^3.1.6"
+    "styled-components": "^5.3.2"
   },
   "peerDependencies": {
     "prop-types": "^15.6.0",
-    "react": "^16.3",
+    "react": "^17",
     "react-dom": ">=0.14"
   },
   "devDependencies": {

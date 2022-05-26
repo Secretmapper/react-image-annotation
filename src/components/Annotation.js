@@ -250,7 +250,7 @@ export default compose(
     return (
       <Container
         style={props.style}
-        innerRef={isMouseHovering.innerRef}
+        ref={isMouseHovering.innerRef}
         onMouseLeave={this.onTargetMouseLeave}
         onTouchCancel={this.onTargetTouchLeave}
         allowTouch={allowTouch}
@@ -261,7 +261,7 @@ export default compose(
           alt={props.alt}
           src={props.src}
           draggable={false}
-          innerRef={this.setInnerRef}
+          ref={this.setInnerRef}
         />
         <Items>
           {props.annotations.map(annotation => (
@@ -282,7 +282,7 @@ export default compose(
           }
         </Items>
         <Target
-          innerRef={this.targetRef}
+          ref={this.targetRef}
           onClick={this.onClick}
           onMouseUp={this.onMouseUp}
           onMouseDown={this.onMouseDown}
