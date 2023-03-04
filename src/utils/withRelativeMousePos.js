@@ -9,8 +9,9 @@ const withRelativeMousePos = (key = 'relativeMousePos') => DecoratedComponent =>
       this.container = el
     }
 
-    onMouseMove = (e) => {
-      const xystate = getOffsetCoordPercentage(e, this.container);
+    onMouseMove = (e, ref) => {
+      const elem = this.container || (ref && ref.current);
+      const xystate = getOffsetCoordPercentage(e, elem);
       this.setState(xystate);
     }
     onTouchMove = (e) => {

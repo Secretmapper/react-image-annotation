@@ -90,6 +90,9 @@ export default compose(
   static defaultProps = defaultProps
 
   targetRef = React.createRef();
+  containerRef = React.createRef();
+  imgRef = React.createRef();
+
   componentDidMount() {
     if (this.props.allowTouch) {
       this.addTargetTouchEventListeners();
@@ -101,18 +104,21 @@ export default compose(
     // so we need to call preventDefault ourselves to stop touch from scrolling
     // Event handlers must be set via ref to enable e.preventDefault()
     // https://github.com/facebook/react/issues/9809
-    
-    this.targetRef.current.ontouchstart = this.onTouchStart;
-    this.targetRef.current.ontouchend = this.onTouchEnd;
-    this.targetRef.current.ontouchmove = this.onTargetTouchMove;
-    this.targetRef.current.ontouchcancel = this.onTargetTouchLeave;
+    if (this.targetRef.current) {
+      this.targetRef.current.ontouchstart = this.onTouchStart;
+      this.targetRef.current.ontouchend = this.onTouchEnd;
+      this.targetRef.current.ontouchmove = this.onTargetTouchMove;
+      this.targetRef.current.ontouchcancel = this.onTargetTouchLeave;
+    }
     
   }
   removeTargetTouchEventListeners = () => {
-    this.targetRef.current.ontouchstart = undefined;
-    this.targetRef.current.ontouchend = undefined;
-    this.targetRef.current.ontouchmove = undefined;
-    this.targetRef.current.ontouchcancel = undefined;
+    if (this.targetRef.current) {
+      this.targetRef.current.ontouchstart = undefined;
+      this.targetRef.current.ontouchend = undefined;
+      this.targetRef.current.ontouchmove = undefined;
+      this.targetRef.current.ontouchcancel = undefined;
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -139,14 +145,16 @@ export default compose(
     const { annotations } = this.props
     const { container, getSelectorByType } = this
 
-    if (!container) return
+    let con = container || (this.imgRef && this.imgRef.current);
+
+    if (!con) return
 
     const intersections = annotations
       .map(annotation => {
         const { geometry } = annotation
         const selector = getSelectorByType(geometry.type)
 
-        return selector.intersects({ x, y }, geometry, container)
+        return selector.intersects({ x, y }, geometry, con)
           ? annotation
           : false
       })
@@ -155,7 +163,7 @@ export default compose(
         const aSelector = getSelectorByType(a.geometry.type)
         const bSelector = getSelectorByType(b.geometry.type)
 
-        return aSelector.area(a.geometry, container) - bSelector.area(b.geometry, container)
+        return aSelector.area(a.geometry, con) - bSelector.area(b.geometry, con)
       })
 
     return intersections[0]
@@ -179,7 +187,7 @@ export default compose(
 
   onMouseUp = (e) => this.callSelectorMethod('onMouseUp', e)
   onMouseDown = (e) => this.callSelectorMethod('onMouseDown', e)
-  onMouseMove = (e) => this.callSelectorMethod('onMouseMove', e)
+  onMouseMove = (e) => this.callSelectorMethod('onMouseMove', e, this.containerRef)
   onTouchStart = (e) => this.callSelectorMethod("onTouchStart", e)
   onTouchEnd = (e) => this.callSelectorMethod("onTouchEnd", e)
   onTouchMove = (e) => this.callSelectorMethod("onTouchMove", e)
@@ -189,13 +197,13 @@ export default compose(
     this.props.onSubmit(this.props.value)
   }
 
-  callSelectorMethod = (methodName, e) => {
+  callSelectorMethod = (methodName, e, ref) => {
     if (this.props.disableAnnotation) {
       return
     }
 
     if (!!this.props[methodName]) {
-      this.props[methodName](e)
+      this.props[methodName](e, ref)
     } else {
       const selector = this.getSelectorByType(this.props.type)
       if (selector && selector.methods[methodName]) {
@@ -233,7 +241,6 @@ export default compose(
     const { props } = this
     const {
       isMouseHovering,
-
       renderHighlight,
       renderContent,
       renderSelector,
@@ -250,7 +257,7 @@ export default compose(
     return (
       <Container
         style={props.style}
-        innerRef={isMouseHovering.innerRef}
+        ref={this.containerRef}
         onMouseLeave={this.onTargetMouseLeave}
         onTouchCancel={this.onTargetTouchLeave}
         allowTouch={allowTouch}
@@ -261,6 +268,7 @@ export default compose(
           alt={props.alt}
           src={props.src}
           draggable={false}
+          ref={this.imgRef}
           innerRef={this.setInnerRef}
         />
         <Items>
@@ -282,7 +290,7 @@ export default compose(
           }
         </Items>
         <Target
-          innerRef={this.targetRef}
+          ref={this.targetRef}
           onClick={this.onClick}
           onMouseUp={this.onMouseUp}
           onMouseDown={this.onMouseDown}
